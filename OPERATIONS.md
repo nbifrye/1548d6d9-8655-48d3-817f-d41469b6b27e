@@ -114,11 +114,26 @@
 - out-of-scope の明示
 - 一次資料
 
+## Responsive content policy
+
+記事はスマートフォン表示で横スクロールを必要としない構成にします。
+
+### Tables
+
+表は、項目同士を同じ軸で比較する必要がある場合に限って使用します。
+
+- 原則として2列程度の小さな比較に限定する。
+- 行数が多い、説明文が長い、3列以上になる、コードや URI を多く含む場合は、表を使わず見出し付き箇条書きや番号付きリストへ分解する。
+- 表を使用する場合も、スマートフォンでは1行をカード状に縦積みして表示し、横スクロールを発生させない。
+- 情報密度を下げずに表を分解できる場合は、表より文章構造を優先する。
+
 ## Mermaid policy
 
 Protocol、ceremony、resource lifecycle、request / response の順序や構成要素間の関係がある記事には Mermaid 図を含めます。
 
 図は記事テーマに直接関係する情報だけを表示します。仕様本文に存在しない actor、message、security property は追加しません。図だけで規範要件を表現せず、本文でも該当要件と一次資料の section を記載します。
+
+スマートフォンでは Mermaid 図を画面幅内に収め、横スクロールを発生させません。横方向に要素が増える図は、`flowchart TD` の縦方向レイアウトを優先するか、複数の小さな図へ分割します。sequence diagram は participant 数と message label の長さを抑え、1枚で読みづらくなる場合は処理段階ごとに分割します。
 
 ## Japanese style guide
 
@@ -159,6 +174,8 @@ Protocol、ceremony、resource lifecycle、request / response の順序や構成
 - MUST / MUST NOT / SHOULD / SHOULD NOT / MAY の強度が変わっていない。
 - 独自の推奨・評価・見解が含まれていない。
 - Mermaid 図と本文の処理順序が一致している。
+- スマートフォンで表・図の横スクロールが発生しない構成になっている。
+- 大きな表を使わず、必要に応じて箇条書きや複数 section に分解している。
 - actor と token / code / assertion / credential / resource の用語が混同されていない。
 - 仕様にない security property を断定していない。
 - 日本語として不自然な直訳が残っていない。
