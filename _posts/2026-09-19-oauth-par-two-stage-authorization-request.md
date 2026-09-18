@@ -14,23 +14,13 @@ OAuth 2.0 Pushed Authorization Requests（PAR）は RFC 9126 で定義されて�
 **この記事で伝えること:** PAR Endpoint への pushed authorization request と、その応答で得た `request_uri` を使う Authorization Request の処理順序  
 **扱わないこと:** JAR の署名・暗号化処理、PKCE の詳細、Authorization Code の交換、Access Token の利用、FAPI 2.0 固有の追加要件
 
-## Article brief
-
-**Reader:** OAuth Client / Authorization Server 実装者  
-**Question:** PAR を使うと、通常 Authorization Endpoint に渡す request parameter はどこへ送られ、その後 Browser を経由する Authorization Request は何を含むのか。  
-**Answer:** Client は Authorization Request の parameter を PAR Endpoint へ直接 POST し、Authorization Server が返す `request_uri` を `client_id` とともに Authorization Endpoint へ送る。  
-**Scope:** RFC 9126 §2、§2.1、§2.2、§4 に規定された基本フロー  
-**Out of scope:** Request Object の処理、redirect URI の動的管理、PAR metadata、個別の security consideration  
-**Primary sources:** RFC 9126  
-**Diagram:** Client、Authorization Server、User Agent の3主体による sequence diagram
-
 ## 1. PAR Endpoint へ Authorization Request を push する
 
 RFC 9126 §2 は、Authorization Server に Pushed Authorization Request Endpoint を定義します。この endpoint は HTTPS を使用しなければなりません（MUST）。Client は Authorization Request を構成する parameter を、この endpoint へ HTTP `POST` で直接送信します。
 
 §2.1 によれば、pushed authorization request には `client_id`、`response_type`、`redirect_uri`、`scope`、`state`、`code_challenge` など、Authorization Endpoint に適用可能な parameter を含めることができます。ただし `request_uri` parameter は含めてはなりません（MUST NOT）。
 
-Client Authentication が適用される Client は、Token Endpoint request と同じ規則に従って認証情報も送信します。Authorization Server は §2.1 の処理として Client を認証し、`request_uri` parameter が送信されていれば request を拒否し、pushed request を Authorization Request として検証します。
+Client Authentication が必要な Client は、Token Endpoint request と同じ規則に従って認証情報も送信します。Authorization Server は §2.1 の処理として Client を認証し、`request_uri` parameter が送信されていれば request を拒否し、pushed request を Authorization Request として検証します。
 
 ## 2. 成功すると `request_uri` が返る
 
@@ -59,8 +49,8 @@ sequenceDiagram
 
 このため、PAR の基本フローは次の2段階に分かれます。
 
-1. **Direct request:** Client が Authorization Request のデータを PAR Endpoint へ直接 push し、`request_uri` を取得する。
-2. **Authorization request:** Client が User Agent を経由して `client_id` と `request_uri` を Authorization Endpoint へ送る。
+1. **PAR への直接送信:** Client が Authorization Request のデータを PAR Endpoint へ直接 push し、`request_uri` を取得する。
+2. **Authorization Endpoint への送信:** Client が User Agent を経由して `client_id` と `request_uri` を Authorization Endpoint へ送る。
 
 ## 4. `request_uri` の利用条件
 
