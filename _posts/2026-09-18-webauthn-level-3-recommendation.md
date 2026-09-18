@@ -20,12 +20,10 @@ Web Authentication (WebAuthn) Level 3 は、2026年8月25日付の W3C Recommend
 
 WebAuthn の処理には、Relying Party、User Agent、Authenticator、User が登場します。
 
-| 主体 | 仕様上の役割 |
-|---|---|
-| Relying Party (RP) | 公開鍵クレデンシャルを利用してユーザーを認証する Web サービス |
-| User Agent | Web Authentication API を Web アプリケーションへ公開し、Authenticator へのアクセスを仲介する |
-| Authenticator | 公開鍵クレデンシャルを作成・保持し、ユーザーの同意の下で署名処理を行う |
-| User | 登録または認証セレモニーに参加する利用者 |
+- **Relying Party (RP):** 公開鍵クレデンシャルを利用してユーザーを認証する Web サービス。
+- **User Agent:** Web Authentication API を Web アプリケーションへ公開し、Authenticator へのアクセスを仲介する。
+- **Authenticator:** 公開鍵クレデンシャルを作成・保持し、ユーザーの同意の下で署名処理を行う。
+- **User:** 登録または認証セレモニーに参加する利用者。
 
 RP の処理は大きく2つに分かれます。
 
@@ -33,7 +31,7 @@ RP の処理は大きく2つに分かれます。
 2. 認証時に、Authenticator が作成した assertion を受け取り、登録済み公開鍵を使って検証する。
 
 <pre class="mermaid">
-flowchart LR
+flowchart TD
     A[登録開始] --> B[PublicKeyCredentialCreationOptions]
     B --> C[Authenticator が credential を作成]
     C --> D[RP が §7.1 に従って検証]
@@ -88,20 +86,20 @@ Authenticator data には `rpIdHash`、flags、signature counter、および登�
 
 WebAuthn Level 3 §7.1 は、RP が登録応答に対して実行する verification procedure を定義しています。
 
-| 検証対象 | RP が確認する内容 |
-|---|---|
-| response type | `AuthenticatorAttestationResponse` であること |
-| `clientDataJSON.type` | `webauthn.create` であること |
-| `clientDataJSON.challenge` | 登録開始時の challenge と一致すること |
-| `clientDataJSON.origin` | RP が期待する origin であること |
-| `crossOrigin` / `topOrigin` | cross-origin の条件が RP の期待値と一致すること |
-| `rpIdHash` | 期待する RP ID の SHA-256 ハッシュと一致すること |
-| UP flag | 仕様が要求する条件で User Presence が設定されていること |
-| UV flag | RP が user verification を要求した場合に設定されていること |
-| BE / BS flags | backup eligibility / backup state の組み合わせが仕様に適合すること |
-| 公開鍵アルゴリズム | credential public key の `alg` が `pubKeyCredParams` に含まれること |
-| attestation | `fmt` に対応する verification procedure に従うこと |
-| credential ID | 仕様が定める長さと重複条件を満たすこと |
+検証項目は次のとおりです。
+
+1. response が `AuthenticatorAttestationResponse` であること。
+2. `clientDataJSON.type` が `webauthn.create` であること。
+3. `clientDataJSON.challenge` が登録開始時の challenge と一致すること。
+4. `clientDataJSON.origin` が RP の期待する origin であること。
+5. `crossOrigin` / `topOrigin` が、cross-origin 利用時の RP の期待値と一致すること。
+6. `rpIdHash` が期待する RP ID の SHA-256 ハッシュと一致すること。
+7. 仕様が要求する条件で UP flag が設定されていること。
+8. RP が user verification を要求した場合、UV flag が設定されていること。
+9. BE / BS flags の組み合わせが仕様に適合すること。
+10. credential public key の `alg` が `pubKeyCredParams` に含まれること。
+11. attestation を `fmt` に対応する verification procedure で検証すること。
+12. credential ID が仕様の長さと重複条件を満たすこと。
 
 RP は `clientDataJSON` を UTF-8 としてデコードし、JSON として解析したうえで、`type`、`challenge`、`origin` などを検証します。
 
@@ -111,16 +109,16 @@ attestation については、RP は `attestationObject` を CBOR decode し、`
 
 §7.1 は、登録検証が成功した後に作成する credential record の項目を列挙しています。
 
-| 項目 | 内容 |
-|---|---|
-| `type` | PublicKeyCredential の type |
-| `id` | credential ID |
-| `publicKey` | credential public key |
-| `signCount` | authenticator data の signature counter |
-| `uvInitialized` | 登録時の UV flag |
-| `transports` | `getTransports()` の戻り値 |
-| `backupEligible` | BE flag |
-| `backupState` | BS flag |
+credential record には、仕様に列挙された次の項目を保存します。
+
+- **`type`:** PublicKeyCredential の type
+- **`id`:** credential ID
+- **`publicKey`:** credential public key
+- **`signCount`:** authenticator data の signature counter
+- **`uvInitialized`:** 登録時の UV flag
+- **`transports`:** `getTransports()` の戻り値
+- **`backupEligible`:** BE flag
+- **`backupState`:** BS flag
 
 `attestationObject`、登録時の `clientDataJSON`、RP ID などは OPTIONAL な保存項目として列挙されています。
 
