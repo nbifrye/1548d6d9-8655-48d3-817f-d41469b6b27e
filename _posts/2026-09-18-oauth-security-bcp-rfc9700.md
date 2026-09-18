@@ -57,9 +57,9 @@ PKCE challenge または OpenID Connect の `nonce` を transaction binding に�
 
 RFC 9700 §2.1.1 は、Authorization Code Grant を利用する Client が authorization code injection attack と authorization code misuse を防止することを MUST としています。
 
-Public Client は PKCE を使用しなければなりません（MUST）。Confidential Client に対しても PKCE は RECOMMENDED です。
+Public Client は PKCE を使用しなければなりません（MUST）。Confidential Client に対しても PKCE は RECOMMENDED です。追加の対策を満たす Confidential OpenID Connect Client は、代わりに `nonce` parameter と ID Token の対応する Claim を使用してもよい（MAY）とされています。
 
-RFC 9700 は、この recommendation が native application に限定されず、Web application を含むすべての種類の OAuth Client に適用されると明記しています。
+RFC 9700 は、PKCE に関するこの推奨が native application に限定されず、Web application を含むすべての種類の OAuth Client に適用されると明記しています。
 
 ## 5. PKCE の処理
 
@@ -79,7 +79,9 @@ sequenceDiagram
     AS-->>C: Access Token
 </pre>
 
-RFC 9700 §2.1.1 は、PKCE を使う Client が、Authorization Request で verifier を露出しない challenge method を SHOULD use としています。RFC 9700 公開時点では `S256` がその条件を満たす方式として記載されています。
+RFC 9700 §2.1.1 は、PKCE を使う Client が、Authorization Request で verifier を露出しない challenge method を使用することを SHOULD としています。RFC 9700 公開時点では `S256` がその条件を満たす唯一の方式です。
+
+Authorization Server は PKCE をサポートしなければならず（MUST）、Client が PKCE 対応を検出できる手段も提供しなければなりません（MUST）。
 
 ## 6. PKCE downgrade を防止する
 
@@ -102,16 +104,15 @@ flowchart TD
 
 ## 7. Authorization Code Grant に関する確認点
 
-RFC 9700 のうち、この記事の対象範囲にある規範要件をまとめると次のとおりです。
-
 この記事の対象範囲にある規範要件は、次のように整理できます。
 
 - **Redirect URI:** 原則として exact string matching を使用する（MUST）。
 - **CSRF:** Client は CSRF を防止する（MUST）。
 - **Authorization Code Injection:** Client は code injection / misuse を防止する（MUST）。
 - **Public Client:** PKCE を使用する（MUST）。
-- **Confidential Client:** PKCE の使用が RECOMMENDED。
-- **PKCE challenge method:** verifier を Authorization Request で露出しない方式を SHOULD use。
+- **Confidential Client:** PKCE の使用が RECOMMENDED。追加条件を満たす Confidential OpenID Connect Client は `nonce` を代替として使用できる（MAY）。
+- **Authorization Server:** PKCE をサポートし（MUST）、Client が対応を検出できる手段を提供する（MUST）。
+- **PKCE challenge method:** verifier を Authorization Request で露出しない方式を使用する（SHOULD）。
 - **PKCE downgrade:** challenge の有無を transaction に結び付け、不整合な Token Request を拒否する。
 
 ## 8. この記事で扱っていない RFC 9700 の主題
@@ -135,4 +136,4 @@ RFC 9700 には、このほかにも次の主題があります。
 - RFC Editor: [RFC 7636 — Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/rfc/rfc7636.html)
 
 参照した主要節: RFC 9700 §2.1, §2.1.1, §4.1, §4.8.2  
-最終確認: 2026-09-18
+最終確認: 2026-09-19
