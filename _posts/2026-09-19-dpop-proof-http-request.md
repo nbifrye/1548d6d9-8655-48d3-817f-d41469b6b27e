@@ -69,7 +69,7 @@ flowchart TD
 
 RFC 9449 §4.2 が基本要件として HTTP request から DPoP proof に含めるのは HTTP method と URI です。一般的な request header や message body は DPoP proof の対象に含まれません。拡張や profile により追加の claim を含めることは可能ですが、RFC 9449 の基本仕様は request 全体の integrity を提供しません。
 
-## 4. protected resource access では `ath` が追加される
+## 4. 保護リソースへのアクセスでは `ath` が追加される
 
 DPoP proof を access token とともに保護リソースへのアクセスに使用する場合、RFC 9449 §4.2 と §7 は `ath` claim を要求しています（MUST）。
 
@@ -81,7 +81,7 @@ Resource Server は、提示された access token から同じ hash を計算�
 
 ## 5. access token と DPoP key の binding
 
-RFC 9449 §6 は、Resource Server が access token が DPoP-bound かどうかを確実に識別し、その token と DPoP proof の公開鍵との binding を検証するために十分な情報を取得できなければならない（MUST）と規定しています。
+RFC 9449 §6 は、Resource Server が、access token が DPoP-bound かどうかを確実に識別し、その token と DPoP proof の公開鍵との binding を検証するために十分な情報を取得できなければならない（MUST）と規定しています。
 
 たとえば、JWT 形式の access token では `cnf.jkt` に JWK SHA-256 Thumbprint を含める方法が §6.1 で定義されています。token introspection を使用する場合は、§6.2 に従って introspection response の `cnf.jkt` から binding 情報を取得できます。
 
