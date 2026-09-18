@@ -1,0 +1,13 @@
+title: "Identity & Access Standards Notes"
+description: "デジタルアイデンティティとアクセスコントロールの標準仕様を実装者向けに読み解く"
+lang: ja-JP
+timezone: Asia/Tokyo
+theme: minima
+baseurl: "/1548d6d9-8655-48d3-817f-d41469b6b27e"
+url: "https://nbifrye.github.io"
+show_excerpts: true
+header_pages:
+  - standards.md
+  - about.md
+plugins:
+  - jekyll-feed
