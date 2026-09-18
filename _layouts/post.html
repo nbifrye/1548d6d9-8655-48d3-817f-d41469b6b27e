@@ -20,5 +20,44 @@ layout: default
 
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-  mermaid.initialize({ startOnLoad: true });
+
+  const systemDark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  function currentTheme() {
+    const explicit = document.documentElement.getAttribute("data-theme");
+    if (explicit) return explicit;
+    return systemDark ? "dark" : "light";
+  }
+
+  document.querySelectorAll(".mermaid").forEach((el) => {
+    el.dataset.mermaidSource = el.textContent;
+  });
+
+  async function renderMermaid() {
+    const theme = currentTheme() === "dark" ? "dark" : "default";
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme,
+      securityLevel: "strict",
+      flowchart: { useMaxWidth: false },
+      sequence: { useMaxWidth: false }
+    });
+
+    const nodes = Array.from(document.querySelectorAll(".mermaid"));
+    for (const node of nodes) {
+      if (node.dataset.mermaidSource) {
+        node.removeAttribute("data-processed");
+        node.textContent = node.dataset.mermaidSource;
+      }
+    }
+    await mermaid.run({ nodes });
+  }
+
+  await renderMermaid();
+
+  window.addEventListener("site-theme-change", async () => {
+    await renderMermaid();
+  });
 </script>
