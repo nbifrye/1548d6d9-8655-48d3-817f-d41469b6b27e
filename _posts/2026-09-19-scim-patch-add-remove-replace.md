@@ -14,16 +14,6 @@ SCIM Protocol の HTTP PATCH は、既存 resource の attribute を部分更新
 **この記事で伝えること:** PATCH request の構造、`path` の対象指定、`add` / `remove` / `replace` の処理差、および複数 operation の適用方法  
 **扱わないこと:** PUT による resource 全体の置換、Bulk operation、filter を使った resource 検索、Group membership のライフサイクル全体
 
-## Article brief
-
-- **Reader:** SCIM Service Provider の PATCH endpoint を実装・レビューする開発者
-- **Question:** `add`、`remove`、`replace` は `path` が指す attribute に対してどのように作用し、複数 operation はどの順序で処理されるのか
-- **Answer:** RFC 7644 §3.5.2 の request 構造、path rule、各 operation の規則、逐次適用と atomicity を区別して説明できる
-- **Scope:** RFC 7644 §3.5.2–§3.5.2.3 と、path が参照する §3.4.2.2 / §3.10
-- **Out of scope:** PUT、Bulk、resource 検索、Group membership 設計
-- **Primary sources:** RFC 7644
-- **Diagram:** PATCH request 内の Operations を Service Provider が順番に適用する flowchart
-
 ## 1. PATCH request の基本構造
 
 RFC 7644 §3.5.2 では、HTTP PATCH は Service Provider にとって OPTIONAL な機能です。Client は `/ServiceProviderConfig` を使って PATCH のサポートを確認できます。
@@ -91,6 +81,8 @@ complex attribute を対象にする場合、`value` に指定された sub-attr
 
 multi-valued attribute に valuePath filter を指定し、1個以上の value が一致した場合は、matching record が置き換え対象になります。さらに sub-attribute を指定した path では、一致した record のその sub-attribute が置き換えられます。
 
+valuePath filter が1件も一致しない場合、Service Provider は HTTP 400 と `scimType` の `noTarget` を返さなければなりません（SHALL）。
+
 ## 6. Operations は記載順に適用される
 
 1つの PATCH request に複数の operation がある場合、RFC 7644 §3.5.2 はそれらを配列の順序で逐次適用すると定めています。各 operation の結果となる resource が、次の operation の target になります。
@@ -112,7 +104,7 @@ PATCH request は operation 数にかかわらず atomic に扱われます（SH
 
 ## 7. 成功時の response
 
-すべての operation が成功した場合、Service Provider は resource 全体を response body に含む `200 OK` を返さなければならないか（MUST）、適切な response header とともに `204 No Content` を返すことができます（MAY）。
+すべての operation が成功した場合、Service Provider は resource 全体を response body に含む `200 OK` を返します（MUST）。代わりに、適切な response header とともに `204 No Content` を返すこともできます（MAY）。
 
 ただし request に `attributes` parameter が指定されている場合、Service Provider は `200 OK` を返さなければなりません（MUST）。
 
