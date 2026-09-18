@@ -20,17 +20,17 @@ FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が策定�
 
 FAPI 2.0 Security Profile §5.3.1 は、OAuth 2.0 と関連仕様を組み合わせて利用します。
 
-| 機能 | 参照仕様 |
-|---|---|
-| OAuth 2.0 Authorization Framework | RFC 6749 |
-| Bearer Token Usage | RFC 6750 |
-| PKCE | RFC 7636 |
-| Mutual TLS | RFC 8705 |
-| DPoP | RFC 9449 |
-| Pushed Authorization Requests | RFC 9126 |
-| Authorization Server Metadata | RFC 8414 |
-| Authorization Server Issuer Identification | RFC 9207 |
-| OpenID Connect | OpenID Connect Core 1.0 |
+このフローに関係する主な仕様は次のとおりです。
+
+- **OAuth 2.0 Authorization Framework:** RFC 6749
+- **Bearer Token Usage:** RFC 6750
+- **PKCE:** RFC 7636
+- **Mutual TLS:** RFC 8705
+- **DPoP:** RFC 9449
+- **Pushed Authorization Requests:** RFC 9126
+- **Authorization Server Metadata:** RFC 8414
+- **Authorization Server Issuer Identification:** RFC 9207
+- **OpenID Connect:** OpenID Connect Core 1.0
 
 FAPI 2.0 Security Profile は、これらの仕様にある選択肢をそのまま許容するのではなく、§5 で追加の適合要件を課します。
 
@@ -38,21 +38,27 @@ FAPI 2.0 Security Profile は、これらの仕様にある選択肢をそのま
 
 <pre class="mermaid">
 sequenceDiagram
-    participant C as Confidential Client
+    participant C as Client
     participant AS as Authorization Server
     participant UA as User Agent
-    participant RS as Resource Server
     C->>C: PKCE verifier / challenge を生成
-    C->>AS: PAR + client authentication + redirect_uri + code_challenge
-    AS->>AS: Client と PAR を検証
+    C->>AS: PAR + client authentication
     AS-->>C: request_uri + expires_in
-    C->>UA: Authorization Request(client_id, request_uri)
+    C->>UA: Authorization Request
     UA->>AS: client_id + request_uri
-    AS->>UA: Resource Owner authentication / authorization
     AS-->>UA: authorization code + iss
     UA-->>C: redirect response
     C->>C: iss を検証
-    C->>AS: Token Request + code + code_verifier + client authentication
+</pre>
+
+Token Endpoint 以降は、次の処理になります。
+
+<pre class="mermaid">
+sequenceDiagram
+    participant C as Client
+    participant AS as Authorization Server
+    participant RS as Resource Server
+    C->>AS: code + code_verifier + client authentication
     AS->>AS: code / PKCE / sender binding を検証
     AS-->>C: sender-constrained Access Token
     C->>RS: Access Token + MTLS または DPoP proof
@@ -104,17 +110,17 @@ Client 側の §5.3.3.2 は、この `iss` を RFC 9207 に従って検証する
 
 Token Request では、authorization code と `code_verifier` に加えて、選択した方式による Client Authentication が行われます。
 
-| Client Authentication | 参照仕様 |
-|---|---|
-| Mutual TLS | RFC 8705 |
-| `private_key_jwt` | RFC 7521 / RFC 7523 / OpenID Connect Core |
+Client Authentication は、次のいずれかの方式を使用します。
+
+- **Mutual TLS:** RFC 8705
+- **`private_key_jwt`:** RFC 7521 / RFC 7523 / OpenID Connect Core
 
 ## 7. Access Token は sender-constrained とする
 
 Authorization Server は sender-constrained Access Token のみを発行します。方式は MTLS または DPoP です。
 
 <pre class="mermaid">
-flowchart LR
+flowchart TD
     C[Confidential Client] -->|Token Request + Client Authentication| AS[Authorization Server]
     AS -->|Sender-constrained Access Token| C
     C -->|Access Token + MTLS certificate / DPoP proof| RS[Resource Server]
@@ -136,16 +142,16 @@ Resource Server は §5.3.4 に従い、Access Token の validity、integrity、
 
 ## 9. このフローを構成する要件の対応表
 
-| 処理段階 | FAPI 2.0 Security Profile が要求する主な要素 |
-|---|---|
-| Authorization Request の準備 | PKCE S256 |
-| Authorization Request の送信 | Client-authenticated PAR |
-| Browser redirect | `client_id` + `request_uri` |
-| Authorization Response | Authorization Code + `iss` |
-| Client 側 response 検証 | RFC 9207 に従う issuer validation |
-| Token Request | Code + verifier + Client Authentication |
-| Access Token 発行 | Sender-constrained token |
-| Resource access | MTLS または DPoP による sender constraint verification |
+各処理段階と要件の対応は次のとおりです。
+
+1. **Authorization Request の準備:** PKCE S256。
+2. **Authorization Request の送信:** Client-authenticated PAR。
+3. **Browser redirect:** `client_id` と `request_uri`。
+4. **Authorization Response:** Authorization Code と `iss`。
+5. **Client 側 response 検証:** RFC 9207 に従う issuer validation。
+6. **Token Request:** Code、verifier、Client Authentication。
+7. **Access Token 発行:** sender-constrained token。
+8. **Resource access:** MTLS または DPoP による sender constraint verification。
 
 ## 10. この記事で扱っていない FAPI 2.0 の主題
 
