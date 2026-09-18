@@ -6,20 +6,12 @@ categories: [oauth]
 tags: [OAuth, RFC8707, Resource Indicators]
 ---
 
+RFC 8707 **Resource Indicators for OAuth 2.0** は、Client が requested Access Token の使用先となる Resource を Authorization Server に伝えるための `resource` request parameter を定義します。
+
 **記事タイプ:** Feature Deep Dive  
 **対象読者:** OAuth 2.0 の Authorization Request / Token Request と Access Token の対象 Resource の関係を実装・レビューする開発者  
 **この記事で伝えること:** RFC 8707 の `resource` parameter が、Client が Access Token を使用する対象 Resource を Authorization Server にどう示すか  
 **扱わないこと:** `scope` の一般的な設計、Token Exchange、Access Token の具体的な token format、Resource Server における token validation 手順
-
-## Article brief
-
-- **Reader:** OAuth 2.0 の Authorization Request / Token Request と Access Token の対象 Resource の関係を実装・レビューする開発者
-- **Question:** Client は Access Token を使用する対象 Resource を Authorization Server にどのように伝え、Authorization Server はその情報をどう扱うのか
-- **Answer:** `resource` parameter の値の制約、Authorization Request / Access Token Request での意味、複数 Resource、`invalid_target`、Access Token の audience restriction との関係を RFC 8707 に沿って説明できる
-- **Scope:** RFC 8707 §2、§2.1、§2.2、§3
-- **Out of scope:** Token Exchange、`scope` の一般論、JWT Access Token Profile、Token Introspection の処理手順、Resource Server の token validation
-- **Primary sources:** RFC 8707
-- **Diagram:** Client が `resource` を Authorization Server に送り、Authorization Server が対象 Resource を考慮して Access Token を発行する関係を縦方向の flowchart で示す
 
 ## 1. `resource` は Access Token の使用先を示す
 
@@ -50,9 +42,9 @@ flowchart TD
 
 RFC 8707 §2.1 では、Authorization Request の `resource` parameter は、Client が access を要求する target service または protected resource を示します。
 
-Authorization Server は、Authorization Request で示された Resource を authorization grant に関連付けます。その後の Authorization Code を使った Access Token Request では、Client が Token Request に `resource` を含めなかった場合、Authorization Server は Authorization Request で指定された Resource を使用して Access Token の対象を決定できます。
+Authorization Code Flow では、Authorization Request で示された Resource は authorization grant 全体に適用されます。Authorization Server はこの情報を、後続の Access Token Request で利用可能な Resource の集合を決めるために使用できます。
 
-複数 Resource が Authorization Request に含まれていた場合、Authorization Server はそれらを authorization grant と関連付けることができます。どの Resource に対して token を発行するかは、後続の Access Token Request と Authorization Server の policy にも依存します。
+複数の Resource が Authorization Request に含まれていた場合も、それらは authorization grant に適用されます。実際にどの Resource を対象とする Access Token を発行するかは、後続の Access Token Request と Authorization Server の policy にも依存します。
 
 ## 4. Access Token Request での `resource`
 
