@@ -107,9 +107,9 @@ attestation については、RP は `attestationObject` を CBOR decode し、`
 
 ## 4. 登録後に RP が保存する credential record
 
-§7.1 は、登録検証が成功した後に作成する credential record の項目を列挙しています。
+WebAuthn Level 3 は、§7 の手順を実装するため、Relying Party が登録済み public key credential source の一部の属性を保持することを要求しています（MUST）。
 
-credential record には、仕様に列挙された次の項目を保存します。
+そのうえで、仕様は次の項目を credential record に保持することを推奨しています（RECOMMENDED）。
 
 - **`type`:** PublicKeyCredential の type
 - **`id`:** credential ID
@@ -173,4 +173,4 @@ signature counter について、§7.2 は今回の値が保存済み値以下�
 - W3C publication history: [WebAuthn Level 3 publication history](https://www.w3.org/standards/history/webauthn-3/)
 
 参照した主要節: §4, §5.5, §6.1, §6.5, §7.1, §7.2  
-最終確認: 2026-09-18
+最終確認: 2026-09-19
