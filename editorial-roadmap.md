@@ -4,16 +4,21 @@ title: "Editorial Roadmap"
 permalink: /roadmap/
 ---
 
-今後の候補:
-- OAuth 2.0 Security BCP: redirect URI / PKCE / sender-constrained token / refresh token
-- OIDC: ID Token と Access Token の責務
-- WebAuthn Level 3: Level 2 との差分と passkey 実装
-- FAPI 2.0: PAR / PKCE / sender-constrained token
-- SCIM: User / Group / PATCH / filter / lifecycle
-- DPoP (RFC 9449) と mTLS (RFC 8705)
-- Rich Authorization Requests
-- SAML 2.0 と OIDC
-- JWT / JWS / JWE / JWK / JWKS
-- ABAC / ReBAC / policy-as-code と標準仕様
+今後扱う候補は、一次資料の内容と標準化ステータスを確認したうえで選定します。
 
-記事の基本形は「目的 → 登場人物 → プロトコル/データ構造 → MUST/SHOULD の要点 → 落とし穴 → 参照仕様」です。
+- RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)
+- RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens
+- RFC 9126: OAuth 2.0 Pushed Authorization Requests
+- RFC 9396: OAuth 2.0 Rich Authorization Requests
+- OpenID Connect Core 1.0 incorporating errata set 2
+- OpenID Connect Discovery 1.0 incorporating errata set 2
+- OpenID Connect Dynamic Client Registration 1.0 incorporating errata set 2
+- FAPI 2.0 Message Signing
+- JWT / JWS / JWE / JWK / JWKS に関する RFC 群
+- SAML 2.0 の OASIS 標準仕様
+- WebAuthn Level 3 の extension、related origins、conditional mediation
+- SCIM 2.0 の filter、PATCH、Bulk、discovery
+
+記事は、対象仕様に応じて「文書情報 → scope → actors / terminology → protocol / processing model → Mermaid 図 → data structure → normative requirements → validation / error processing → security / privacy considerations → 一次資料と参照 section」の順で構成します。
+
+候補の掲載は公開予定や優先順位を意味しません。新しい RFC、BCP、OpenID Final Specification、W3C Recommendation などが発行された場合は、一次資料を確認したうえで候補を更新します。
