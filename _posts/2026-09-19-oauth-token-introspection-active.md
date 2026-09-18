@@ -9,7 +9,7 @@ categories: [oauth, token]
 
 **記事タイプ:** Feature Deep Dive  
 **対象読者:** OAuth 2.0 の Protected Resource / Authorization Server で Token Introspection を実装・レビューする開発者  
-**この記事で伝えること:** RFC 7662 の Introspection Request / Response と、`active` が表す状態および Authorization Server が行う適用可能な検査  
+**この記事で伝えること:** RFC 7662 の Introspection Request / Response の具体的な形式と、`active` が表す状態および Authorization Server が行う適用可能な検査  
 **扱わないこと:** JWT Access Token のローカル検証、Token Revocation Endpoint、Client が Access Token を取得するフロー、個別 deployment の認可ポリシー
 
 ## 1. Introspection Endpoint が返すもの
@@ -22,11 +22,37 @@ RFC 7662 における active token の具体的な定義は Authorization Server
 
 ## 2. Protected Resource は token を POST する
 
-RFC 7662 §2.1 では、Protected Resource は Introspection Endpoint に HTTP POST request を送り、parameter を `application/x-www-form-urlencoded` 形式で送信します。
+RFC 7662 §2.1 では、Protected Resource は Introspection Endpoint に HTTP POST request を送り、parameter を `application/x-www-form-urlencoded` 形式で送信します。つまり、`token` や `token_type_hint` は JSON object の member ではなく、POST body の form parameter です。
 
 `token` parameter は REQUIRED です。値には introspection の対象となる token string を指定します。
 
 `token_type_hint` は OPTIONAL です。Protected Resource は token lookup の最適化を助けるためにこの parameter を送ることができます（MAY）。Authorization Server が hint で token を見つけられない場合、サポートするすべての token type に検索を広げなければなりません（MUST）。Authorization Server はこの parameter を無視することもできます（MAY）。
+
+### 2.1 parameter をどこに指定するか
+
+構造を分けると次のようになります。
+
+- **HTTP method:** `POST`
+- **Content-Type:** `application/x-www-form-urlencoded`
+- **POST body の `token`:** REQUIRED。introspection 対象の token string
+- **POST body の `token_type_hint`:** OPTIONAL。token type の hint
+- **Introspection Endpoint への authorization:** request body の `token` とは別物。endpoint 自体へのアクセスを認可する credential
+
+以下は、RFC 7662 §2.1 の規則に沿って構造を示すための非規範的な例です。
+
+```http
+POST /introspect HTTP/1.1
+Host: authorization.example
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic <endpoint-credential>
+
+token=ACCESS_TOKEN_VALUE&token_type_hint=access_token
+```
+
+この例では、調べたい Access Token は POST body の `token` に入ります。`Authorization` header は Introspection Endpoint を呼び出す側の credential を表しており、調査対象の token とは役割が異なります。
+
+RFC 7662 §2.1 は Introspection Endpoint が何らかの authorization を要求することを MUST としていますが、その方式を Basic authentication に限定していません。仕様は例として OAuth 2.0 Client Authentication や、別の OAuth 2.0 Access Token による authorization を挙げています。
 
 また、Introspection Endpoint は token scanning attack を防ぐため、endpoint へのアクセスに何らかの authorization を要求しなければなりません（MUST, §2.1）。その credential の管理・検証方法は RFC 7662 の scope 外です。
 
@@ -37,6 +63,44 @@ RFC 7662 §2.2 では、Introspection Response の `active` member は REQUIRED 
 `active: true` の具体的な判定は Authorization Server の実装と token に保持している情報に依存します。RFC 7662 は一般的な状態として、Authorization Server が token を発行していること、Resource Owner により revoke されていないこと、token の有効時間内であることを挙げています。
 
 Response には `scope`、`client_id`、`username`、`token_type`、`exp`、`iat`、`nbf`、`sub`、`aud`、`iss`、`jti` などの OPTIONAL member も定義されています。
+
+### 3.1 Response object の具体的な形
+
+Introspection Response は `application/json` の JSON object です。次は RFC 7662 §2.2 で定義された member だけを使った、構造を理解するための非規範的な例です。
+
+```json
+{
+  "active": true,
+  "scope": "read profile",
+  "client_id": "client-123",
+  "token_type": "Bearer",
+  "exp": 1790000000,
+  "sub": "user-123",
+  "aud": "https://api.example"
+}
+```
+
+この object では、それぞれ次の位置と型になります。
+
+- **`active`:** top-level Boolean。REQUIRED。
+- **`scope`:** top-level string。OPTIONAL。複数 scope は JSON array ではなく、space-separated string として表す。
+- **`client_id`:** top-level value。OPTIONAL。token を要求した OAuth Client の identifier。
+- **`token_type`:** top-level value。OPTIONAL。OAuth 2.0 token type。
+- **`exp`:** top-level integer。OPTIONAL。1970-01-01 UTC からの秒数で表す expiration timestamp。
+- **`sub`:** top-level value。OPTIONAL。token の subject。
+- **`aud`:** top-level string または string の list。OPTIONAL。token の intended audience。
+
+`active` 以外は常に返されるわけではありません。RFC 7662 §2.2 は Authorization Server が Protected Resource ごとに返す情報を変えることも MAY としています。
+
+inactive な token では、構造は次のようになります。
+
+```json
+{
+  "active": false
+}
+```
+
+RFC 7662 §2.2 は、inactive token について追加情報を含めるべきではない（SHOULD NOT）としています。
 
 ## 4. Authorization Server は適用可能な state check を行う
 
