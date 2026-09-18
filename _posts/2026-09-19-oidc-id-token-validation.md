@@ -88,13 +88,13 @@ Client は、`aud` Claim に、`iss` で識別された Issuer に登録した�
 - `aud` に Client 自身が有効な audience として含まれていない
 - Client が信頼しない追加 audience が含まれている
 
-## 7. `azp` が存在する場合は、適用される拡張仕様の規則に従う
+## 7. 複数 audience と `azp` を確認する
 
 `azp`（authorized party）は OPTIONAL Claim です。
 
-§3.1.3.7 は、使用している拡張仕様によって `azp` Claim が存在する場合、その拡張仕様が定める方法で `azp` を検証することを SHOULD としています。
+§3.1.3.7 は、`aud` に複数の audience が含まれる場合、Client が `azp` Claim の存在を確認することを SHOULD としています。
 
-さらに、この検証には、`azp` が存在するときにその値が Client 自身の `client_id` であることを確認する処理を含めてもよい（MAY）としています。その場合、Client が自身の `client_id` と一致することを確認する強度は SHOULD です。
+また、`azp` Claim が存在する場合、Client はその値が自身の `client_id` と一致することを確認することを SHOULD としています。
 
 ## 8. Authorization Code Flow では署名検証に例外がある
 
@@ -149,7 +149,7 @@ Authorization Code Flow の Token Response で受け取る ID Token について
 2. §2 で REQUIRED とされる `iss`、`sub`、`aud`、`exp`、`iat` が ID Token の要件を満たしていることを確認する。
 3. `iss` が期待する Issuer Identifier と完全一致することを確認する（MUST）。
 4. `aud` に自身の `client_id` が含まれることを確認する（MUST）。
-5. `azp` が存在する場合は、適用される拡張仕様の規則に従って確認する。
+5. `aud` が複数値なら `azp` の存在を確認し（SHOULD）、`azp` が存在する場合は自身の `client_id` と一致することを確認する（SHOULD）。
 6. §3.1.3.7 が定める条件に従って署名を検証し、`alg` の条件を確認する。
 7. `exp` を検証する（MUST）。`iat` は REQUIRED Claim であり、必要に応じて許容時刻範囲を確認する。
 8. Authentication Request で `nonce` を送った場合、その存在と一致を確認する（MUST）。
