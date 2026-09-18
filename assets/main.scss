@@ -3,6 +3,12 @@
 
 @import "minima";
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   color-scheme: light;
   --bg: #ffffff;
@@ -69,11 +75,17 @@ html[data-theme="dark"] {
 }
 
 html {
+  width: 100%;
+  max-width: 100%;
   background: var(--bg);
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family:
@@ -84,17 +96,32 @@ body {
   overflow-wrap: anywhere;
   text-rendering: optimizeLegibility;
   transition: background-color 160ms ease, color 160ms ease;
+  overflow-x: clip;
 }
 
 .wrapper {
+  width: 100%;
   max-width: 860px;
+  min-width: 0;
   padding-right: 28px;
   padding-left: 28px;
 }
 
 .page-content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding-top: 42px;
   padding-bottom: 64px;
+  overflow-x: clip;
+}
+
+.post,
+.post-content,
+.post-header {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .site-header {
@@ -224,6 +251,11 @@ pre,
 }
 
 pre {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-right: 0;
+  margin-left: 0;
   padding: 16px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -233,10 +265,21 @@ pre code {
   border: 0;
   padding: 0;
   background: transparent;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.post-content :not(pre) > code {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 table {
   width: 100%;
+  max-width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   margin: 1.4rem 0 1.8rem;
@@ -307,6 +350,8 @@ hr {
 .mermaid {
   display: block;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin: 1.5rem 0 2rem;
   padding: 1rem;
   overflow: hidden;
@@ -383,6 +428,7 @@ hr {
   }
 
   .site-nav {
+    max-width: calc(100vw - 30px);
     border-color: var(--border);
     background: var(--surface);
   }
@@ -469,16 +515,20 @@ hr {
   }
 
   pre {
-    margin-right: -6px;
-    margin-left: -6px;
-    padding: 14px;
-    font-size: 0.84rem;
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 12px;
+    font-size: 0.82rem;
   }
 
   .mermaid {
+    width: 100%;
+    max-width: 100%;
     margin-right: 0;
     margin-left: 0;
-    padding: 0.55rem;
+    padding: 0.45rem;
   }
 
   .mermaid svg {
