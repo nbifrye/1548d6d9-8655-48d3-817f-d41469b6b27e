@@ -171,9 +171,7 @@ sequenceDiagram
 
 ## 9. User ライフサイクルとして見た SCIM 2.0
 
-この記事で扱った処理をまとめると、SCIM 2.0 の基本的な User lifecycle は次のようになります。
-
-User lifecycle を HTTP operation で追うと、次の順序になります。
+この記事で扱った User lifecycle を HTTP operation で追うと、次の順序になります。
 
 1. **作成 — `POST /Users`:** User resource を作成する。
 2. **取得 — `GET /Users/{id}`:** User resource を取得する。
@@ -194,4 +192,4 @@ RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extensio
 - RFC Editor: [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html)
 
 参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4  
-最終確認: 2026-09-18
+最終確認: 2026-09-19
