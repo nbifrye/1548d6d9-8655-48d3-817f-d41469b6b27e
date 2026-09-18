@@ -79,6 +79,7 @@ html {
   max-width: 100%;
   background: var(--bg);
   scroll-behavior: smooth;
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -96,6 +97,7 @@ body {
   overflow-wrap: anywhere;
   text-rendering: optimizeLegibility;
   transition: background-color 160ms ease, color 160ms ease;
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -113,6 +115,7 @@ body {
   min-width: 0;
   padding-top: 42px;
   padding-bottom: 64px;
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -122,6 +125,13 @@ body {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+}
+
+img,
+svg,
+iframe,
+video {
+  max-width: 100%;
 }
 
 .site-header {
