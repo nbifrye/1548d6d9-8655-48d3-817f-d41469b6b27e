@@ -12,16 +12,6 @@ categories: [oauth, token]
 **この記事で伝えること:** RFC 7662 の Introspection Request / Response と、`active` が表す状態および Authorization Server が行う適用可能な検査  
 **扱わないこと:** JWT Access Token のローカル検証、Token Revocation Endpoint、Client が Access Token を取得するフロー、個別 deployment の認可ポリシー
 
-## Article brief
-
-- **Reader:** Token Introspection を実装・レビューする Protected Resource / Authorization Server の開発者
-- **Question:** Protected Resource は Introspection Endpoint へ何を送り、`active: true` / `false` は何を意味するのか
-- **Answer:** RFC 7662 §2.1–§2.3 と §4 に基づき、request、response、`active`、適用可能な token-state check、inactive token の扱いを区別して説明できる
-- **Scope:** RFC 7662 §2, §2.1, §2.2, §2.3, §4
-- **Out of scope:** JWT の自己完結型検証、RFC 7009 の revocation request、Access Token 発行、deployment 固有の認可判断
-- **Primary sources:** RFC 7662
-- **Diagram:** Protected Resource が Introspection Endpoint へ token を送り、Authorization Server が state を評価して `active` を返す処理を縦方向の flowchart で示す
-
 ## 1. Introspection Endpoint が返すもの
 
 RFC 7662 §2 は Introspection Endpoint を、OAuth 2.0 token を表す parameter を受け取り、その token の meta-information を JSON document として返す endpoint と定義しています。この情報には token が現在 active かどうかが含まれます。
@@ -46,7 +36,7 @@ RFC 7662 §2.2 では、Introspection Response の `active` member は REQUIRED 
 
 `active: true` の具体的な判定は Authorization Server の実装と token に保持している情報に依存します。RFC 7662 は一般的な状態として、Authorization Server が token を発行していること、Resource Owner により revoke されていないこと、token の有効時間内であることを挙げています。
 
-Response には `scope`、`client_id`、`username`、`token_type`、`exp`、`iat`、`nbf`、`sub`、`aud`、`iss`、`jti` などの OPTIONAL memberも定義されています。
+Response には `scope`、`client_id`、`username`、`token_type`、`exp`、`iat`、`nbf`、`sub`、`aud`、`iss`、`jti` などの OPTIONAL member も定義されています。
 
 ## 4. Authorization Server は適用可能な state check を行う
 
@@ -78,7 +68,9 @@ RFC 7662 §2.2 では、introspection call 自体が適切に authorized され�
 
 Authorization Server は inactive token について、なぜ inactive なのかを含む追加情報を response に含めるべきではありません（SHOULD NOT, §2.2）。§4 でも、Authorization Server の内部状態の開示を避けるため、required な `active: false` 以外の claim を含めるべきではない（SHOULD NOT）としています。
 
-一方、Introspection Endpoint を呼び出すための credential が無効な場合は別です。RFC 7662 §2.3 は、Protected Resource が OAuth 2.0 client credentials で認証し、その credential が無効な場合には HTTP 401 を返すことを規定しています。つまり、introspection 対象 token の inactive state と、Introspection Endpoint へのアクセス自体の失敗は異なる処理です。
+一方、Introspection Endpoint へのアクセスに使う credential が無効な場合は別です。RFC 7662 §2.3 は、Protected Resource が OAuth 2.0 client credentials で認証し、その credential が無効な場合には HTTP 401 を返すと規定しています。別の OAuth 2.0 bearer token で endpoint access を認可している場合も、その token の権限が不足しているか request に対して無効であれば HTTP 401 を返します。
+
+つまり、introspection 対象 token の inactive state と、Introspection Endpoint へのアクセス自体の失敗は異なる処理です。
 
 ## 6. Response の cache と `exp`
 
