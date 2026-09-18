@@ -14,21 +14,11 @@ RFC 9396 **OAuth 2.0 Rich Authorization Requests** は、OAuth の認可要求�
 **この記事で伝えること:** `authorization_details` のデータ構造と、Authorization Request から Access Token に対応する権限情報が渡るまでの仕様上の関係  
 **扱わないこと:** 個別業界の authorization details type 設計、PAR の詳細フロー、JWT Access Token の一般的な検証、Resource Server の業務ロジック
 
-## Article brief
-
-- **Reader:** OAuth の `scope` より細粒度な認可要求を扱う実装者。
-- **Question:** `authorization_details` は何を表現し、その情報は OAuth フローのどこで処理されるのか。
-- **Answer:** JSON object の `type` と各 field が認可要件を表し、Authorization Server が検証・認可した内容を Access Token に対応付け、Resource Server が強制できる形で利用可能にする流れを理解できる。
-- **Scope:** RFC 9396 §2、§3、§5、§7、§9。
-- **Out of scope:** type ごとの業務仕様、権限比較アルゴリズム、privacy/security considerations の網羅的解説。
-- **Primary sources:** RFC 9396。
-- **Diagram:** Client、Authorization Server、Resource Server 間で `authorization_details` が処理される位置を示す短い sequence diagram。
-
 ## 1. `authorization_details` が表現するもの
 
 RFC 9396 §2 は、`authorization_details` を JSON object の配列として定義しています。各 object は、ある種類の resource に対する認可要件を表します。
 
-各 object の `type` field は REQUIRED です。`type` の値によって、その object で利用できる field が決まります。同じ `type` の entry を配列内に複数含めることも MAY とされています。
+各 object の `type` field は REQUIRED です。`type` の値によって、その object で利用できる field と値の意味が決まります。同じ `type` の entry を配列内に複数含めることも MAY とされています。
 
 RFC 9396 §2.2 は、API 間で再利用できる common data field として、`locations`、`actions`、`datatypes`、`identifier` などを定義しています。ただし、仕様は API にこれらの field の使用を要求していません。許容される値は、保護対象 API と `type` の定義によって決まります。
 
