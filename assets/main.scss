@@ -19,6 +19,9 @@
   --header-bg: rgba(255, 255, 255, 0.94);
   --shadow: 0 8px 28px rgba(31, 35, 40, 0.08);
   --focus: #0969da;
+  --table-head: #eef2f6;
+  --table-row: #ffffff;
+  --table-row-alt: #f8fafc;
 }
 
 html[data-theme="dark"] {
@@ -37,6 +40,9 @@ html[data-theme="dark"] {
   --header-bg: rgba(13, 17, 23, 0.94);
   --shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
   --focus: #58a6ff;
+  --table-head: #1f2937;
+  --table-row: #111820;
+  --table-row-alt: #161f2a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -56,6 +62,9 @@ html[data-theme="dark"] {
     --header-bg: rgba(13, 17, 23, 0.94);
     --shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
     --focus: #58a6ff;
+    --table-head: #1f2937;
+    --table-row: #111820;
+    --table-row-alt: #161f2a;
   }
 }
 
@@ -228,27 +237,47 @@ pre code {
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 1.4rem 0 1.8rem;
   color: var(--text);
-  background: var(--bg);
+  background: var(--table-row);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
   font-size: 0.94rem;
 }
 
 th,
 td {
-  border: 1px solid var(--border);
   padding: 0.72rem 0.8rem;
   vertical-align: top;
+  text-align: left;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+th:last-child,
+td:last-child {
+  border-right: 0;
+}
+
+tr:last-child td {
+  border-bottom: 0;
 }
 
 th {
-  background: var(--surface);
+  background: var(--table-head);
+  color: var(--text);
   font-weight: 700;
 }
 
-tr:nth-child(even) td {
-  background: color-mix(in srgb, var(--surface) 55%, transparent);
+td {
+  background: var(--table-row);
+}
+
+tbody tr:nth-child(even) td {
+  background: var(--table-row-alt);
 }
 
 .post-list > li {
@@ -277,19 +306,20 @@ hr {
 
 .mermaid {
   display: block;
+  width: 100%;
   margin: 1.5rem 0 2rem;
   padding: 1rem;
-  overflow-x: auto;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mermaid svg {
   display: block;
-  max-width: 100%;
-  height: auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
   margin: 0 auto;
 }
 
@@ -388,16 +418,54 @@ hr {
   table {
     display: block;
     width: 100%;
-    overflow-x: auto;
-    white-space: normal;
-    -webkit-overflow-scrolling: touch;
-    font-size: 0.86rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+    font-size: 0.9rem;
   }
 
-  th,
-  td {
-    min-width: 9rem;
-    padding: 0.62rem 0.68rem;
+  table thead {
+    display: none;
+  }
+
+  table tbody,
+  table tr,
+  table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  table tr {
+    margin: 0 0 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  table td,
+  table tbody tr:nth-child(even) td {
+    min-width: 0;
+    padding: 0.72rem 0.78rem;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.22rem;
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.35;
   }
 
   pre {
@@ -408,14 +476,15 @@ hr {
   }
 
   .mermaid {
-    margin-right: -6px;
-    margin-left: -6px;
-    padding: 0.75rem;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0.55rem;
   }
 
   .mermaid svg {
-    min-width: 640px;
-    max-width: none;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
 
   .theme-toggle {
@@ -444,10 +513,6 @@ hr {
     font-size: 1.34rem;
   }
 
-  th,
-  td {
-    min-width: 8rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
