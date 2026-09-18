@@ -5,7 +5,7 @@ date: 2026-09-18 09:30:00 +0900
 categories: [provisioning, scim]
 ---
 
-SCIM 2.0 は、identity resource を HTTP で作成・取得・更新・削除・検索するための標準です。データモデルは **RFC 7643: System for Cross-domain Identity Management: Core Schema**、プロトコルは **RFC 7644: System for Cross-domain Identity Management: Protocol** で定義されています。
+SCIM 2.0 は、identity resource を HTTP で作成・取得・更新・削除・検索するための標準です。データモデルは **RFC 7643: System for Cross-domain Identity Management: Core Schema**、プロトコルは **RFC 7644: System for Cross-domain Identity Management: Protocol** で定義されています。RFC 7643 と RFC 7644 は、いずれも 2015年9月に公開された Standards Track RFC です。
 
 この記事では RFC 7643 と RFC 7644 に記載されたリソース構造、HTTP operation、filter、PATCH、discovery、authentication / authorization の要件を整理します。MUST / SHOULD / MAY などの規範語は RFC の強度を維持して記載します。
 
