@@ -104,15 +104,15 @@ flowchart TD
 
 RFC 9700 のうち、この記事の対象範囲にある規範要件をまとめると次のとおりです。
 
-| 対象 | RFC 9700 の要件 |
-|---|---|
-| Redirect URI | 原則として exact string matching を使用する（MUST） |
-| CSRF | Client は CSRF を防止する（MUST） |
-| Authorization Code Injection | Client は code injection / misuse を防止する（MUST） |
-| Public Client | PKCE を使用する（MUST） |
-| Confidential Client | PKCE を使用することが RECOMMENDED |
-| PKCE challenge method | verifier を Authorization Request で露出しない方式を SHOULD use |
-| PKCE downgrade | challenge の有無を transaction に結び付け、不整合な Token Request を拒否する |
+この記事の対象範囲にある規範要件は、次のように整理できます。
+
+- **Redirect URI:** 原則として exact string matching を使用する（MUST）。
+- **CSRF:** Client は CSRF を防止する（MUST）。
+- **Authorization Code Injection:** Client は code injection / misuse を防止する（MUST）。
+- **Public Client:** PKCE を使用する（MUST）。
+- **Confidential Client:** PKCE の使用が RECOMMENDED。
+- **PKCE challenge method:** verifier を Authorization Request で露出しない方式を SHOULD use。
+- **PKCE downgrade:** challenge の有無を transaction に結び付け、不整合な Token Request を拒否する。
 
 ## 8. この記事で扱っていない RFC 9700 の主題
 
