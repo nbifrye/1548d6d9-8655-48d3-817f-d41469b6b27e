@@ -5,7 +5,7 @@ date: 2026-09-18 09:20:00 +0900
 categories: [authorization, api-security, fapi]
 ---
 
-FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が公開する Final Specification です。仕様は、自身を **general purpose high security profile of OAuth 2.0** と定義しています。
+FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が策定し、2025年2月22日に公開された Final Specification です。仕様は、自身を **general purpose high security profile of OAuth 2.0** と定義しています。
 
 この仕様は OAuth 2.0、Bearer Token、PKCE、MTLS、DPoP、Pushed Authorization Requests (PAR)、Authorization Server Metadata、Authorization Server Issuer Identification、および OpenID Connect Core の一部を組み合わせ、Authorization Server、Client、Resource Server に追加要件を課します。
 
