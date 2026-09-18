@@ -114,6 +114,19 @@
 - out-of-scope の明示
 - 一次資料
 
+## Concrete protocol examples
+
+Protocol parameter、JSON object、JWT claim、HTTP header、request body、response body、data structure を扱う記事では、仕様本文で形式が定義されている場合、読者が配置と構造を確認できる具体例を含めます。
+
+- parameter が query、form body、JSON member、HTTP header のどこに置かれるかを明記する。
+- JSON object や token claim set を扱う場合、記事テーマに必要な範囲で最小の構造例を示す。
+- request / response を扱う場合、HTTP method、Content-Type、主要 parameter の配置が分かる例を示す。
+- 例は **非規範的な例** と明記し、仕様上の MUST / SHOULD / MAY と混同させない。
+- 一次資料で定義されていない field、actor、security property を例のために追加しない。
+- 値そのものに規範的意味がない場合は illustrative value であることが分かる値を使用する。
+- field の型や cardinality が理解に必要な場合は、表ではなく短い箇条書きで説明する。
+- 大きな object は記事テーマに必要な member だけを示し、省略した member が存在する場合はその旨を記載する。
+
 ## Responsive content policy
 
 記事はスマートフォン表示で横スクロールを必要としない構成にします。
@@ -176,6 +189,7 @@ Protocol、ceremony、resource lifecycle、request / response の順序や構成
 - Draft を Final / RFC / Recommendation と誤認させる表現がない。
 - MUST / MUST NOT / SHOULD / SHOULD NOT / MAY の強度が変わっていない。
 - 独自の推奨・評価・見解が含まれていない。
+- Protocol parameter や object structure を扱う記事では、配置・形式が分かる非規範的な具体例がある。
 - Mermaid 図と本文の処理順序が一致している。
 - スマートフォンで表・図の横スクロールが発生しない構成になっている。
 - 大きな表を使わず、必要に応じて箇条書きや複数 section に分解している。
