@@ -30,7 +30,7 @@ FAPI 2.0 Security Profile §5.3.1 は、OAuth 2.0 と関連仕様を組み合わ
 - **Pushed Authorization Requests:** RFC 9126
 - **Authorization Server Metadata:** RFC 8414
 - **Authorization Server Issuer Identification:** RFC 9207
-- **OpenID Connect:** OpenID Connect Core 1.0
+- **OpenID Connect:** OpenID Connect Core 1.0 incorporating errata set 1
 
 FAPI 2.0 Security Profile は、これらの仕様にある選択肢をそのまま許容するのではなく、§5 で追加の適合要件を課します。
 
@@ -74,7 +74,7 @@ sequenceDiagram
 
 Authorization Server は、PAR を使わずに送信された Authorization Request を拒否し、Client Authentication を伴わない PAR も拒否します。
 
-Client は Authorization Endpoint に、`client_id` と PAR で得た `request_uri` を送信します。その他の Authorization Request parameter は PAR request に含めます。
+Client は Authorization Endpoint に `client_id` と PAR で得た `request_uri` だけを送信しなければなりません（shall）。その他の Authorization Request parameter は PAR request に含めます。
 
 <pre class="mermaid">
 sequenceDiagram
@@ -137,7 +137,7 @@ Resource Server は §5.3.4 に従い、Access Token の validity、integrity、
 
 - Authorization Code の lifetime は最大60秒。
 - 一度使用された Authorization Code は拒否する。
-- DPoP を使用する場合、Authorization Code Binding to DPoP Key をサポートする。
+- DPoP を使用する場合、Authorization Server は Authorization Code Binding to DPoP Key をサポートする（shall）。Client にその利用までは要求されない。
 - native application の loopback interface redirect を除き、`http` scheme の redirect URI を許可しない。
 
 ## 9. このフローを構成する要件の対応表
@@ -168,4 +168,4 @@ FAPI 2.0 Message Signing は別仕様であり、本記事では扱いません�
 - RFC Editor: [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207.html)
 
 参照した主要節: FAPI 2.0 Security Profile §5.3.1, §5.3.2.1, §5.3.2.2, §5.3.3.1, §5.3.3.2, §5.3.4  
-最終確認: 2026-09-18
+最終確認: 2026-09-19
