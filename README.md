@@ -11,7 +11,7 @@
 - 仕様更新時は既存記事も追記・訂正
 
 ## Publishing
-GitHub Pages / Jekyll 向けの構成です。Settings → Pages で `main` ブランチの `/` (root) を公開ソースに指定してください。
+GitHub Pages / Jekyll 向けの構成です。`.github/workflows/pages.yml` が main への push をビルド・デプロイします。初回のみ Settings → Pages → Build and deployment → Source で `GitHub Actions` を選択してください。
 
 > GitHub Pages は private repository をソースにしても公開サイトになる場合があります。機密情報は置かないでください。
 
