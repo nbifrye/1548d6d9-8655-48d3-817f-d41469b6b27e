@@ -14,16 +14,6 @@ FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の r
 **この記事で伝えること:** Client が Authorization Request のパラメータを signed request object に入れて PAR Endpoint へ送り、Authorization Server がどこで何を検証するか  
 **扱わないこと:** Authorization Response の JARM、Introspection Response、ID Token、Resource Request / Response、非否認性一般の評価
 
-## Article brief
-
-- **Reader:** FAPI 2.0 Message Signing の Authorization Request signing を実装する Client / Authorization Server 開発者。
-- **Question:** Authorization Request はどの時点で署名され、どの endpoint で検証されるのか。また signed request object に追加される要件は何か。
-- **Answer:** Client はすべての Authorization Request parameter を JAR の signed request object に格納して PAR Endpoint へ送信し、Authorization Server は同 endpoint で署名と request object を検証する。`aud`、`nbf`、`exp`、`typ` にも FAPI 2.0 Message Signing 固有の要件がある。
-- **Scope:** FAPI 2.0 Message Signing §5.3–§5.3.2。
-- **Out of scope:** JARM、signed introspection response、ID Token signing、鍵管理、署名アルゴリズムの選定詳細。
-- **Primary sources:** OpenID Foundation FAPI 2.0 Message Signing Final Specification、RFC 9101、RFC 9126。
-- **Diagram:** Client → PAR Endpoint → Authorization Endpoint の2段階フロー。
-
 ## 1. Authorization Request signing の位置
 
 FAPI 2.0 Message Signing §5.3 は、pushed authorization request を署名することで NR1 を扱います。また FAPI 2.0 が PAR を使用するため、signed pushed authorization request によって front-channel の Authorization Request に関する NR2 も扱われると説明しています。
@@ -45,13 +35,13 @@ sequenceDiagram
 
 ## 2. Client はすべての Authorization parameter を signed request object に入れる
 
-FAPI 2.0 Message Signing §5.3.2 は、Authorization Request signing を実装する Client に対し、**すべての Authorization parameter を JAR に従う signed request object に格納し、PAR Endpoint へ送信することを shall としています**。
+FAPI 2.0 Message Signing §5.3.2 は、Authorization Request signing を実装する Client に対し、**すべての Authorization parameter を JAR に従う signed request object に格納し、PAR Endpoint へ送信することを要求しています（shall）**。
 
 JAR は RFC 9101、PAR は RFC 9126 で定義されています。したがって、FAPI 2.0 Message Signing は Authorization Request の署名形式と送信経路を新規に定義するのではなく、JAR と PAR を組み合わせ、その利用方法に追加要件を設定しています。
 
 ## 3. `aud` は Authorization Server の issuer identifier URL
 
-§5.3.2 は Client に対し、request object の `aud` claim として Authorization Server の issuer identifier URL を送ることを shall としています。
+§5.3.2 は Client に対し、request object の `aud` claim として Authorization Server の issuer identifier URL を送ることを要求しています（shall）。
 
 Authorization Server 側について §5.3.1 は、`aud` が Authorization Server の issuer identifier URL そのもの、またはその URL を含む配列であることを要求することを shall としています。
 
@@ -65,7 +55,7 @@ flowchart TD
 
 ## 4. `nbf` と `exp` の時間条件
 
-Client は §5.3.2 により、request object に `nbf` claim を送ることを shall とされています。また `exp` claim も送信し、その lifetime は60分を超えないことが shall です。
+Client は §5.3.2 により、request object に `nbf` claim を送ることを要求されています（shall）。また `exp` claim も送信し、その lifetime を60分以内にしなければなりません（shall）。
 
 Authorization Server は §5.3.1 により、`nbf` が現在から60分より前ではないことを要求しなければなりません。さらに `exp` は `nbf` から60分を超えない lifetime であることを要求します。
 
@@ -73,7 +63,7 @@ Authorization Server は §5.3.1 により、`nbf` が現在から60分より前
 
 ## 5. `typ` は Client と Authorization Server で強度が異なる
 
-Client について §5.3.2 は、JOSE Header の `typ` に `oauth-authz-req+jwt` を送ることを **should** としています。
+Client について §5.3.2 は、JOSE Header の `typ` に `oauth-authz-req+jwt` を設定することを **should** としています。
 
 一方、Authorization Server について §5.3.1 は、`typ` が `oauth-authz-req+jwt` である request object を受け入れることを **shall** としています。
 
