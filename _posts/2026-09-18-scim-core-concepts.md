@@ -21,7 +21,7 @@ SCIM 2.0 のデータモデルは RFC 7643、プロトコルは RFC 7644 で定�
 RFC 7643 は SCIM resource の schema を定義します。RFC 7644 は、その resource を HTTP で操作する protocol を定義します。
 
 <pre class="mermaid">
-flowchart LR
+flowchart TD
     A[RFC 7643 Core Schema] --> C[User Resource]
     B[RFC 7644 Protocol] --> C
     C --> D[POST: 作成]
@@ -42,15 +42,15 @@ RFC 7643 は User resource に `userName`、`name`、`displayName`、`emails`、
 
 SCIM resource には共通 attribute もあります。
 
-| Attribute | 役割 |
-|---|---|
-| `id` | Service Provider が発行する resource identifier |
-| `externalId` | Provisioning Client が発行する外部 identifier |
-| `meta.resourceType` | resource type |
-| `meta.created` | 作成時刻 |
-| `meta.lastModified` | 最終変更時刻 |
-| `meta.version` | resource version |
-| `meta.location` | resource URI |
+代表的な common attribute は次のとおりです。
+
+- **`id`:** Service Provider が発行する resource identifier。
+- **`externalId`:** Provisioning Client が発行する外部 identifier。
+- **`meta.resourceType`:** resource type。
+- **`meta.created`:** 作成時刻。
+- **`meta.lastModified`:** 最終変更時刻。
+- **`meta.version`:** resource version。
+- **`meta.location`:** resource URI。
 
 Service Provider が resource を受理した後、`id` と `meta` およびその sub-attribute には Service Provider が値を割り当てます。
 
@@ -58,15 +58,15 @@ Service Provider が resource を受理した後、`id` と `meta` およびそ�
 
 RFC 7643 の schema は、attribute の型だけでなく、その attribute をどのように扱うかも定義します。
 
-| characteristic | 例 | 意味 |
-|---|---|---|
-| `type` | string, boolean, complex | データ型 |
-| `multiValued` | true / false | 複数値を持てるか |
-| `required` | true / false | 必須か |
-| `caseExact` | true / false | 文字列比較が case-sensitive か |
-| `mutability` | readOnly / readWrite / immutable / writeOnly | 変更可能性 |
-| `returned` | always / never / default / request | response に返す条件 |
-| `uniqueness` | none / server / global | 一意性の範囲 |
+主な characteristic は次のとおりです。
+
+- **`type`:** `string`、`boolean`、`complex` などのデータ型。
+- **`multiValued`:** 複数値を持てるか。
+- **`required`:** 必須 attribute か。
+- **`caseExact`:** 文字列比較が case-sensitive か。
+- **`mutability`:** `readOnly`、`readWrite`、`immutable`、`writeOnly`。
+- **`returned`:** `always`、`never`、`default`、`request`。
+- **`uniqueness`:** `none`、`server`、`global`。
 
 Service Provider は POST、PUT、PATCH を処理する際に、これらの schema rule を適用します。
 
@@ -149,11 +149,11 @@ Service Provider が内部的に resource を永久削除しない場合でも�
 
 SCIM 2.0 は、Client が Service Provider の対応機能を確認するための discovery endpoint を定義しています。
 
-| Endpoint | 確認できる内容 |
-|---|---|
-| `/ServiceProviderConfig` | PATCH、Bulk、Filter、Sort、authentication scheme など |
-| `/ResourceTypes` | 利用可能な resource type と endpoint |
-| `/Schemas` | schema definition |
+Discovery endpoint は次の3つです。
+
+- **`/ServiceProviderConfig`:** PATCH、Bulk、Filter、Sort、authentication scheme などの対応状況。
+- **`/ResourceTypes`:** 利用可能な resource type と endpoint。
+- **`/Schemas`:** schema definition。
 
 User resource を操作する前に、Client はこれらの endpoint を利用して Service Provider の capability と schema を取得できます。
 
@@ -173,14 +173,14 @@ sequenceDiagram
 
 この記事で扱った処理をまとめると、SCIM 2.0 の基本的な User lifecycle は次のようになります。
 
-| 状態 | HTTP operation | 仕様上の役割 |
-|---|---|---|
-| 未作成 | POST /Users | User resource を作成 |
-| 作成済み | GET /Users/{id} | User resource を取得 |
-| 検索 | GET /Users?filter=... | 条件に一致する User を検索 |
-| 更新 | PUT /Users/{id} | resource を置換 |
-| 部分更新 | PATCH /Users/{id} | attribute を部分更新 |
-| 削除 | DELETE /Users/{id} | resource を削除 |
+User lifecycle を HTTP operation で追うと、次の順序になります。
+
+1. **作成 — `POST /Users`:** User resource を作成する。
+2. **取得 — `GET /Users/{id}`:** User resource を取得する。
+3. **検索 — `GET /Users?filter=...`:** 条件に一致する User を検索する。
+4. **置換 — `PUT /Users/{id}`:** resource を置換する。
+5. **部分更新 — `PATCH /Users/{id}`:** attribute を部分更新する。
+6. **削除 — `DELETE /Users/{id}`:** resource を削除する。
 
 ## 10. この記事で扱っていない SCIM 2.0 の主題
 
