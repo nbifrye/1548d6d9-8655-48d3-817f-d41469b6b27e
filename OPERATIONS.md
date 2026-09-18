@@ -146,19 +146,21 @@ Protocol、ceremony、resource lifecycle、request / response の順序や構成
 - RFC の規範語は日本語だけに置換せず、MUST / SHOULD / MAY 等を併記する。
 - section ごとに主題を1つにし、別論点への脱線を避ける。
 
-## Weekly editorial loop
+## Editorial loop
 
 1. 一次資料の新規発行・更新を確認する。
-2. 読者と記事テーマを決める。
-3. Article brief の Reader / Question / Answer / Scope / Out of scope を確定する。
-4. 文書の status、date、supersedes / updates 関係を確認する。
-5. 根拠となる一次資料の section を特定する。
-6. Mermaid 図を仕様本文に沿って作成する。
-7. 本文を作成し、各 section が記事テーマに必要か確認する。
-8. すべての技術的主張が一次資料に紐付くことを確認する。
-9. 規範語の強度を原文と照合する。
-10. 日本語を校正する。
-11. main へ反映する。
+2. 既存記事の title、Reader、Question、Scope、Primary sources を確認し、同一または実質的に同一のテーマがないことを確認する。
+3. 読者と記事テーマを決める。
+4. Article brief の Reader / Question / Answer / Scope / Out of scope を確定する。
+5. 新しい Article brief を既存記事と再比較し、Reader / Question / Scope が大きく重なる場合は新規記事を作らず、必要なら既存記事を更新する。
+6. 文書の status、date、supersedes / updates 関係を確認する。
+7. 根拠となる一次資料の section を特定する。
+8. Mermaid 図を仕様本文に沿って作成する。
+9. 本文を作成し、各 section が記事テーマに必要か確認する。
+10. すべての技術的主張が一次資料に紐付くことを確認する。
+11. 規範語の強度を原文と照合する。
+12. 日本語を校正する。
+13. main へ反映する。
 
 ## Publication quality gate
 
@@ -167,6 +169,7 @@ Protocol、ceremony、resource lifecycle、request / response の順序や構成
 - 対象読者が明記されている。
 - 「この記事で伝えること」が1つの中心テーマとして明記されている。
 - 「扱わないこと」が明記されている。
+- 既存記事と Reader / Question / Scope が実質的に重複していない。
 - すべての section が中心テーマに直接寄与している。
 - 技術的事実の根拠が一次資料である。
 - 文書 status と date が確認されている。
