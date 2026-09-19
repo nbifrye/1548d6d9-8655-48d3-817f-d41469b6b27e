@@ -5,7 +5,7 @@ date: 2026-09-18 09:20:00 +0900
 categories: [authorization, api-security, fapi]
 ---
 
-FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が策定した Final Specification です。
+FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が策定し、2025年2月22日に公開された Final Specification です。
 
 ## この記事について
 

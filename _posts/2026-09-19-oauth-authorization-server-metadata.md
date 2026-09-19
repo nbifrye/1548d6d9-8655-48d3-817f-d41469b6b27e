@@ -12,16 +12,6 @@ categories: [oauth, discovery]
 **この記事で伝えること:** RFC 8414 に基づき、issuer identifier から metadata URL を構成し、HTTP GET で JSON object を取得して `issuer` を検証するまでの流れ  
 **扱わないこと:** OpenID Connect Discovery 固有の処理、Authorization Server の選択方法、Dynamic Client Registration、個々の OAuth grant の実行、signed metadata の詳細
 
-## Article brief
-
-- **Reader:** Authorization Server Metadata の取得・検証を実装する OAuth 2.0 Client 開発者
-- **Question:** issuer identifier から metadata をどの URL で取得し、取得した JSON の何を検証するのか
-- **Answer:** RFC 8414 §2、§3、§3.1–§3.3 に基づき、well-known URL の構成、GET request、JSON response、`issuer` 一致検証を説明できる
-- **Scope:** RFC 8414 §1、§2、§3、§3.1、§3.2、§3.3
-- **Out of scope:** OpenID Connect Discovery の discovery procedure、signed metadata の処理詳細、Authorization Server の選択、各 endpoint の protocol processing
-- **Primary sources:** RFC 8414
-- **Diagram:** issuer identifier から metadata URL を構成し、取得した JSON の `issuer` を照合する処理を縦方向の flowchart で示す
-
 ## 1. Metadata は Authorization Server の構成を表す JSON object である
 
 RFC 8414 §1 は、Authorization Server Metadata を、Client が Authorization Server と対話するために必要な endpoint location や capability を取得できる metadata format として定義しています。metadata は well-known location から JSON document として取得します。

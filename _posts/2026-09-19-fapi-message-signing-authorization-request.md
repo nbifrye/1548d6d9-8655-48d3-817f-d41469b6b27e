@@ -5,7 +5,7 @@ date: 2026-09-19 04:38:00 +0900
 categories: [authorization, oauth, fapi]
 ---
 
-FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の request / response を署名・検証するためのプロファイルです。この記事では、そのうち **Authorization Request の署名**だけを扱います。
+FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の request / response に署名を付与し、その署名を検証するためのプロファイルです。2025年9月25日に公開された OpenID Final Specification を対象とし、この記事では **Authorization Request の署名**だけを扱います。
 
 ## この記事について
 

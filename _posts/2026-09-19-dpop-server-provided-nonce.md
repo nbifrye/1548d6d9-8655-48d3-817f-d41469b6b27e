@@ -12,15 +12,6 @@ categories: [authorization, oauth, dpop]
 **この記事で伝えること:** Server が `DPoP-Nonce` を返し、Client がその値を次の DPoP proof の `nonce` claim に入れて request を再送する処理  
 **扱わないこと:** DPoP proof 全般の claim 検証、access token の key binding、authorization code binding、nonce を要求する時期を決める local policy
 
-## Article brief
-
-- **Reader:** DPoP nonce の request / response を実装・レビューする開発者
-- **Question:** `DPoP-Nonce` はどの response に入り、Client は受け取った値をどこへ指定して次の request を送るのか
-- **Answer:** Authorization Server と Resource Server の nonce challenge、`nonce` claim の配置、再送時の検証、次回用 nonce の更新を RFC 9449 の規定に沿って説明できる
-- **Scope:** RFC 9449 §4.2, §4.3, §8, §8.1, §8.2, §9, §11.3
-- **Out of scope:** DPoP proof 全般、token binding、`dpop_jkt`、nonce 発行タイミングの local policy
-- **Primary sources:** RFC 9449（Verified Errata ID 7646 を含む）
-- **Diagram:** nonce がない request、challenge、nonce を含む proof での再送を縦方向の flowchart で示す
 
 既存の「DPoP proof は HTTP request の何を証明するのか」は DPoP proof の構造と protected resource access 時の検証を扱い、DPoP nonce を明示的に scope 外としています。本記事は server-provided nonce の往復だけを扱います。
 

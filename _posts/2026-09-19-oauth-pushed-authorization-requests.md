@@ -16,7 +16,7 @@ categories: [oauth, authorization]
 
 RFC 9126 §1 は Pushed Authorization Requests（PAR）を、Client が Authorization Request の payload を Authorization Server に直接 push し、そのデータを参照する `request_uri` を受け取る仕組みとして定義しています。
 
-Client はその後、User Agent を Authorization Endpoint へ redirect するときに `request_uri` を使用します。Authorization Request の主要な parameter を User Agent 経由の URL にすべて載せるのではなく、先に PAR Endpoint へ送る点が処理上の特徴です。
+Client はその後、User Agent を Authorization Endpoint へリダイレクトするときに `request_uri` を使用します。Authorization Request の主要な parameter を User Agent 経由の URL にすべて載せるのではなく、先に PAR Endpoint へ送る点が処理上の特徴です。
 
 この記事では、RFC 9126 §2、§2.1–§2.3、§4 に限定して、この2段階の request を追います。
 
@@ -34,7 +34,7 @@ flowchart TD
 
 RFC 9126 §2 は PAR Endpoint を HTTP API として定義しています。Endpoint URL は `https` scheme を使用しなければなりません（MUST）。Client は HTTP `POST` を使用し、parameter を UTF-8 の `application/x-www-form-urlencoded` request body に入れます。
 
-RFC 9126 §2.1 によれば、PAR Endpoint は Authorization Endpoint で使用できる Authorization Request parameter と、適用可能な extension parameter を受け付けます。`client_id` は Pushed Authorization Request でも required です。
+RFC 9126 §2.1 によれば、PAR Endpoint は Authorization Endpoint で使用できる Authorization Request parameter と、適用可能な extension parameter を受け付けます。`client_id` は Pushed Authorization Request でも必須です。
 
 一方、`request_uri` authorization request parameter を Pushed Authorization Request に含めてはなりません（MUST NOT, §2.1）。
 
@@ -48,7 +48,7 @@ RFC 9126 §2.1 によれば、PAR Endpoint は Authorization Endpoint で使用�
 - **`redirect_uri`:** form body。Authorization Request parameter
 - **`scope`:** form body。Authorization Request parameter
 - **`state`:** form body。Authorization Request parameter
-- **Client authentication parameter / credential:** Client に適用される方式に従い request header または body に置く
+- **Client Authentication の parameter / credential:** Client に適用される方式に従い request header または body に置く
 - **`request_uri`:** Pushed Authorization Request には含めない（MUST NOT）
 
 以下は RFC 9126 §2.1 の形式を示すための非規範的な例です。値は構造を示すための illustrative value です。
@@ -62,7 +62,7 @@ Authorization: Basic <client-credential>
 response_type=code&client_id=client-123&redirect_uri=https%3A%2F%2Fclient.example%2Fcb&scope=read&state=state-123
 ```
 
-`Authorization` header は例示した Client authentication の credential です。RFC 9126 §2 は PAR Endpoint に、Token Endpoint request に対する Client authentication の規則を適用します。仕様は Client authentication をこの例の方式だけに限定していません。
+`Authorization` header は、この例で使用している Client Authentication の credential です。RFC 9126 §2 は PAR Endpoint に、Token Endpoint request に対する Client authentication の規則を適用します。仕様は Client authentication をこの例の方式だけに限定していません。
 
 ## 3. Authorization Server は push された request を検証する
 
@@ -72,7 +72,7 @@ RFC 9126 §2.1 は Authorization Server の処理順序を規定しています�
 2. `request_uri` parameter が含まれていれば request を拒否します（MUST）。
 3. Authorization Endpoint に送られた Authorization Request と同様に Pushed Authorization Request を検証します（MUST）。
 
-Authorization Server が push の時点で実行できない validation step は省略できます（MAY）。ただし、その check は Authorization Endpoint で Authorization Request を処理するときに実行しなければなりません（MUST, §2.1）。
+Authorization Server が push の時点で実行できない検証手順は省略できます（MAY）。ただし、その検証は Authorization Endpoint で Authorization Request を処理するときに実行しなければなりません（MUST, §2.1）。
 
 ## 4. 成功すると `request_uri` と `expires_in` が JSON で返る
 
@@ -83,7 +83,7 @@ Response object には次の top-level member が含まれます。
 - **`request_uri`:** push された Authorization Request に対応する URI。後続の Authorization Request で参照として使用する。
 - **`expires_in`:** positive integer の JSON number。`request_uri` の lifetime を秒数で表す。
 
-`request_uri` は、その Authorization Request を push した Client に bind されなければなりません（MUST, §2.2）。また、その値には、有効な値を予測・推測することが計算上困難になるよう cryptographically strong pseudorandom algorithm で生成した部分を含めなければなりません（MUST, §2.2）。
+`request_uri` は、その Authorization Request を push した Client にひも付けられなければなりません（MUST, §2.2）。また、その値には、有効な値の予測・推測が計算上困難になるよう、暗号学的に強い疑似乱数アルゴリズム（cryptographically strong pseudorandom algorithm）で生成した部分を含めなければなりません（MUST, §2.2）。
 
 以下は構造を示すための非規範的な例です。
 
@@ -113,7 +113,7 @@ Host: authorization.example
 
 ここでは `client_id` と `request_uri` が Authorization Endpoint への request の query parameter です。最初の PAR request で form body に送った Authorization Request data は、この段階では `request_uri` から参照されます。
 
-Client は `request_uri` を一度だけ使用しなければなりません（MUST, §4）。Authorization Server は `request_uri` を one-time use として扱うべきですが（SHOULD）、User Agent の reload / refresh による duplicate request を許可できます（MAY）。expired `request_uri` は invalid として拒否しなければなりません（MUST）。
+Client は `request_uri` を一度だけ使用しなければなりません（MUST, §4）。Authorization Server は `request_uri` を one-time use として扱うべきですが（SHOULD）、User Agent の reload / refresh による重複 request を許可できます（MAY）。有効期限切れの `request_uri` は invalid として拒否しなければなりません（MUST）。
 
 ## 6. PAR Endpoint の error response
 
@@ -142,7 +142,7 @@ PAR の処理では、同じ Authorization 処理のために2つの HTTP reques
 
 次の Authorization Request では、Client は User Agent を Authorization Endpoint へ誘導し、PAR Endpoint から返された `request_uri` を参照として使用します。
 
-この2段階を区別すると、`request_uri` が「最初から Client が用意する Authorization Request data」ではなく、「push した request に対して Authorization Server が返す参照」であることを追えます。
+この2段階を区別すると、`request_uri` が「最初から Client が用意する Authorization Request data」ではなく、「push したリクエストに対して Authorization Server が返す参照」であることを追えます。
 
 ## 一次資料
 

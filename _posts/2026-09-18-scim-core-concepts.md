@@ -49,10 +49,10 @@ SCIM resource には共通 attribute もあります。
 - **`meta.resourceType`:** resource type。
 - **`meta.created`:** 作成時刻。
 - **`meta.lastModified`:** 最終変更時刻。
-- **`meta.version`:** resource version。
+- **`meta.version`:** resource version。Service Provider が versioning をサポートする場合に使用される OPTIONAL な sub-attribute。
 - **`meta.location`:** resource URI。
 
-Service Provider が resource を受理した後、`id` と `meta` およびその sub-attribute には Service Provider が値を割り当てます。
+Service Provider が resource を受理した後、`id` と `meta` の値は Service Provider が割り当てます。`meta` の sub-attribute も Service Provider が割り当てますが、`meta.version` のサポートは OPTIONAL です。
 
 ## 3. Attribute には動作特性が定義される
 

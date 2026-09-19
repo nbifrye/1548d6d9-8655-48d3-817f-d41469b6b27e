@@ -12,16 +12,6 @@ categories: [oauth, token]
 **この記事で伝えること:** Client が Revocation Endpoint に送る parameter、その配置、Authorization Server の検証と無効化、成功・error response の関係  
 **扱わないこと:** Token Introspection、refresh token rotation、Resource Server が access token の失効を検知する方法、個別 deployment の revocation policy
 
-## Article brief
-
-- **Reader:** Token Revocation Endpoint を実装・レビューする OAuth 2.0 Client / Authorization Server の開発者
-- **Question:** token を無効化するとき、Client は何をどこへ送り、Authorization Server は何を検証してどの response を返すのか
-- **Answer:** RFC 7009 §2–§2.2.1 に基づき、revocation request の form parameter、client authentication、token の検証・無効化、HTTP 200 と error response を区別して説明できる
-- **Scope:** RFC 7009 §2, §2.1, §2.2, §2.2.1
-- **Out of scope:** RFC 7662 Token Introspection、RFC 9700 の refresh token replay detection、Resource Server への失効伝播方式、CORS / JSONP、deployment 固有の cascade policy
-- **Primary sources:** RFC 7009 §2–§2.2.1
-- **Diagram:** Client から Revocation Endpoint への POST、client/token 検証、token 無効化、response を縦方向の flowchart で示す
-
 ## 1. Revocation Endpoint の役割
 
 RFC 7009 §2 は、Client が以前取得した token を無効化するための Token Revocation Endpoint を定義しています。
@@ -59,7 +49,7 @@ RFC 7009 §2.1 では、Authorization Server は confidential client の場合�
 
 検証後、Authorization Server は token を無効化します。RFC 7009 は invalidation が直ちに行われ、revocation 後はその token を再利用できないと規定しています。
 
-実際の distributed system では invalidation の propagation delay があり得ることも §2.1 が記載しています。実装はその window を最小化すべきであり、Client は HTTP 200 を受け取った後に token を使用してはなりません。
+実際の distributed system では invalidation の propagation delay があり得ることも §2.1 が記載しています。原文は、実装がその window を最小化するべきであり、Client は HTTP 200 を受け取った後に token の使用を試みるべきではないと述べています。ここで使われている `should` / `must not` は小文字であり、RFC 2119 の規範語ではありません。
 
 <pre class="mermaid">
 flowchart TD

@@ -12,16 +12,6 @@ categories: [oauth, client-registration]
 **この記事で伝えること:** Client Registration Endpoint に送る JSON client metadata と、成功時に返る client information の構造と処理の流れ  
 **扱わないこと:** RFC 7592 の registration management、software statement の内部構造と検証、個別 deployment の registration policy、Authorization Code Flow など登録後の OAuth フロー
 
-## Article brief
-
-- **Reader:** Dynamic Client Registration の request / response を実装・レビューする開発者
-- **Question:** Client は Registration Endpoint にどの形式で何を送り、Authorization Server は何を返すのか
-- **Answer:** RFC 7591 §2、§3、§3.1、§3.2.1、§3.2.2 に基づき、HTTP request、JSON metadata、成功 response、error response の位置と構造を説明できる
-- **Scope:** Client metadata の役割、Client Registration Request、成功 response、registration error
-- **Out of scope:** RFC 7592、software statement の生成・署名・検証、initial access token の発行方法、deployment 固有の登録可否判断
-- **Primary sources:** RFC 7591 §1.3, §2, §3, §3.1, §3.2.1, §3.2.2
-- **Diagram:** Client / Developer が JSON metadata を POST し、Authorization Server が登録結果または error を返す処理を縦方向の flowchart で示す
-
 ## 1. Registration Request は JSON object を POST する
 
 RFC 7591 §3.1 では、Client または Client Developer は Client Registration Endpoint に HTTP POST を送り、`Content-Type` を `application/json` とします。HTTP entity body は JSON object で、要求する client metadata を top-level member として配置します。
