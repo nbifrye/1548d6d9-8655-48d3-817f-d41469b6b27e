@@ -5,104 +5,121 @@ date: 2026-09-19 02:47:00 +0900
 categories: [authorization, oauth]
 ---
 
-RFC 9396 **OAuth 2.0 Rich Authorization Requests** は、OAuth の認可要求に細粒度の認可データを載せるための `authorization_details` パラメータを定義します。
-
 ## この記事について
 
 **記事タイプ:** Feature Deep Dive  
-**対象読者:** OAuth Authorization Server / Client / Resource Server の実装・レビューを担当する開発者  
-**この記事で伝えること:** `authorization_details` のデータ構造と、Authorization Request から Access Token に対応する権限情報が渡るまでの仕様上の関係  
-**扱わないこと:** 個別業界の authorization details type 設計、PAR の詳細フロー、JWT Access Token の一般的な検証、Resource Server の業務ロジック
+**対象読者:** OAuth 2.0 の Authorization Server / Client で Rich Authorization Requests を実装・レビューする開発者  
+**この記事で伝えること:** RFC 9396 の `authorization_details` が JSON object の配列として細粒度の authorization requirements を表し、`type` が各 object の意味と許可される field を決めること、および OAuth Authorization Request での配置  
+**扱わないこと:** Token Request / Token Response での `authorization_details`、JWT Access Token や Token Introspection への伝達、個別 API の authorization details type の設計、PAR や JAR の詳細、特定業界の authorization model
 
-## 1. `authorization_details` が表現するもの
+## 1. `authorization_details` は authorization requirements を JSON で表す
 
-RFC 9396 §2 は、`authorization_details` を JSON object の配列として定義しています。各 object は、ある種類の resource に対する認可要件を表します。
+RFC 9396 §2 は、`authorization_details` request parameter を JSON object の配列として定義しています。各 object は、ある resource type に対する authorization requirements を表します。
 
-各 object の `type` field は REQUIRED です。`type` の値によって、その object で利用できる field と値の意味が決まります。同じ `type` の entry を配列内に複数含めることも MAY とされています。
+各 object の `type` field は、その object が表す resource type または access requirement の識別子です。`type` は string であり REQUIRED です（RFC 9396 §2）。`type` の値によって、その object で許可される内容が決まります。
 
-RFC 9396 §2.2 は、API 間で再利用できる common data field として、`locations`、`actions`、`datatypes`、`identifier` などを定義しています。ただし、仕様は API にこれらの field の使用を要求していません。許容される値は、保護対象 API と `type` の定義によって決まります。
+`authorization_details` array には、同じ `type` の entry を複数含めてもかまいません（MAY, §2）。
 
-## 2. Authorization Request での位置
+RFC 9396 §2.1 では、`type` value の解釈と、その `type` の object で許可する field を Authorization Server が制御するとしています。RFC 9396 自体が、すべての API に共通する個別の authorization model を定義するわけではありません。
 
-RFC 9396 §3 により、`authorization_details` は `scope` が認可要件の指定に使われる場所で利用できます。
+## 2. 共通 field は再利用可能な構成要素として定義されている
 
-Authorization Request では、Client が `authorization_details` を Authorization Server に送ります。Authorization Server は、その内容を認可処理に利用します。
+RFC 9396 §2.2 は、API type をまたいで利用できる common data field を定義しています。ただし、API definition にこれらの field の使用を要求してはいません。許容される値は、保護対象 API と `type` の定義によって決まります。
 
-<pre class="mermaid">
-sequenceDiagram
-    participant C as Client
-    participant AS as Authorization Server
-    participant RS as Resource Server
-    C->>AS: Authorization Request + authorization_details
-    AS->>AS: type / fields を検証
-    AS->>AS: 認可処理
-    AS-->>C: Authorization Response
-    C->>AS: Token Request
-    AS-->>C: Access Token + authorization_details
-    C->>RS: Access Token
-    RS->>RS: 対応する認可情報を強制
-</pre>
+- **`locations`:** resource または Resource Server の location を表す string の array。
+- **`actions`:** resource に対して行う action の種類を表す string の array。
+- **`datatypes`:** resource に要求する data の種類を表す string の array。
+- **`identifier`:** API で利用可能な特定 resource を示す string identifier。
+- **`privileges`:** resource に要求する privilege の種類または level を表す string の array。
 
-この図は、`authorization_details` の処理位置だけを示しています。Authorization Code Grant の User Agent 経由の redirect など、この記事の主題ではないメッセージは省略しています。
+次は RFC 9396 §2.2 の構造に沿った非規範的な例です。値は構造を示すための illustrative value です。
 
-## 3. `scope` と同時に使う場合
+```json
+[
+  {
+    "type": "customer_information",
+    "locations": ["https://example.com/customers"],
+    "actions": ["read"],
+    "datatypes": ["contacts"]
+  }
+]
+```
 
-RFC 9396 §3.1 は、`authorization_details` と `scope` を同じ Authorization Request で使用できると定めています。この場合、それぞれは独立した認可要件を運びます。
+この例では、`authorization_details` の値そのものが array であり、その中に1つの authorization details object があります。`type` は object の意味を識別し、`locations`、`actions`、`datatypes` は §2.2 の common data field です。
 
-Authorization Server は、両方が指定された場合、その request に対して両方の要件を組み合わせて処理しなければなりません（MUST）。Resource Owner から consent を得る際も、Authorization Server は両方を統合した要件を提示しなければなりません（MUST）。
+RFC 9396 §2.2 では、複数の common data field を組み合わせた場合、object が表す permission はそれらの値の積として解釈されます。たとえば複数の `actions`、`locations`、`datatypes` を1つの object に含める場合、その object は列挙されたすべての組み合わせを要求します。
 
-一方、両者をどのように組み合わせるかの詳細は、保護対象 API に固有であり RFC 9396 の範囲外です。
+## 3. Authorization Request では form encoding された request parameter として送る
 
-## 4. Authorization Server が拒否するデータ
+RFC 9396 §3 は、RFC 6749 の Authorization Request で `authorization_details` を使用する場合、serialized JSON を `application/x-www-form-urlencoded` 形式で encode して request parameter として送ることを定義しています。
 
-RFC 9396 §5 は、Authorization Server が未知の authorization details type、または type definition に適合しない authorization details を処理してはならないことを定めています。
+次は配置を確認するための非規範的な例です。まず、form encoding 前の JSON value は次の形です。
 
-Authorization Server は、たとえば次の条件に該当する場合、処理を中止して `invalid_authorization_details` error を返さなければなりません（MUST）。
+```json
+[
+  {
+    "type": "customer_information",
+    "actions": ["read"],
+    "locations": ["https://example.com/customers"]
+  }
+]
+```
 
-- 未知の `type` が指定されている。
-- 既知の `type` だが未知の field を含む。
-- field のデータ型が type definition と一致しない。
-- field の値が type definition に対して無効である。
-- type definition が要求する field が欠けている。
+実際の Authorization Request では、この JSON serialization を form encoding した値が query parameter の `authorization_details` に置かれます。
 
-この検証は、`authorization_details` が任意の JSON object を自由に渡す仕組みではなく、Authorization Server が理解する type definition に基づくデータであることを示します。
+```http
+GET /authorize?response_type=code&client_id=illustrative-client&authorization_details=%5B%7B%22type%22%3A%22customer_information%22%2C%22actions%22%3A%5B%22read%22%5D%2C%22locations%22%3A%5B%22https%3A%2F%2Fexample.com%2Fcustomers%22%5D%7D%5D HTTP/1.1
+Host: authorization.example
+```
 
-## 5. Token Response との関係
-
-RFC 9396 §7 は、Authorization Server が Token Response に、Resource Owner によって認可され、対象 Access Token に割り当てられた `authorization_details` を返さなければならないことを定めています（MUST）。
-
-Token Request に `authorization_details` が指定されている場合、Access Token に割り当てられる authorization details はその request parameter によって決まります。Client が Token Request で指定しない場合は、Authorization Server が結果を決定します。
-
-また、Authorization Server は `authorization_details` 内の値を Client への response から省略してもよいとされています（MAY）。
-
-## 6. Resource Server が認可を強制できるようにする
-
-RFC 9396 §9 は、認可プロセスで承認された authorization details を Resource Server が強制できるようにするため、Authorization Server がそのデータを Resource Server に利用可能にしなければならないと定めています（MUST）。
-
-その方法として、Authorization Server は JWT 形式の Access Token または Token Introspection Response に `authorization_details` を含めることができます（MAY）。
-
-JWT Access Token の場合、RFC 9396 §9.1 は audience に応じて filter した authorization details object を top-level claim として追加することを RECOMMENDED としています。
-
-Token Introspection を使う場合、§9.2 は authorization detail information を response に含めるなら、`authorization_details` という top-level member で伝達しなければならないと規定しています（MUST）。その member は §2 と同じ構造を持ち、request を行った Resource Server 向けに filter または拡張される場合があります。
-
-## 7. データの流れ
-
-`authorization_details` に注目すると、仕様上の関係は次のように整理できます。
+この HTTP example は非規範的です。`illustrative-client` などの値に規範的意味はありません。ここで確認する点は、`authorization_details` が JSON request body の member ではなく、RFC 6749 の Authorization Request の文脈では serialized JSON を form encoding した request parameter であることです（RFC 9396 §3）。
 
 <pre class="mermaid">
 flowchart TD
-    A[Client が認可要件を作成] --> B[authorization_details]
-    B --> C[Authorization Server が type と fields を検証]
-    C --> D[Resource Owner が認可]
-    D --> E[Access Token に対応する authorization details]
-    E --> F[Resource Server が認可情報を利用]
+    A[Client が authorization details を構成]
+    B[JSON array に serialize]
+    C[form encoding]
+    D[Authorization Request の parameter]
+    E[AS が type と内容を処理]
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 </pre>
 
-RFC 9396 は、任意の2つの authorization details を一般的に比較する標準アルゴリズムを定義していません。field の意味は API の type definition に依存するためです。この記事では、その比較方法を扱いません。
+## 4. `scope` と同時に使う場合は両方を処理する
 
-## 8. 一次資料
+RFC 9396 §3.1 は、`authorization_details` と `scope` を同じ Authorization Request で独立した authorization requirements のために使用できるとしています。
+
+同じ request に両方がある場合、Authorization Server は両方の requirements を組み合わせて処理しなければなりません（MUST, §3.1）。どのように組み合わせるかは保護対象 API 固有であり、RFC 9396 の scope 外です。
+
+Resource Owner から consent を取得する場合、Authorization Server は request が表す requirements の統合された集合を提示しなければなりません（MUST, §3.1）。
+
+RFC 9396 §3.1 は、1つの API について requirement specification の形式を1つだけ使用することを RECOMMENDED としています。これは `authorization_details` と `scope` を同一 request で併用できないという意味ではありません。
+
+## 5. 不明または不正な authorization details は拒否する
+
+RFC 9396 §5 は、Authorization Server が unknown authorization details type、またはその type definition に適合しない authorization details の処理を拒否しなければならない（MUST）と規定しています。
+
+次のいずれかに該当する場合、Authorization Server は処理を中止し、`invalid_authorization_details` error を Client に返さなければなりません（MUST, §5）。
+
+- unknown な `type` value を含む。
+- known type だが unknown field を含む。
+- field の型がその authorization details type に対して誤っている。
+- field value がその authorization details type に対して invalid である。
+- その authorization details type で required とされた field が欠けている。
+
+したがって、`type` は単なる表示用 label ではありません。Authorization Server が object の許容構造と意味を判断する基点になります。
+
+## 6. Authorization Response 自体には extension を追加しない
+
+RFC 9396 §4 は Authorization Response に extension を定義していません。この記事のテーマは Authorization Request で `authorization_details` が何を表し、どのように配置されるかまでです。
+
+Token Request での authorization details の指定、Token Response で granted authorization details を返す規則、Resource Server への伝達方法は RFC 9396 §6–§9 の別の処理であり、ここでは扱いません。
+
+## 一次資料
 
 - RFC Editor: [RFC 9396 — OAuth 2.0 Rich Authorization Requests](https://www.rfc-editor.org/rfc/rfc9396.html)
 
-参照した主要節: §2, §2.1, §2.2, §3, §3.1, §5, §7, §9, §9.1, §9.2  
+参照した主要節: §1, §2, §2.1, §2.2, §3, §3.1, §4, §5  
 最終確認: 2026-09-19
