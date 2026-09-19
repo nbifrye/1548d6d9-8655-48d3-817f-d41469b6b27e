@@ -14,16 +14,6 @@ WebAuthn では通常、RP ID は呼び出し元 origin の effective domain と
 **この記事で伝えること:** Related Origin Requests で RP が公開する `/.well-known/webauthn` の JSON 構造と、WebAuthn Client が caller origin を検証する処理  
 **扱わないこと:** cross-origin iframe、passkey の同期、registration / authentication ceremony 全般、attestation、ブラウザごとの実装状況、関連 domain を採用するかどうかの判断
 
-## Article brief
-
-- **Reader:** 複数の関連 domain で同じ RP ID を使う WebAuthn RP / Web frontend の実装・レビュー担当者
-- **Question:** 呼び出し元 origin が RP ID の registrable domain suffix 関係にない場合、Related Origin Requests では何を公開し、Client はどのようにその origin を検証するのか
-- **Answer:** RP が共通 RP ID を使い、その RP ID の `/.well-known/webauthn` に `origins` 配列を持つ JSON document を HTTPS で公開し、Client がその document を取得して caller origin を検証する流れを追える
-- **Scope:** WebAuthn Level 3 §5.11、§5.11.1、関連する §5.1.3 / §5.1.4 の RP ID validation、および §5.8.7 の `relatedOrigins` capability
-- **Out of scope:** cross-origin iframe と Permissions Policy、ceremony 全般、attestation、credential sync、実装製品ごとの対応状況、deployment の推奨
-- **Primary sources:** W3C Web Authentication: An API for accessing Public Key Credentials Level 3 §5.11、§5.11.1、§5.1.3、§5.1.4、§5.8.7、§12.5
-- **Diagram:** caller origin、WebAuthn Client、RP ID の `/.well-known/webauthn` の間で行われる validation を示す縦方向 flowchart
-
 ## 1. 通常の RP ID validation と Related Origin Requests
 
 WebAuthn Level 3 §5.11 では、通常、RP ID は origin の effective domain と同じか、その registrable domain suffix である必要があります。
@@ -137,7 +127,12 @@ Related Origin Requests は、任意の origin が任意の RP ID を使える�
 
 また、cross-origin `iframe` で WebAuthn API を利用するための Permissions Policy は §5.10 の別機構です。Related Origin Requests は、異なる registrable domain の origin と共通 RP ID の関係を検証する §5.11 の機構であり、この記事では両者を混在させません。
 
-## Primary sources
+## 一次資料
 
-- W3C, *Web Authentication: An API for accessing Public Key Credentials Level 3*, §5.1.3, §5.1.4, §5.8.7, §5.11, §5.11.1, §6.1, §12.5  
-  <https://www.w3.org/TR/webauthn-3/>
+- W3C Recommendation: [Web Authentication: An API for accessing Public Key Credentials - Level 3](https://www.w3.org/TR/2026/REC-webauthn-3-20260825/)
+- W3C: [WebAuthn Level 3 publication history](https://www.w3.org/standards/history/webauthn-3/)
+
+文書ステータス: W3C Recommendation  
+公開日: 2026-08-25  
+参照した主要節: §5.1.3, §5.1.4, §5.8.7, §5.11, §5.11.1, §6.1, §12.5  
+最終確認: 2026-09-19

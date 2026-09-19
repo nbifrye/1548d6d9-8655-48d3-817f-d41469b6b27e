@@ -4,7 +4,7 @@ title: "標準仕様レーダー"
 permalink: /standards/
 ---
 
-2026-09-18 時点で、このブログが継続的に参照している主要仕様です。
+2026-09-19 時点で、このブログが継続的に参照している主要仕様です。
 
 ## OAuth
 
@@ -55,5 +55,19 @@ permalink: /standards/
 
 - **ステータス:** Standards Track RFC
 - **一次資料:** [RFC 7644](https://www.rfc-editor.org/rfc/rfc7644.html)
+
+### RFC 9865 — Cursor-Based Pagination of SCIM Resources
+
+- **ステータス:** Proposed Standard（Standards Track）
+- **公開時期:** 2025-10
+- **更新対象:** RFC 7643 / RFC 7644
+- **一次資料:** [RFC 9865](https://www.rfc-editor.org/rfc/rfc9865.html)
+
+### RFC 9967 — SCIM Profile for Security Event Tokens (SETs)
+
+- **ステータス:** Proposed Standard（Standards Track）
+- **公開時期:** 2026-05
+- **更新対象:** RFC 7643 / RFC 7644
+- **一次資料:** [RFC 9967](https://www.rfc-editor.org/rfc/rfc9967.html)
 
 新しい RFC、BCP、W3C Recommendation、OpenID Final Specification が公開された場合は、このページの対象仕様とステータスを更新します。Draft を扱う場合は、未確定の文書であることを明記します。

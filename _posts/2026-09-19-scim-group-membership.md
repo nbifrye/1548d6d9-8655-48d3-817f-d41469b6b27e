@@ -14,16 +14,6 @@ SCIM 2.0 では、Group membership は Group resource の `members` と User res
 **この記事で伝えること:** Group resource の `members` と User resource の `groups` の役割、member の参照構造、および Group resource に対する PATCH で membership を追加・削除する位置  
 **扱わないこと:** Group membership が認可に与える意味、Service Provider 固有の role / entitlement、SCIM PATCH 全般の網羅的解説、resource 検索の filter grammar、Bulk operation
 
-## Article brief
-
-- **Reader:** SCIM Client / Service Provider で Group membership の同期を実装・レビューする開発者
-- **Question:** User が属する Group を SCIM resource のどこに表現し、membership の追加・削除をどの resource に対して行うのか
-- **Answer:** `Group.members` が membership 更新の対象であり、`User.groups` は readOnly の membership 表現であること、各参照の `value` / `$ref` の意味、および PATCH request で member を追加・削除する構造を区別できる
-- **Scope:** RFC 7643 §4.1、§4.2 と RFC 7644 §3.5.2 に定義された Group membership の表現と Group resource に対する PATCH
-- **Out of scope:** membership に基づく authorization semantics、role / entitlement、PATCH operation 一般、検索、Bulk、Service Provider 固有 policy
-- **Primary sources:** RFC 7643 §4.1、§4.2、§8.4、RFC 7644 §3.5.2
-- **Diagram:** User 側の readOnly `groups` と、更新対象となる Group 側の `members` の関係を示す flowchart
-
 ## 1. membership は Group resource の `members` で更新する
 
 RFC 7643 §4.2 は Group resource を `urn:ietf:params:scim:schemas:core:2.0:Group` で識別し、`members` を multi-valued attribute として定義しています。
@@ -34,7 +24,7 @@ RFC 7643 §4.2 は Group resource を `urn:ietf:params:scim:schemas:core:2.0:Gro
 - **`$ref`:** member となる SCIM resource の URI。User だけでなく Group を参照することもできます。
 - **`display`:** human-readable な表示値。membership を識別する主体は `value` / `$ref` であり、RFC 7644 の Group PATCH 例では `display` は optional とされています。
 
-RFC 7643 §4.2 では、`members` の値は追加または削除できます（MAY）が、member value の sub-attributes は `immutable` です。また Group type は nested group を Service Provider がサポートできるように設計されており、member の `$ref` は User または Group などの SCIM resource を参照できます。
+RFC 7643 §4.2 では、`members` の値は追加または削除できます（MAY）が、member value の sub-attributes は `immutable` です。また Group resource は nested group を Service Provider がサポートできるように設計されており、member の `$ref` は User または Group などの SCIM resource を参照できます。
 
 次は構造を示すための**非規範的な例**です。値は illustrative value です。
 
@@ -187,9 +177,10 @@ SCIM の Group membership では、表現と更新先を分けて読む必要が
 - member の追加・削除は Group resource に対する PATCH で表現できます。RFC 7644 §3.5.2 は `members` を対象にした具体例を定義しています。
 - Group membership が authorization 上で何を意味するかは SCIM 2.0 の仕様では定義されません。
 
-## Primary sources
+## 一次資料
 
-- RFC 7643, *System for Cross-domain Identity Management: Core Schema*, §4.1, §4.2, §8.4  
-  https://www.rfc-editor.org/rfc/rfc7643.html
-- RFC 7644, *System for Cross-domain Identity Management: Protocol*, §3.5.2, §3.5.2.1, §3.5.2.2  
-  https://www.rfc-editor.org/rfc/rfc7644.html
+- RFC Editor: [RFC 7643 — System for Cross-domain Identity Management: Core Schema](https://www.rfc-editor.org/rfc/rfc7643.html)
+- RFC Editor: [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html)
+
+参照した主要節: RFC 7643 §4.1, §4.2, §8.4 / RFC 7644 §3.5.2, §3.5.2.1, §3.5.2.2  
+最終確認: 2026-09-19

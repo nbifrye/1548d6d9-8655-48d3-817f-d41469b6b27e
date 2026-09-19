@@ -5,7 +5,9 @@ date: 2026-09-18 09:30:00 +0900
 categories: [provisioning, scim]
 ---
 
-SCIM 2.0 のデータモデルは RFC 7643、プロトコルは RFC 7644 で定義されています。
+SCIM 2.0 の基本データモデルは RFC 7643、基本プロトコルは RFC 7644 で定義されています。
+
+なお、RFC 7643 / RFC 7644 は、その後 RFC 9865（2025年10月、cursor-based pagination）と RFC 9967（2026年5月、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
 
 ## この記事について
 
@@ -54,11 +56,11 @@ SCIM resource には共通 attribute もあります。
 
 Service Provider が resource を受理した後、`id` と `meta` の値は Service Provider が割り当てます。`meta` の sub-attribute も Service Provider が割り当てますが、`meta.version` のサポートは OPTIONAL です。
 
-## 3. Attribute には動作特性が定義される
+## 3. Attribute には扱い方を示す特性が定義される
 
-RFC 7643 の schema は、attribute の型だけでなく、その attribute をどのように扱うかも定義します。
+RFC 7643 の schema は、attribute の型だけでなく、その attribute をどのように扱うかを示す特性（attribute characteristic）も定義します。
 
-主な characteristic は次のとおりです。
+主な attribute characteristic は次のとおりです。
 
 - **`type`:** `string`、`boolean`、`complex` などのデータ型。
 - **`multiValued`:** 複数値を持てるか。
@@ -182,7 +184,7 @@ sequenceDiagram
 
 ## 10. この記事で扱っていない SCIM 2.0 の主題
 
-RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extension、Bulk operation、filter grammar、sorting、pagination、ETag、authentication / authorization、security considerations などが定義されています。
+RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extension、Bulk operation、filter grammar、sorting、index-based pagination、ETag、authentication / authorization、security considerations などが定義されています。RFC 9865 の cursor-based pagination と RFC 9967 の SCIM Security Events / 非同期リクエストも、本記事の範囲外です。
 
 これらは User resource の基本ライフサイクルを使って SCIM の全体像を把握するという本記事の範囲外です。
 
@@ -190,6 +192,8 @@ RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extensio
 
 - RFC Editor: [RFC 7643 — System for Cross-domain Identity Management: Core Schema](https://www.rfc-editor.org/rfc/rfc7643.html)
 - RFC Editor: [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html)
+- RFC Editor: [RFC 9865 — Cursor-Based Pagination of System of Cross-domain Identity Management (SCIM) Resources](https://www.rfc-editor.org/rfc/rfc9865.html)
+- RFC Editor: [RFC 9967 — System for Cross-Domain Identity Management (SCIM) Profile for Security Event Tokens (SETs)](https://www.rfc-editor.org/rfc/rfc9967.html)
 
-参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4  
+参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4 / RFC 9865 §1 / RFC 9967 §1  
 最終確認: 2026-09-19

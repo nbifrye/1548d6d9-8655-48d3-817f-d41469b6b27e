@@ -14,16 +14,6 @@ SCIM の `filter` は、検索結果を条件で絞り込むための式です�
 **この記事で伝えること:** `filter` parameter の配置、filter expression の構造、比較・論理演算子、multi-valued attribute の評価、および不正な filter の扱い  
 **扱わないこと:** sort、pagination、`attributes` / `excludedAttributes`、PATCH の `path` filter、検索全体の認可ポリシー
 
-## Article brief
-
-- **Reader:** SCIM の resource 検索と filter 評価を実装・レビューする開発者
-- **Question:** `filter` は HTTP request のどこに指定し、`userName eq "bjensen"` や `emails[type eq "work"]` はどのように解釈されるのか
-- **Answer:** RFC 7644 §3.4.2.2 の filter grammar、operator、precedence、multi-valued attribute の評価規則、invalid filter の処理を区別して説明できる
-- **Scope:** RFC 7644 §3.4.2、§3.4.2.1、§3.4.2.2、§3.4.3、§3.12
-- **Out of scope:** sort、pagination、返却 attribute の選択、PATCH path、deployment 固有の検索制限
-- **Primary sources:** RFC 7644
-- **Diagram:** HTTP request の `filter` から expression の評価、matching resource の ListResponse までを縦方向に示す
-
 ## 1. `filter` は検索条件を表す
 
 RFC 7644 §3.4.2.2 では filtering は Service Provider にとって OPTIONAL です。Client は `/ServiceProviderConfig` の `filter` attribute から filter capability を確認できます。
@@ -80,17 +70,29 @@ String attribute の比較で大文字・小文字を区別するかどうかは
 title pr and userType eq "Employee"
 ```
 
-括弧を使って expression を group 化することもできます（MAY）。RFC 7644 §3.4.2.2 が定める precedence は次の順序です。
-
-1. grouping operator
-2. logical operator: `not` → `and` → `or`
-3. attribute operator
-
-たとえば次の expression では、括弧内を group として評価します。
+括弧を使って expression をグループ化することもできます（MAY）。
 
 ```text
 userType eq "Employee" and (emails co "example.com" or emails.value co "example.org")
 ```
+
+### 4.1 RFC 本文と Technical Errata 4670
+
+RFC 7644 §3.4.2.2 の公開本文は、演算子の優先順位を次の順序で記載しています。
+
+1. grouping operator
+2. logical operator（`not` → `and` → `or`）
+3. attribute operator
+
+一方、RFC Editor の **Technical Errata ID 4670** は、2 と 3 が逆であり、次の順序とする訂正を提示しています。
+
+1. grouping operator
+2. attribute operator
+3. logical operator（`not` → `and` → `or`）
+
+Errata ID 4670 の status は **Held for Document Update** で、Verified ではありません。RFC Editor はこの status を、RFC への必須の更新ではないものの、将来の文書改訂で考慮すべき erratum と説明しています。
+
+同 Errata の Notes は、たとえば `title sw "M" and userType eq "Employee"` を `(title sw "M") and (userType eq "Employee")` と解釈する想定を示しています。RFC 7644 本文の記載と Errata の status は区別して扱う必要があります。
 
 ## 5. multi-valued complex attribute は `[...]` で同じ要素を評価できる
 
@@ -183,6 +185,7 @@ RFC 7644 §3.4.2.2 では、Service Provider が指定された filter operation
 ## 一次資料
 
 - RFC Editor: [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html)
+- RFC Editor: [Errata ID 4670 — RFC 7644 §3.4.2.2](https://www.rfc-editor.org/errata/eid4670)（Technical / Held for Document Update）
 
 参照した主要節: §1.2, §3.4.2, §3.4.2.1, §3.4.2.2, §3.4.3, §3.12  
 最終確認: 2026-09-19

@@ -12,16 +12,6 @@ categories: [oauth, security]
 **この記事で伝えること:** `code_verifier` の生成、`code_challenge` の導出、Authorization Request と Token Request への parameter 配置、Authorization Server による照合を RFC 7636 に沿って理解する  
 **扱わないこと:** OAuth 2.0 全体の Authorization Code Grant、Client authentication、redirect URI の選択、PAR、DPoP、RFC 9700 が PKCE の適用対象を拡張する要件
 
-## Article brief
-
-- **Reader:** PKCE を実装・レビューする Client / Authorization Server の開発者
-- **Question:** `code_verifier` と `code_challenge` はどう作り、どの request のどこに指定し、Authorization Server は何を照合するのか
-- **Answer:** RFC 7636 §4.1–§4.6 に基づき、S256 の変換式、各 parameter の配置、Authorization Code との関連付け、Token Endpoint での検証を順番に説明できる
-- **Scope:** RFC 7636 §1.1, §3, §4.1–§4.6, §6.1
-- **Out of scope:** RFC 6749 のフロー全般、RFC 9700 による後年の Best Current Practice、Client authentication、PAR
-- **Primary sources:** RFC 7636
-- **Diagram:** Client が verifier を生成し、challenge を Authorization Request に送り、後から verifier を Token Request に送って照合される流れ
-
 ## 1. 2つの値は同じ request に送らない
 
 RFC 7636 の PKCE では、Client は Authorization Request ごとに `code_verifier` を生成し、そこから `code_challenge` を導出します。

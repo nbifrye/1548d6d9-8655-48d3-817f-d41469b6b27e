@@ -12,16 +12,6 @@ categories: [oauth, jwt]
 **この記事で伝えること:** RFC 7523 の JWT Client Authentication で `client_assertion_type` / `client_assertion` をどこに指定し、JWT に何を含め、Authorization Server が何を検証するか  
 **扱わないこと:** JWT Bearer Authorization Grant、JWT の取得方法、鍵配布方法、個別 profile が追加する制約
 
-## Article brief
-
-- **Reader:** Token Endpoint の JWT Client Authentication を実装・レビューする開発者
-- **Question:** Client は JWT assertion を request のどこに置き、JWT の claim はどう構成し、Authorization Server は何を検証するのか
-- **Answer:** form parameter と JWT Claims Set を区別し、RFC 7523 §2.2、§3、§3.2 の validation と error を追える
-- **Scope:** RFC 7523 §1、§2.2、§3、§3.2、§5
-- **Out of scope:** RFC 7523 §2.1 の JWT Authorization Grant、assertion の取得、鍵交換、追加 profile
-- **Primary sources:** RFC 7523
-- **Diagram:** Client が Token Endpoint に form-encoded request を送り、Authorization Server が JWT を検証する流れ
-
 ## 1. JWT は Client Authentication の credential として使う
 
 RFC 7523 §1 は、JWT を OAuth Client が Authorization Server に対して認証するための mechanism として定義しています。JWT を authorization grant として使う方法も同じ RFC にありますが、本記事では扱いません。
