@@ -66,6 +66,7 @@ permalink: /roadmap/
 - SCIM Group membership の表現・更新 → `2026-09-19-scim-group-membership.md`
 - SCIM PATCH の add / remove / replace / path → `2026-09-19-scim-patch-add-remove-replace.md`
 - SCIM Bulk Operations の BulkRequest / BulkResponse と `bulkId` → `2026-09-21-scim-bulk-operations.md`
+- SCIM sorting の `sortBy` / `sortOrder` と属性値の評価 → `2026-09-21-scim-sorting.md`
 
 ### WebAuthn
 
