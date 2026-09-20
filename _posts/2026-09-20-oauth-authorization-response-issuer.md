@@ -12,17 +12,6 @@ categories: [oauth, authorization, security]
 **この記事で伝えること:** RFC 9207 の Authorization Response `iss` parameter を Client がどの issuer identifier と照合し、不一致時にどう処理するか  
 **扱わないこと:** mix-up attack の全攻撃手順、JARM の JWT validation、OpenID Connect ID Token validation、Authorization Server Metadata 全体、Token Endpoint の処理
 
-<!--
-Article brief
-Reader: 複数の Authorization Server と連携する OAuth Client 実装者
-Question: Authorization Response の iss を Client は何と照合し、どの条件で response を拒否するのか
-Answer: Client は form-urlencoded の iss を decode し、request を送った Authorization Server の issuer identifier と simple string comparison し、不一致なら response を reject して grant を続行しないことを理解できる
-Scope: RFC 9207 §2–§4 の Authorization Response iss の提供、metadata による support indication、Client validation
-Out of scope: mix-up attack の完全な攻撃シナリオ、JARM の詳細、OIDC ID Token validation、metadata document 全体、token exchange
-Primary sources: RFC 9207 §2–§4、RFC 8414 の issuer identifier、RFC 3986 §6.2.1
-Diagram: Authorization Request から Authorization Response iss の比較・accept/reject までの flowchart
--->
-
 ## `iss` は Authorization Response を作成した Authorization Server を示す
 
 RFC 9207 §2 は、同仕様をサポートする Authorization Server に対し、Client への Authorization Response に `iss` parameter を含めて自身の identity を示すことを **MUST** としています。これは成功 response だけでなく error response にも適用されます。
