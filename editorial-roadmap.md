@@ -46,6 +46,7 @@ permalink: /roadmap/
 - mTLS certificate-bound Access Token の binding / validation → `2026-09-20-oauth-mtls-certificate-bound-access-token.md`
 - mTLS と DPoP の sender-constrained Access Token の binding / validation → `2026-09-20-oauth-mtls-dpop-sender-constraint.md`
 - Protected Resource Metadata の metadata document と discovery → `2026-09-20-oauth-protected-resource-metadata.md`
+- Authorization Response の `iss` と expected issuer の validation → `2026-09-20-oauth-authorization-response-issuer.md`
 
 ### OpenID Connect / FAPI
 
