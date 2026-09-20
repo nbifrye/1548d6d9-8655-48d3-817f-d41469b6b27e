@@ -12,16 +12,6 @@ categories: [oauth, jwt, access-token]
 **この記事で伝えること:** RFC 9068 の JWT Access Token の識別に使う `typ`、必須 Claims、および Resource Server が §4 に従って行う検証  
 **扱わないこと:** opaque token の Token Introspection、Access Token の発行フロー、独自 Claim に基づく認可ポリシー、sender-constrained Access Token の proof-of-possession 検証
 
-## Article brief
-
-- **Reader:** OAuth Resource Server の実装・レビュー担当者
-- **Question:** RFC 9068 の JWT Access Token を受け取った Resource Server は、どの Header / Claim をどのように検証するのか
-- **Answer:** `typ`、`iss`、`aud`、署名、`alg`、`exp` を中心とする RFC 9068 §4 の検証要件と、JWT Access Token の必須データ構造を説明できる
-- **Scope:** RFC 9068 §2、§4 に定義された JWT Access Token の Header / Claims と Resource Server による validation。HTTP Authorization header の配置確認には RFC 6750 §2.1 を使用する
-- **Out of scope:** RFC 9068 §3 の token 発行要求、§2.2.1–§2.2.3 の optional authorization / identity Claims の詳細、opaque token の introspection、アプリケーション固有の authorization、mTLS / DPoP の binding 検証
-- **Primary sources:** RFC 9068 §2、§4、RFC 6750 §2.1
-- **Diagram:** Resource Server が request から Access Token を受け取り、RFC 9068 §4 の validation checks を適用する順序を示す縦方向 flowchart
-
 ## 1. RFC 9068 は JWT 形式の Access Token に共通プロファイルを定める
 
 OAuth 2.0 自体は Access Token の形式を規定していません。RFC 9068 §1 は、JWT 形式で Access Token を発行・利用するための相互運用可能な profile を定義しています。
