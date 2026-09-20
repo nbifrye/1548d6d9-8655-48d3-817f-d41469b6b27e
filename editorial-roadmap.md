@@ -68,6 +68,7 @@ permalink: /roadmap/
 - SCIM Bulk Operations の BulkRequest / BulkResponse と `bulkId` → `2026-09-21-scim-bulk-operations.md`
 - SCIM sorting の `sortBy` / `sortOrder` と属性値の評価 → `2026-09-21-scim-sorting.md`
 - SCIM index-based pagination の `startIndex` / `count` と ListResponse → `2026-09-21-scim-index-based-pagination.md`
+- SCIM cursor-based pagination の `cursor` / `nextCursor` と後続ページ取得 → `2026-09-21-scim-cursor-based-pagination.md`
 
 ### WebAuthn
 
