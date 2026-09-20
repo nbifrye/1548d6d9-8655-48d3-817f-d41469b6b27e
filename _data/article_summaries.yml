@@ -33,3 +33,4 @@ oauth-mtls-dpop-sender-constraint: "mTLS と DPoP の sender-constrained Access 
 oauth-protected-resource-metadata: "Protected Resource の resource identifier から metadata URL を構成し、JSON metadata を取得して resource を検証するまでを追います。"
 oidc-authorization-code-flow-id-token-role: "OpenID Connect Authorization Code Flow で ID Token が認証結果を Claims として RP に伝え、Subject Identifier を得る役割を整理します。"
 oidc-userinfo-endpoint: "UserInfo Endpoint に Bearer Access Token を送り、Claims を受け取り、UserInfo Response の sub を ID Token の sub と照合する処理を整理します。"
+oidc-provider-configuration-discovery: "既知の Issuer Identifier から OpenID Provider Configuration を取得し、metadata の issuer を照合するまでの Discovery 処理を整理します。"
