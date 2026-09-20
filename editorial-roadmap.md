@@ -73,6 +73,7 @@ permalink: /roadmap/
 - SCIM ResourceTypes の resource type / endpoint / schema discovery → `2026-09-21-scim-resource-types-discovery.md`
 - SCIM Schemas の schema / attribute definition discovery → `2026-09-21-scim-schema-discovery.md`
 - SCIM Enterprise User extension の組織属性と `manager` representation → `2026-09-21-scim-enterprise-user-extension.md`
+- SCIM User.password の writeOnly / returned=never と設定・変更時の処理 → `2026-09-21-scim-password-writeonly.md`
 
 ### WebAuthn
 
