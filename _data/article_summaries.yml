@@ -25,6 +25,7 @@ scim-patch-add-remove-replace: "SCIM PATCH request の構造、path の対象指
 scim-bulk-operations: "SCIM Bulk Endpoint に複数の resource operation を1つの BulkRequest として送り、bulkId による参照と operation ごとの BulkResponse を処理する方法を整理します。"
 scim-sorting: "SCIM の sortBy / sortOrder を GET query または POST /.search に配置し、属性値と attribute type に従って検索結果を並べ替える規則を整理します。"
 scim-index-based-pagination: "SCIM の startIndex / count を GET query または POST /.search に配置し、ListResponse の startIndex / itemsPerPage / totalResults を使ってページを取得する方法を整理します。"
+scim-cursor-based-pagination: "RFC 9865 の cursor / count を GET または POST /.search に配置し、ListResponse の nextCursor / previousCursor を使って後続ページを取得する規則を整理します。"
 webauthn-conditional-mediation-authentication: "WebAuthn conditional mediation で capability check、credential discovery、ユーザー選択、assertion 取得までの認証フローを追います。"
 webauthn-related-origin-requests: "WebAuthn Related Origin Requests の /.well-known/webauthn と、異なる origin から共通 RP ID を使う際の Client validation を整理します。"
 jose-jws-jwe-jwk-jwks-overview: "JOSE の JWS・JWE・JWK・JWK Set が、それぞれ message protection と cryptographic key representation のどの役割を担うかを整理します。"
