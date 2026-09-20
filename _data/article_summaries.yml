@@ -8,6 +8,7 @@ fapi-message-signing-authorization-request: "FAPI 2.0 Message Signing で Author
 oauth-authorization-server-metadata: "issuer identifier から Authorization Server Metadata の URL を構成し、JSON metadata を取得して issuer を検証するまでを追います。"
 oauth-device-authorization-grant: "Device Authorization Grant で device_code と user_code が別の経路を通り、承認と polling を経て Access Token を取得する流れを整理します。"
 oauth-dynamic-client-registration: "Dynamic Client Registration の JSON client metadata と、成功時に返される client information の構造と HTTP 処理を整理します。"
+oauth-dynamic-client-registration-management: "登録済み OAuth Client が Client Configuration Endpoint に Registration Access Token を提示し、GET / PUT / DELETE で登録情報を参照・更新・削除する処理を整理します。"
 oauth-jwt-client-authentication: "JWT Client Authentication の form parameter、JWT Claims Set、Authorization Server が行う validation を RFC 7523 に沿って整理します。"
 oauth-mtls-client-authentication: "RFC 8705 の2つの mutual-TLS Client Authentication method で、X.509 certificate を client_id に対応する credential として検証する方法を整理します。"
 oauth-pkce-code-verifier-challenge: "PKCE の code_verifier 生成、code_challenge 導出、Authorization Request と Token Request への配置、Authorization Server の照合を追います。"
