@@ -30,6 +30,7 @@ scim-service-provider-configuration: "SCIM Client が /ServiceProviderConfig を
 scim-resource-types-discovery: "SCIM Client が /ResourceTypes を取得し、Service Provider が公開する Resource Type と endpoint、base schema、schema extension の対応を確認する方法を整理します。"
 scim-schema-discovery: "SCIM Client が /Schemas から Schema resource を取得し、id と attributes から attribute の型・多値性・mutability などの定義を確認する方法を整理します。"
 scim-enterprise-user-extension: "SCIM Enterprise User extension の schema URI と JSON container、employeeNumber などの組織属性、manager の参照構造を整理します。"
+scim-password-writeonly: "SCIM User.password の writeOnly / returned=never の意味と、初期設定・変更、保存・転送、response で値を返さない規則を整理します。"
 webauthn-conditional-mediation-authentication: "WebAuthn conditional mediation で capability check、credential discovery、ユーザー選択、assertion 取得までの認証フローを追います。"
 webauthn-related-origin-requests: "WebAuthn Related Origin Requests の /.well-known/webauthn と、異なる origin から共通 RP ID を使う際の Client validation を整理します。"
 jose-jws-jwe-jwk-jwks-overview: "JOSE の JWS・JWE・JWK・JWK Set が、それぞれ message protection と cryptographic key representation のどの役割を担うかを整理します。"
