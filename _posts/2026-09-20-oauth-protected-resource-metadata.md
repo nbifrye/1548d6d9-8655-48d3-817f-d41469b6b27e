@@ -12,16 +12,6 @@ categories: [oauth, discovery]
 **この記事で伝えること:** RFC 9728 に基づき、Protected Resource の resource identifier から metadata URL を構成し、HTTP GET で JSON object を取得して `resource` を検証するまでの流れ  
 **扱わないこと:** Authorization Server Metadata 自体の取得・検証手順、OAuth grant の実行、Access Token の検証、signed metadata の詳細、Client 登録方法、どの Authorization Server を信頼するかという application-specific な判断
 
-## Article brief
-
-- **Reader:** OAuth Client で Protected Resource Metadata の discovery と validation を実装する開発者
-- **Question:** Protected Resource Metadata はどの URL から取得し、取得した JSON の何を検証すればよいか
-- **Answer:** resource identifier から well-known URL を構成し、GET で metadata を取得し、返された `resource` を取得元の resource identifier と一致確認する一連の処理を理解できる
-- **Scope:** RFC 9728 §2、§3、§5.1 に定義された metadata の基本構造、well-known URL、HTTP request / response、`resource` validation、`WWW-Authenticate` の `resource_metadata`
-- **Out of scope:** RFC 8414 の Authorization Server Metadata 処理、signed metadata の署名検証、OAuth authorization flow、Access Token validation、Client registration、Authorization Server の trust determination
-- **Primary sources:** RFC 9728 §2、§3、§5.1
-- **Diagram:** resource identifier から metadata URL を構成し、取得・`resource` 検証を行う `flowchart TD`
-
 既存の「RFC 8414：Authorization Server Metadata はどこから取得し、何を検証するのか」は Authorization Server の issuer identifier を起点に endpoint と capability を取得する記事です。本記事は Protected Resource の resource identifier を起点に Resource Server 側の metadata を取得する処理だけを扱います。
 
 ## 1. Protected Resource Metadata は Resource Server 側の構成を表す
