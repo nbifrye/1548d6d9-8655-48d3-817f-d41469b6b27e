@@ -11,16 +11,6 @@ tags: [oidc, id-token, authorization-code-flow]
 - **この記事で伝えること:** Authorization Code Flow において ID Token が認証結果を Claims として RP に伝え、RP が End-User の Subject Identifier を得るために使われること
 - **扱わないこと:** ID Token の検証手順の詳細、Implicit / Hybrid Flow、UserInfo Endpoint、Access Token の Resource Server での利用、Logout、Self-Issued OP
 
-## Article brief
-
-- **Reader:** OAuth 2.0 の Authorization Code Flow は知っているが、OpenID Connect の ID Token の役割を整理したい実装者
-- **Question:** Authorization Code Flow では Authorization Code と Access Token があるのに、ID Token は何を表し、どこで返されるのか
-- **Answer:** ID Token は Authentication event に関する Claims を含む JWT であり、Authorization Code Flow では Token Endpoint から返され、Client は検証後に End-User の Subject Identifier を取得する
-- **Scope:** OpenID Connect Core 1.0 §1、§1.2、§2、§3、§3.1、§3.1.1、§3.1.3.3、§3.1.3.6 における Authorization Code Flow と ID Token の位置付け
-- **Out of scope:** §3.1.3.7 の個々の validation requirement、Access Token validation、Implicit / Hybrid Flow、UserInfo、Logout、Self-Issued OP
-- **Primary sources:** OpenID Connect Core 1.0 incorporating errata set 2
-- **Diagram:** Authorization Endpoint では Authorization Code、Token Endpoint では ID Token と Access Token が返る流れを示す sequence diagram
-
 ## ID Token は認証結果を伝える JWT
 
 OpenID Connect Core 1.0 §1 は、OpenID Connect を OAuth 2.0 上の identity layer と位置付けています。Client は Authorization Request に `openid` scope value を含めることで OpenID Connect の利用を要求し、認証についての情報は **ID Token** と呼ばれる JSON Web Token（JWT）で返されます。
