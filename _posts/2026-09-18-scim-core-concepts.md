@@ -186,8 +186,6 @@ sequenceDiagram
 
 RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extension、Bulk operation、filter grammar、sorting、index-based pagination、ETag、authentication / authorization、security considerations などが定義されています。RFC 9865 の cursor-based pagination と RFC 9967 の SCIM Security Events / 非同期リクエストも、本記事の範囲外です。
 
-これらは User resource の基本ライフサイクルを使って SCIM の全体像を把握するという本記事の範囲外です。
-
 ## 11. 一次資料
 
 - RFC Editor: [RFC 7643 — System for Cross-domain Identity Management: Core Schema](https://www.rfc-editor.org/rfc/rfc7643.html)
