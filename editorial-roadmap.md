@@ -56,6 +56,7 @@ permalink: /roadmap/
 - Authorization Code Flow の ID Token validation → `2026-09-19-oidc-id-token-validation.md`
 - Authorization Code Flow における ID Token の役割 → `2026-09-20-oidc-authorization-code-flow-id-token-role.md`
 - UserInfo Endpoint の request / response と `sub` validation → `2026-09-20-oidc-userinfo-endpoint.md`
+- OpenID Provider Configuration の取得と `issuer` validation → `2026-09-20-oidc-provider-configuration-discovery.md`
 
 ### SCIM
 
