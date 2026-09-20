@@ -103,7 +103,7 @@ DPoP-Nonce: NEXT_NONCE_VALUE
 
 HTTP 200 response で新しい nonce が提供された場合、Client はその値を次の token request と、それ以降に Authorization Server が新しい nonce を提供するまでの token request で使用しなければなりません（MUST, §8.2）。
 
-`DPoP-Nonce` を含む response は、古い nonce を後続 request で使用することを防ぐため、cache 不能にすべきと RFC 9449 §8.2 は記載しています。
+`DPoP-Nonce` を含む response について、RFC 9449 §8.2 は規範キーワードの SHOULD ではなく、非規範的な “should” として cache 不能にすることを推奨しています。目的は、cache された response が後続 request に再利用され、stale nonce が使われることを防ぐことです。
 
 ## 6. nonce を受け取った後に省略してはならない
 
@@ -117,4 +117,4 @@ RFC 9449 §11.3 は、Server が Client に DPoP nonce を提供した後、`non
 - RFC Editor: [Verified Errata ID 7646](https://www.rfc-editor.org/errata/eid7646)
 
 参照した主要節: §4.2, §4.3, §8, §8.1, §8.2, §9, §11.3  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
