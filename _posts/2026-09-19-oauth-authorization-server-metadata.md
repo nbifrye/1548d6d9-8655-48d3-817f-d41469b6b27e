@@ -27,6 +27,8 @@ RFC 8414 §2 では metadata member を定義しています。代表的なも�
 - **`grant_types_supported`:** OPTIONAL。サポートする grant type value の JSON array。
 - **`introspection_endpoint`:** OPTIONAL。RFC 7662 の Introspection Endpoint URL。
 
+ここで `response_types_supported` の REQUIRED は、公開済み RFC 8414 §2 の規範本文に従った表記です。一方、RFC Editor には、Authorization Endpoint を使う grant type を1つもサポートしない Authorization Server ではこの member を必須にしないよう変更する Technical Errata ID 7793 が登録されています。2026-09-21 時点の status は Reported であり、Verified ではないため、本記事では errata の提案を確定した規範要件として扱いません。
+
 この記事では、これらすべての metadata member を列挙するのではなく、取得と検証の流れを理解するために必要な member に限定します。
 
 ## 2. issuer identifier から well-known URL を構成する
@@ -134,6 +136,7 @@ RFC 8414 §6.1 は implementation が TLS をサポートしなければなら�
 ## 一次資料
 
 - RFC Editor: [RFC 8414 — OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/rfc/rfc8414.html)
+- RFC Editor: [RFC 8414 Errata — Errata ID 7793](https://www.rfc-editor.org/errata/eid7793)
 
 参照した主要節: §1, §2, §3, §3.1, §3.2, §3.3, §6.1  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
