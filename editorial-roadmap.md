@@ -24,17 +24,51 @@ permalink: /roadmap/
 
 以下は公開済みの canonical topic です。同じ Reader / Question / Scope で新規記事を作成せず、追加事項は原則として canonical article を更新します。
 
+### OAuth / API Security
+
+- OAuth 2.0 Security Best Current Practice（RFC 9700）の主要な更新・セキュリティ要件 → `2026-09-18-oauth-security-bcp-rfc9700.md`
 - DPoP proof と HTTP request の binding / validation → `2026-09-19-dpop-proof-http-request.md`
-- mTLS と DPoP の sender-constrained Access Token の binding / validation → `2026-09-20-oauth-mtls-dpop-sender-constraint.md`
-- RAR の `authorization_details` の構造と処理 → `2026-09-19-rar-authorization-details.md`
-- Authorization Code Flow における ID Token の役割 → `2026-09-20-oidc-authorization-code-flow-id-token-role.md`
-- Authorization Code Flow の ID Token validation → `2026-09-19-oidc-id-token-validation.md`
-- FAPI 2.0 Message Signing の Authorization Request → `2026-09-19-fapi-message-signing-authorization-request.md`
+- DPoP server-provided nonce の challenge / retry 処理 → `2026-09-19-dpop-server-provided-nonce.md`
+- Authorization Server Metadata の metadata document と主要 member → `2026-09-19-oauth-authorization-server-metadata.md`
+- Device Authorization Grant の device authorization / polling flow → `2026-09-19-oauth-device-authorization-grant.md`
+- Dynamic Client Registration の registration request / response → `2026-09-19-oauth-dynamic-client-registration.md`
+- JWT を用いる OAuth client authentication → `2026-09-19-oauth-jwt-client-authentication.md`
+- mTLS client authentication → `2026-09-19-oauth-mtls-client-authentication.md`
+- PKCE の code_verifier / code_challenge → `2026-09-19-oauth-pkce-code-verifier-challenge.md`
 - PAR の2段階 Authorization Request → `2026-09-19-oauth-pushed-authorization-requests.md`
-- SCIM PATCH の add / remove / replace / path → `2026-09-19-scim-patch-add-remove-replace.md`
+- Resource Indicators の `resource` parameter → `2026-09-19-oauth-resource-indicators.md`
+- OAuth Token Exchange の token exchange request / response → `2026-09-19-oauth-token-exchange.md`
+- Token Introspection の `active` と introspection response → `2026-09-19-oauth-token-introspection-active.md`
+- Token Revocation の revocation request / response → `2026-09-19-oauth-token-revocation.md`
+- RAR の `authorization_details` の構造と処理 → `2026-09-19-rar-authorization-details.md`
+- JAR の Request Object と Authorization Request → `2026-09-20-oauth-jar-request-object.md`
+- JWT Profile for OAuth Access Tokens の Access Token validation → `2026-09-20-oauth-jwt-access-token-validation.md`
+- mTLS certificate-bound Access Token の binding / validation → `2026-09-20-oauth-mtls-certificate-bound-access-token.md`
+- mTLS と DPoP の sender-constrained Access Token の binding / validation → `2026-09-20-oauth-mtls-dpop-sender-constraint.md`
+- Protected Resource Metadata の metadata document と discovery → `2026-09-20-oauth-protected-resource-metadata.md`
+
+### OpenID Connect / FAPI
+
+- FAPI 2.0 Security Profile の全体像と主要構成 → `2026-09-18-fapi-2-security-profile.md`
+- FAPI 2.0 Message Signing の Authorization Request → `2026-09-19-fapi-message-signing-authorization-request.md`
+- Authorization Code Flow の ID Token validation → `2026-09-19-oidc-id-token-validation.md`
+- Authorization Code Flow における ID Token の役割 → `2026-09-20-oidc-authorization-code-flow-id-token-role.md`
+
+### SCIM
+
+- SCIM 2.0 の core concepts / resource model → `2026-09-18-scim-core-concepts.md`
+- SCIM filter expression の構文と評価 → `2026-09-19-scim-filter-expressions.md`
 - SCIM Group membership の表現・更新 → `2026-09-19-scim-group-membership.md`
+- SCIM PATCH の add / remove / replace / path → `2026-09-19-scim-patch-add-remove-replace.md`
+
+### WebAuthn
+
+- WebAuthn Level 3 Recommendation の全体像 → `2026-09-18-webauthn-level-3-recommendation.md`
 - WebAuthn conditional mediation authentication → `2026-09-19-webauthn-conditional-mediation-authentication.md`
 - WebAuthn Related Origin Requests → `2026-09-19-webauthn-related-origin-requests.md`
+
+### JOSE
+
 - JWS / JWE / JWK / JWKS の役割 → `2026-09-20-jose-jws-jwe-jwk-jwks-overview.md`
 
-候補追加時には、この registry と `_posts/` 全体の両方を確認します。registry は検索の代替ではなく、見落としを減らす補助索引です。
+候補追加時には、この registry と `_posts/` 全体の両方を確認します。registry は検索の代替ではなく、見落としを減らす補助索引です。新規記事を公開した場合は、同じ変更でこの registry に canonical topic を追加します。
