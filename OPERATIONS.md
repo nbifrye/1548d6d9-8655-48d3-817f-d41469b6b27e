@@ -203,3 +203,46 @@ Protocol、ceremony、resource lifecycle、request / response の順序や構成
 仕様の status、normative requirement、security consideration、processing rule が更新された場合、既存記事を再確認して修正します。
 
 更新時にも既存記事へ無制限に内容を追加しません。新しい論点が現在の記事テーマから外れる場合は、既存記事を肥大化させず別記事として扱います。
+
+## Duplicate prevention gate
+
+新規記事の作成は、既存記事との重複確認を**作成前の必須ゲート**とします。タイトルやファイル名だけでは判定しません。
+
+### Canonical topic key
+
+各記事候補について、作成前に次の5項目を正規化して比較します。
+
+1. **Reader** — 誰が実装・レビューするための記事か
+2. **Question** — 読者が解決する中心的な疑問
+3. **Scope** — 対象 protocol / flow / feature / validation の範囲
+4. **Primary sources** — 主要仕様と section
+5. **Core objects / operations** — 主要 endpoint、parameter、claim、operation、resource
+
+Reader / Question / Scope の中心が既存記事と同じで、Primary sources と Core objects / operations も大きく重なる場合は、表現や記事タイプが多少異なっていても**同一テーマ**として扱います。
+
+### Mandatory preflight
+
+新規 `_posts/*.md` を作る前に、必ず次を実行します。
+
+1. `_posts/` の全ファイル名と title を確認する。
+2. 候補テーマの主要語だけでなく、仕様番号、section、endpoint、parameter、claim、operation、resource 名でも既存記事を検索する。
+3. 候補と近い記事は本文冒頭の Reader / Question / Scope / Primary sources まで読む。
+4. 同一テーマなら新規作成せず、既存記事を更新する。
+5. 部分的に重なる場合は、既存記事と新記事の Question / Scope の境界を明文化する。境界を1文で説明できない場合は新規作成しない。
+6. roadmap に同テーマが残っている場合は、公開済み記事への参照に置き換えるか候補から除外する。
+
+**The default action for a near-duplicate is to update the canonical article, not to publish another article.**
+（近似重複を検出した場合の既定動作は、別記事の公開ではなく canonical article の更新とする。）
+
+### Duplicate review on every content change
+
+新規記事を含む変更では、変更対象だけでなく `_posts/` 全体を対象に重複確認を行います。最低限、同一仕様・同一 feature 名・同一主要 section を共有する記事群を横断確認します。
+
+レビュー結果として、次のいずれかを明確にします。
+
+- **NEW:** 既存記事と Question / Scope が分離している
+- **UPDATE:** 既存記事と同一テーマなので既存記事を更新する
+- **MERGE:** 複数の既存記事が同一テーマなので canonical article に統合する
+- **REMOVE:** canonical article に内容が包含されるため重複記事を削除する
+
+Publication quality gate の「既存記事と重複していない」は、この preflight を完了して初めて合格とします。
