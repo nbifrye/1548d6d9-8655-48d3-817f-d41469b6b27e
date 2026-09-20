@@ -22,6 +22,7 @@ rar-authorization-details: "Rich Authorization Requests の authorization_detail
 scim-filter-expressions: "SCIM filter parameter の配置、filter expression の構造、比較・論理演算子、multi-valued attribute の評価とエラー処理を整理します。"
 scim-group-membership: "SCIM Group.members と User.groups の役割を区別し、Group resource への PATCH で membership を更新する位置を整理します。"
 scim-patch-add-remove-replace: "SCIM PATCH request の構造、path の対象指定、add・remove・replace の処理差、複数 operation の適用方法を整理します。"
+scim-bulk-operations: "SCIM Bulk Endpoint に複数の resource operation を1つの BulkRequest として送り、bulkId による参照と operation ごとの BulkResponse を処理する方法を整理します。"
 webauthn-conditional-mediation-authentication: "WebAuthn conditional mediation で capability check、credential discovery、ユーザー選択、assertion 取得までの認証フローを追います。"
 webauthn-related-origin-requests: "WebAuthn Related Origin Requests の /.well-known/webauthn と、異なる origin から共通 RP ID を使う際の Client validation を整理します。"
 jose-jws-jwe-jwk-jwks-overview: "JOSE の JWS・JWE・JWK・JWK Set が、それぞれ message protection と cryptographic key representation のどの役割を担うかを整理します。"
