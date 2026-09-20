@@ -69,6 +69,10 @@ permalink: /roadmap/
 - SCIM sorting の `sortBy` / `sortOrder` と属性値の評価 → `2026-09-21-scim-sorting.md`
 - SCIM index-based pagination の `startIndex` / `count` と ListResponse → `2026-09-21-scim-index-based-pagination.md`
 - SCIM cursor-based pagination の `cursor` / `nextCursor` と後続ページ取得 → `2026-09-21-scim-cursor-based-pagination.md`
+- SCIM Service Provider Configuration の capability discovery → `2026-09-21-scim-service-provider-configuration.md`
+- SCIM ResourceTypes の resource type / endpoint / schema discovery → `2026-09-21-scim-resource-types-discovery.md`
+- SCIM Schemas の schema / attribute definition discovery → `2026-09-21-scim-schema-discovery.md`
+- SCIM Enterprise User extension の組織属性と `manager` representation → `2026-09-21-scim-enterprise-user-extension.md`
 
 ### WebAuthn
 
