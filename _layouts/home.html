@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}<h1 class="page-heading">{{ page.title }}</h1>{%- endif -%}
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+    <h2 class="post-list-heading">{{ page.list_title | default: "記事一覧" }}</h2>
+    <ul class="post-list">
+      {%- for post in site.posts -%}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
+        <h3><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+        {%- assign summary = site.data.article_summaries[post.slug] -%}
+        <p class="post-summary">
+          {%- if summary -%}
+            {{ summary }}
+          {%- else -%}
+            {{ post.title | escape }}について、一次資料の該当 section に基づいて仕様上の要点を整理します。
+          {%- endif -%}
+        </p>
+      </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
