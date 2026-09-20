@@ -32,6 +32,7 @@ permalink: /roadmap/
 - Authorization Server Metadata の metadata document と主要 member → `2026-09-19-oauth-authorization-server-metadata.md`
 - Device Authorization Grant の device authorization / polling flow → `2026-09-19-oauth-device-authorization-grant.md`
 - Dynamic Client Registration の registration request / response → `2026-09-19-oauth-dynamic-client-registration.md`
+- Dynamic Client Registration Management の read / update / delete → `2026-09-20-oauth-dynamic-client-registration-management.md`
 - JWT を用いる OAuth client authentication → `2026-09-19-oauth-jwt-client-authentication.md`
 - mTLS client authentication → `2026-09-19-oauth-mtls-client-authentication.md`
 - PKCE の code_verifier / code_challenge → `2026-09-19-oauth-pkce-code-verifier-challenge.md`
