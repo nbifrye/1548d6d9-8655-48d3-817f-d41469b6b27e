@@ -55,6 +55,7 @@ permalink: /roadmap/
 - FAPI 2.0 Message Signing の Authorization Request → `2026-09-19-fapi-message-signing-authorization-request.md`
 - Authorization Code Flow の ID Token validation → `2026-09-19-oidc-id-token-validation.md`
 - Authorization Code Flow における ID Token の役割 → `2026-09-20-oidc-authorization-code-flow-id-token-role.md`
+- UserInfo Endpoint の request / response と `sub` validation → `2026-09-20-oidc-userinfo-endpoint.md`
 
 ### SCIM
 
