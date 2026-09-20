@@ -100,14 +100,14 @@ Cache-Control: no-cache, no-store
 }
 ```
 
-- `request_uri`: pushed authorization request data を参照する URI。後続 Authorization Request では single-use reference として扱われます（§2.2）。
+- `request_uri`: pushed authorization request data を参照する URI。RFC 9126 §2.2 は、後続 Authorization Request における respective request data への single-use reference と定義しています。
 - `expires_in`: `request_uri` の lifetime を秒で表す正の整数の JSON number。lifetime は Authorization Server の裁量です（§2.2）。
 
 `request_uri` の形式は Authorization Server の裁量ですが、valid value の予測・推測が computationally infeasible となるよう、cryptographically strong pseudorandom algorithm で生成した部分を含めなければなりません（MUST, §2.2）。また `request_uri` は、それを取得した Client に bind されなければなりません（MUST, §2.2）。
 
 ## 5. 第2段階：User Agent 経由では `request_uri` を Authorization Endpoint に送る
 
-RFC 9126 §4 では、Client は PAR Endpoint から受け取った `request_uri` を、後続の Authorization Request の `request_uri` parameter として使用します。
+RFC 9126 §4 では、Client は PAR Endpoint から受け取った `request_uri` を使って、後続の Authorization Request を構成します。
 
 次は非規範的な例です。
 
@@ -118,26 +118,28 @@ Host: authorization.example
 
 この段階では `client_id` と `request_uri` は Authorization Endpoint への request の query parameter にあります。
 
-RFC 9126 §4 は、Authorization Server が `request_uri` に対応する request data を取得して Authorization Request を処理することを定義しています。また、Authorization Endpoint に送る `client_id` は pushed request の `client_id` と一致しなければなりません（MUST, §4）。
+RFC 9126 §4 では、Client は `request_uri` value を1回だけ使用しなければなりません（MUST）。Authorization Server は `request_uri` を one-time use として扱うべきですが（SHOULD）、User Agent の reload / refresh による duplicate request を許容しても構いません（MAY）。期限切れの `request_uri` は invalid として reject しなければなりません（MUST, §4）。
 
-Authorization Server は `request_uri` が期限切れの場合、または既に使用済みの場合、request を reject しなければなりません（MUST, §4）。§2.2 が `request_uri` を single-use reference として定義しているため、同じ参照値を複数回の Authorization Request に使うものではありません。
+Authorization Server は pushed request に由来する Authorization Request を、通常の Authorization Request と同様に validate しなければなりません（MUST, §4）。PAR Endpoint ですでに実施した validation step は、pushed request であることを確認でき、request または Authorization Server policy が validation outcome に影響する形で変更されていないことを確認できる場合に限り、省略しても構いません（MAY, §4）。
 
-## 6. PAR Endpoint は Authorization Server Metadata で公開できる
+## 6. PAR Endpoint と PAR 必須 policy は Authorization Server Metadata で表現できる
 
-RFC 9126 §5 は RFC 8414 の Authorization Server Metadata に `pushed_authorization_request_endpoint` を追加しています。この member は PAR Endpoint の URL を表します。
-
-PAR をサポートする Authorization Server は、この parameter を metadata document に含めるべきです（SHOULD, RFC 9126 §2、§5）。
+RFC 9126 §5 は RFC 8414 の Authorization Server Metadata に PAR 用の member を追加しています。PAR をサポートする Authorization Server は `pushed_authorization_request_endpoint` を metadata document に含めるべきです（SHOULD, RFC 9126 §2）。
 
 次は必要な構造だけを示す非規範的な例です。
 
 ```json
 {
   "issuer": "https://authorization.example",
-  "pushed_authorization_request_endpoint": "https://authorization.example/par"
+  "pushed_authorization_request_endpoint": "https://authorization.example/par",
+  "require_pushed_authorization_requests": false
 }
 ```
 
-`pushed_authorization_request_endpoint` は top-level JSON string です。Authorization Server Metadata 自体の取得・`issuer` 検証は RFC 8414 の別の処理であり、本記事の中心テーマには含めません。
+- `pushed_authorization_request_endpoint`: PAR Endpoint URL を表す top-level JSON string（§5）。
+- `require_pushed_authorization_requests`: Authorization Server が Authorization Request data を PAR 経由でのみ受け付けるかを表す top-level JSON boolean。省略時の default は `false` です（§5）。
+
+Authorization Server Metadata 自体の取得・`issuer` 検証は RFC 8414 の別の処理であり、本記事の中心テーマには含めません。
 
 ## 7. 2段階で変わるのは Authorization Request parameter の運び方である
 
