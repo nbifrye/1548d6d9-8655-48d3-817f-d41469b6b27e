@@ -12,17 +12,6 @@ categories: [oauth, security]
 **この記事で伝えること:** RFC 10017 §6 が定義する BFF、token-mediating backend、browser-based OAuth client の3つの architecture pattern について、OAuth Client がどこにあり、token を誰が保持し、Resource Server への request がどこを通るかを区別する  
 **扱わないこと:** malicious JavaScript の個別 attack scenario の詳細、cookie の全属性、CORS / CSP の設定方法、DPoP の詳細、Refresh Token の個別要件、OpenID Connect 固有処理
 
-<!--
-Article brief
-Reader: Browser-based application で OAuth 2.0 を利用する構成を設計・レビューする開発者
-Question: RFC 10017 の BFF、token-mediating backend、browser-based OAuth client では、OAuth Client・token・Resource Server request の配置がどう異なるのか
-Answer: 3 pattern について OAuth responsibility の所在、access / refresh token の保持場所、Resource Server への request path を区別できる
-Scope: RFC 10017 §6 の architecture pattern の構成上の差異
-Out of scope: §5 の attack scenario の詳細、§6 各 pattern の全実装要件、§8–§10 の storage / sender-constrained token / service worker の詳細
-Primary sources: RFC 10017 §1, §6.1, §6.2, §6.3
-Diagram: 3 pattern を縦方向の小さな flowchart に分けて構成要素と token / request path を示す
--->
-
 RFC 10017（BCP 212）"OAuth 2.0 for Browser-Based Applications" は、browser-based application が OAuth を利用して protected resource にアクセスする場合の architecture pattern を §6 で3つに整理しています。
 
 この記事では3 pattern の構成上の違いだけを扱います。RFC 10017 は 2026年8月に Best Current Practice として公開されています。
