@@ -28,6 +28,7 @@ scim-index-based-pagination: "SCIM の startIndex / count を GET query また�
 scim-cursor-based-pagination: "RFC 9865 の cursor / count を GET または POST /.search に配置し、ListResponse の nextCursor / previousCursor を使って後続ページを取得する規則を整理します。"
 scim-service-provider-configuration: "SCIM Client が /ServiceProviderConfig を GET し、PATCH、Bulk、filter、sort など Service Provider の対応機能を JSON configuration から確認する方法を整理します。"
 scim-resource-types-discovery: "SCIM Client が /ResourceTypes を取得し、Service Provider が公開する Resource Type と endpoint、base schema、schema extension の対応を確認する方法を整理します。"
+scim-schema-discovery: "SCIM Client が /Schemas から Schema resource を取得し、id と attributes から attribute の型・多値性・mutability などの定義を確認する方法を整理します。"
 webauthn-conditional-mediation-authentication: "WebAuthn conditional mediation で capability check、credential discovery、ユーザー選択、assertion 取得までの認証フローを追います。"
 webauthn-related-origin-requests: "WebAuthn Related Origin Requests の /.well-known/webauthn と、異なる origin から共通 RP ID を使う際の Client validation を整理します。"
 jose-jws-jwe-jwk-jwks-overview: "JOSE の JWS・JWE・JWK・JWK Set が、それぞれ message protection と cryptographic key representation のどの役割を担うかを整理します。"
