@@ -79,6 +79,7 @@ permalink: /roadmap/
 - SCIM partial resource representation の `attributes` / `excludedAttributes` と `returned` characteristic → `2026-09-21-scim-partial-resource-representation.md`
 - SCIM resource deletion の DELETE response と削除後の observable behavior → `2026-09-21-scim-delete-resource.md`
 - SCIM PUT resource replacement の attribute mutability / required と replacement semantics → `2026-09-21-scim-put-resource-replacement.md`
+- SCIM POST resource creation の attribute processing / 201 Created / resource location → `2026-09-21-scim-post-resource-creation.md`
 
 ### WebAuthn
 
