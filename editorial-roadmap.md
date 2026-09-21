@@ -50,6 +50,7 @@ permalink: /roadmap/
 - Authorization Response の `iss` と expected issuer の validation → `2026-09-20-oauth-authorization-response-issuer.md`
 - Browser-Based Application の BFF / token-mediating backend / browser-based OAuth client の architecture pattern → `2026-09-20-oauth-browser-application-architecture-patterns.md`
 - Client Credentials Grant の confidential client authentication / Token Request / Access Token Response → `2026-09-21-oauth-client-credentials-grant.md`
+- Refresh Token による Access Token 更新の request / validation / response → `2026-09-21-oauth-refresh-token-request.md`
 
 ### OpenID Connect / FAPI
 
@@ -85,7 +86,7 @@ permalink: /roadmap/
 ### WebAuthn
 
 - WebAuthn Level 3 Recommendation の全体像 → `2026-09-18-webauthn-level-3-recommendation.md`
-- WebAuthn conditional mediation authentication → `2026-09-19-webauthn-conditional-mediation-authentication.md`
+- WebAuthn conditional mediation authentication → `2026-09-19-webauthn-conditional-mediation authentication.md`
 - WebAuthn Related Origin Requests → `2026-09-19-webauthn-related-origin-requests.md`
 
 ### JOSE
