@@ -69,7 +69,7 @@ flowchart TD
     E -->|No| G[Registration Error Response]
 </pre>
 
-RFC 7591 §1.3 の abstract flow では、Client または Developer が desired registration metadata を endpoint に送り、Authorization Server が Client を登録します。成功時には登録済み metadata、server 上で一意な client identifier、および該当する場合は client secret などの credential が返ります。
+RFC 7591 §1.3 の abstract flow では、Client または Developer が desired registration metadata を endpoint に送り、Authorization Server が Client を登録します。成功時には登録済み metadata、client identifier、および該当する場合は client secret などの credential が返ります。
 
 どの Client を登録可能とするか、どの metadata value を受け入れるかは Authorization Server の処理に関係します。RFC 7591 が deployment や policy に委ねている判断について、この記事では一方の方針を選びません。
 
@@ -96,7 +96,7 @@ RFC 7591 §3.2.1 では、成功した registration response に `client_id` が
 
 主要 member は次の位置と意味を持ちます。
 
-- **`client_id`:** top-level string。REQUIRED。Authorization Server が発行する OAuth 2.0 client identifier。
+- **`client_id`:** top-level string。REQUIRED。Authorization Server が発行する OAuth 2.0 client identifier。RFC 7591 §3.2.1 の公開本文では、他の登録済み Client に対して現在有効な値であるべきではない（SHOULD NOT）一方、同じ登録済み Client の複数 instance に同一の `client_id` を発行してもよい（MAY）とされています。
 - **`client_secret`:** top-level string。OPTIONAL。発行される場合、その `client_id` に対して一意でなければなりません（MUST, §3.2.1）。
 - **`client_id_issued_at`:** top-level number。OPTIONAL。1970-01-01T00:00:00Z からの秒数で表す発行時刻。
 - **`client_secret_expires_at`:** `client_secret` が発行された場合は REQUIRED。expiration time を秒数で表し、`0` は expire しないことを示します。
@@ -104,6 +104,8 @@ RFC 7591 §3.2.1 では、成功した registration response に `client_id` が
 Authorization Server は、この Client について登録された metadata をすべて返さなければなりません（MUST, §3.2.1）。これには Authorization Server 自身が provision した field も含まれます。
 
 そのため、request で送った値と response の登録結果が常に同一とは限りません。RFC 7591 §3.2.1 は Authorization Server が要求された metadata value を reject または replace し、適切な値を代入できる（MAY）としています。
+
+RFC Editor には `client_id` の `SHOULD NOT` を `MUST NOT` に変更する Technical Errata ID 7782 が登録されていますが、2026年9月21日時点では status は Reported です。そのため、この記事では公開済み RFC 本文の規範強度を維持しています。
 
 ## 5. Registration Error は別の JSON object で返る
 
@@ -130,13 +132,14 @@ RFC 7591 §3.2.2 は response にその他の member を含めることも MAY �
 
 Registration Request では、`redirect_uris` などの client metadata が JSON body に入ります。Authorization Server はその request を処理し、成功時には `client_id` と登録済み metadata を JSON response として返します。
 
-`client_id` は Client が request で指定して作る値ではありません。RFC 7591 §3.1 は Authorization Server が Client に一意な client identifier を割り当てる処理として registration を定義しています。
+`client_id` は Client が request で指定して作る値ではありません。RFC 7591 §3.1 では Authorization Server が Client に client identifier を割り当てます。`client_id` の一意性については、§3.2.1 の公開本文にある SHOULD NOT / MAY の規定も合わせて扱う必要があります。
 
 この request / response の構造と登録結果の扱いがこの記事の範囲です。登録済み Client の configuration を後から read / update / delete する protocol は RFC 7592 の別テーマです。
 
 ## 一次資料
 
 - RFC Editor: [RFC 7591 — OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591.html)
+- RFC Editor: [RFC 7591 Errata — Errata ID 7782](https://www.rfc-editor.org/errata/eid7782)
 
 参照した主要節: §1.3, §2, §3, §3.1, §3.2.1, §3.2.2  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
