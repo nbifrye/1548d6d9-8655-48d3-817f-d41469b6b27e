@@ -56,6 +56,7 @@ permalink: /roadmap/
 - Token Endpoint の error response / standard error code / `invalid_client` の HTTP status 処理 → `2026-09-21-oauth-token-endpoint-error-response.md`
 - Bearer Access Token の Protected Resource request / token placement / `WWW-Authenticate` error response → `2026-09-21-oauth-bearer-protected-resource-request.md`
 - Token Endpoint の successful response / JSON member / scope / cache 制御 → `2026-09-21-oauth-token-endpoint-successful-response.md`
+- OAuth Client Type の confidential / public の判定基準と client authentication との関係 → `2026-09-22-oauth-client-types.md`
 
 ### OpenID Connect / FAPI
 
