@@ -72,7 +72,7 @@ sequenceDiagram
 
 §5.3.2.2 は Authorization Server に、RFC 9126 に従う client-authenticated pushed authorization request のサポートを要求します。
 
-Authorization Server は、PAR を使わずに送信された Authorization Request を拒否し、Client Authentication を伴わない PAR も拒否します。
+Authorization Server は、PAR を使わずに送信された Authorization Request を拒否し、Client Authentication を伴わない PAR も拒否します。また、PAR request では `redirect_uri` parameter を必須としなければなりません（shall）。
 
 Client は Authorization Endpoint に `client_id` と PAR で得た `request_uri` だけを送信しなければなりません（shall）。その他の Authorization Request parameter は PAR request に含めます。
 
@@ -168,4 +168,4 @@ FAPI 2.0 Message Signing は別仕様であり、本記事では扱いません�
 - RFC Editor: [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207.html)
 
 参照した主要節: FAPI 2.0 Security Profile §5.3.1, §5.3.2.1, §5.3.2.2, §5.3.3.1, §5.3.3.2, §5.3.4  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
