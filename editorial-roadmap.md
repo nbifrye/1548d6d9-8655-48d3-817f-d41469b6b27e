@@ -95,6 +95,7 @@ permalink: /roadmap/
 - SCIM PUT resource replacement の attribute mutability / required と replacement semantics → `2026-09-21-scim-put-resource-replacement.md`
 - SCIM POST resource creation の attribute processing / 201 Created / resource location → `2026-09-21-scim-post-resource-creation.md`
 - SCIM Error response の HTTP status / `status` / `scimType` / `detail` 構造 → `2026-09-22-scim-error-response.md`
+- SCIM POST query の `/.search` / SearchRequest body / ListResponse → `2026-09-22-scim-post-search.md`
 
 ### WebAuthn
 
