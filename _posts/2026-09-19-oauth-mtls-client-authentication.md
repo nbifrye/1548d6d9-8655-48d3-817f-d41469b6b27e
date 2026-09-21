@@ -78,7 +78,7 @@ RFC 8705 は Client metadata として、たとえば次の値を定義してい
 - `token_endpoint_auth_method`: Token Endpoint で使用する Client Authentication method。PKI Mutual-TLS Method の値は `tls_client_auth`。
 - `tls_client_auth_subject_dn`: Client が使用する certificate に期待される subject distinguished name の string。
 
-RFC 8705 §2.1 は subject DN のほか、SAN の DNS name、URI、IP address、email address を指定する metadata parameter も定義しています。Client ごとに使用する subject name value は1つです。
+RFC 8705 §2.1.2 は subject DN のほか、SAN の DNS name、URI、IP address、email address を指定する metadata parameter も定義しています。`tls_client_auth` を使用する Client は、これらの metadata parameter のうち正確に1つを使用して、Authorization Server が認証時に期待する certificate subject value を示さなければなりません（MUST）。
 
 certificate の revocation status を検査するかどうか、およびその方法は Authorization Server の deployment decision です。
 
@@ -134,5 +134,5 @@ RFC 8705 §1 と §4 は、mutual-TLS OAuth Client Authentication と mutual-TLS
 
 - RFC Editor: [RFC 8705 — OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens](https://www.rfc-editor.org/rfc/rfc8705.html)
 
-参照した主要節: §1, §2, §2.1, §2.2, §2.2.1, §2.2.2, §4  
-最終確認: 2026-09-19
+参照した主要節: §1, §2, §2.1, §2.1.2, §2.2, §2.2.1, §2.2.2, §4  
+最終確認: 2026-09-21
