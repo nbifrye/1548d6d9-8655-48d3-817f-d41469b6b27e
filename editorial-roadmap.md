@@ -59,6 +59,7 @@ permalink: /roadmap/
 - OAuth Client Type の confidential / public の判定基準と client authentication との関係 → `2026-09-22-oauth-client-types.md`
 - OAuth Access Token scope の構文 / requested scope と issued scope の関係 → `2026-09-22-oauth-access-token-scope.md`
 - Resource Owner Password Credentials Grant の request 構造と RFC 9700 の利用禁止要件 → `2026-09-22-oauth-resource-owner-password-credentials.md`
+- Client password authentication の HTTP Basic / request body credential 配置と要件 → `2026-09-22-oauth-client-password-authentication.md`
 
 ### OpenID Connect / FAPI
 
