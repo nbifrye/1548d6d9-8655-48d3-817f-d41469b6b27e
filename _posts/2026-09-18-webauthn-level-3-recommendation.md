@@ -66,7 +66,7 @@ sequenceDiagram
 
 WebAuthn の公開鍵クレデンシャルは RP ID にスコープされます。仕様 §4 では、RP ID は WebAuthn Relying Party を識別する有効なドメイン文字列として定義されています。
 
-Web コンテキストでは、RP ID の既定値は呼び出し元 origin の effective domain です。呼び出し側が RP ID を指定する場合、その値は origin の effective domain と同一、または registrable domain suffix である必要があります。
+Web コンテキストでは、RP ID の既定値は呼び出し元 origin の effective domain です。通常、呼び出し側が RP ID を指定する場合、その値は origin の effective domain と同一、または registrable domain suffix である必要があります。WebAuthn Level 3 の related origins を Client がサポートする場合は、この通常の関係を満たさない RP ID でも related origins validation に成功すれば利用できます。
 
 ### 2.2 challenge
 
@@ -173,4 +173,4 @@ signature counter について、§7.2 は今回の値が保存済み値以下�
 - W3C publication history: [WebAuthn Level 3 publication history](https://www.w3.org/standards/history/webauthn-3/)
 
 参照した主要節: §4, §5.5, §6.1, §6.5, §7.1, §7.2  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
