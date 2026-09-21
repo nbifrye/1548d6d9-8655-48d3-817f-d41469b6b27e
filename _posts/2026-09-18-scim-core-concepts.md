@@ -86,9 +86,9 @@ sequenceDiagram
     SP-->>C: 201 Created + Location + User resource
 </pre>
 
-Client は `/Users` endpoint に User representation を送信します。Service Provider は schema rule に従って request を処理し、作成に成功した場合は HTTP 201 (Created) と作成後の resource representation を返します。
+Client は `/Users` endpoint に User representation を送信します。Service Provider は schema rule に従って request を処理し、作成に成功した場合は HTTP 201 (Created) を返さなければなりません（SHALL）。Response body には作成後の resource representation を含めることが推奨されています（SHOULD）。
 
-Response の `Location` header には、新しい resource の URI が示されます。
+Response の `Location` header には、新しい resource の URI を含めなければなりません（SHALL）。同じ URI は response body の `meta.location` にも含まれます。
 
 ## 5. 作成した User を取得する
 
@@ -197,4 +197,4 @@ RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extensio
 - RFC Editor: [RFC 9967 — System for Cross-Domain Identity Management (SCIM) Profile for Security Event Tokens (SETs)](https://www.rfc-editor.org/rfc/rfc9967.html)
 
 参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4 / RFC 9865 §1 / RFC 9944 §1–§3 / RFC 9967 §1  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
