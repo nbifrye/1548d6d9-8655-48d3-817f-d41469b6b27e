@@ -58,6 +58,8 @@ Server は §4.3 に従い、`htm` が現在の HTTP request method と一致す
 
 さらに RFC 9449 §4.3 は、`htu` の比較前に RFC 3986 の syntax-based normalization と scheme-based normalization を行うことを Server に推奨しています（SHOULD）。したがって、`htu` の検証を単純な文字列一致だけとして実装するのは、RFC 9449 の比較手順を十分に表していません。
 
+また、§4.3 は `iat` または Server が `nonce` により管理する timestamp から求めた creation time が許容可能な time window 内であることの確認を要求しています。§11.1 は replay を制限するため、Server が DPoP proof を作成後の限られた期間だけ受理しなければならない（MUST）とし、秒から分程度の比較的短い期間を推奨しています。
+
 <pre class="mermaid">
 flowchart TD
     A[DPoP proof を受信] --> B[JWT の形式と署名を検証]
@@ -125,6 +127,6 @@ RFC 9449 §11.7 は、DPoP が request payload や一般的な request header �
 
 文書ステータス: Proposed Standard（Standards Track）  
 発行: 2023-09  
-参照した主要節: §2, §4, §4.2, §4.3, §6, §6.1, §6.2, §7, §7.1, §7.2, §11.7  
+参照した主要節: §2, §4, §4.2, §4.3, §6, §6.1, §6.2, §7, §7.1, §7.2, §11.1, §11.7  
 Verified Errata: EID 7646（Editorial。§4.2 の “authentication server” を “authorization server” に訂正）  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
