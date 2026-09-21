@@ -75,6 +75,7 @@ permalink: /roadmap/
 - SCIM Enterprise User extension の組織属性と `manager` representation → `2026-09-21-scim-enterprise-user-extension.md`
 - SCIM User.password の writeOnly / returned=never と設定・変更時の処理 → `2026-09-21-scim-password-writeonly.md`
 - SCIM authentication / authorization の仕様境界と access control requirement → `2026-09-21-scim-authentication-authorization.md`
+- SCIM resource versioning の ETag / `meta.version` と条件付き request → `2026-09-21-scim-resource-versioning-etag.md`
 
 ### WebAuthn
 
