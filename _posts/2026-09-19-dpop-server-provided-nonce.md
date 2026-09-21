@@ -19,7 +19,7 @@ categories: [authorization, oauth, dpop]
 
 RFC 9449 §8 は、Authorization Server が Client に DPoP nonce を提供できる（MAY）と規定しています。Server が nonce を必要と判断する時期を決めるロジックは RFC 9449 の scope 外です。
 
-Nonce value は予測不可能でなければなりません（MUST, §8）。Client にとって nonce は opaque です。
+nonce value は予測不可能でなければなりません（MUST, §8）。Client にとって nonce は opaque です。
 
 RFC 9449 §9 は Resource Server も nonce を提供できると規定しています。Authorization Server と Resource Server が発行する nonce は別のものであり、発行した Server でのみ使用されます。
 
@@ -56,6 +56,8 @@ Content-Type: application/json
 - **nonce value:** Client が解釈するための JSON object ではなく、opaque な値。
 
 同じ error code は、Client が送った nonce が Server の要求する値と一致しない場合にも使用されます。`DPoP-Nonce` header は response に複数含めてはなりません（MUST NOT, §8）。
+
+Browser-based Client が CORS を使用する場合、`DPoP-Nonce` は CORS-safelisted response header ではないため、その値をアプリケーションから取得して使用できるよう、Server は `Access-Control-Expose-Headers` の値に `DPoP-Nonce` を含める必要があります（§8）。
 
 ## 3. Client は nonce を DPoP proof の claim に入れる
 
