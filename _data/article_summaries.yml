@@ -33,6 +33,7 @@ scim-enterprise-user-extension: "SCIM Enterprise User extension の schema URI �
 scim-password-writeonly: "SCIM User.password の writeOnly / returned=never の意味と、初期設定・変更、保存・転送、response で値を返さない規則を整理します。"
 scim-authentication-authorization: "SCIM が authentication / authorization 方式をどこまで定義し、authenticated client と local access control policy をどう接続するよう要求するかを整理します。"
 scim-resource-versioning-etag: "SCIM resource versioning の ETag と meta.version の関係、および If-None-Match / If-Match を使う条件付き取得・更新を整理します。"
+scim-partial-resource-representation: "SCIM の attributes / excludedAttributes の配置と形式、および returned characteristic に基づく partial resource representation の決まり方を整理します。"
 webauthn-conditional-mediation-authentication: "WebAuthn conditional mediation で capability check、credential discovery、ユーザー選択、assertion 取得までの認証フローを追います。"
 webauthn-related-origin-requests: "WebAuthn Related Origin Requests の /.well-known/webauthn と、異なる origin から共通 RP ID を使う際の Client validation を整理します。"
 jose-jws-jwe-jwk-jwks-overview: "JOSE の JWS・JWE・JWK・JWK Set が、それぞれ message protection と cryptographic key representation のどの役割を担うかを整理します。"
