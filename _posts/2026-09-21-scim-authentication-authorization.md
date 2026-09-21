@@ -13,7 +13,7 @@ Article brief
 - Answer: SCIM 固有の認証・認可方式は定義されず、標準 HTTP/TLS の仕組みを利用すること、認証済み Client を access control policy に対応付けること、Bearer Token・anonymous request・TLS に関する規範要件を区別できる
 - Scope: RFC 7644 §2, §2.1, §2.2, §7.2, §7.4 に定義された authentication / authorization の境界と規範要件
 - Out of scope: OAuth token endpoint / grant flow、scope の設計、個別 deployment の access control policy、SCIM resource CRUD の詳細、認証方式の優劣評価
-- Primary sources: RFC 7644; RFC 6750
+- Primary sources: RFC 7644; RFC 6750; RFC 7521
 - Diagram: request の認証情報から authenticated client / subject を識別し、local access control policy により resource operation の認可を判断する flowchart
 -->
 
@@ -116,3 +116,4 @@ RFC 7644 が定める中心点は、特定の authentication product や authori
 
 - [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html) §2, §2.1, §2.2, §7.2, §7.4
 - [RFC 6750 — The OAuth 2.0 Authorization Framework: Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750.html) §2.1
+- [RFC 7521 — Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7521.html) §8
