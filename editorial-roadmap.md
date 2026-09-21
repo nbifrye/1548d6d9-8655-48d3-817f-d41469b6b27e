@@ -77,6 +77,7 @@ permalink: /roadmap/
 - SCIM authentication / authorization の仕様境界と access control requirement → `2026-09-21-scim-authentication-authorization.md`
 - SCIM resource versioning の ETag / `meta.version` と条件付き request → `2026-09-21-scim-resource-versioning-etag.md`
 - SCIM partial resource representation の `attributes` / `excludedAttributes` と `returned` characteristic → `2026-09-21-scim-partial-resource-representation.md`
+- SCIM resource deletion の DELETE response と削除後の observable behavior → `2026-09-21-scim-delete-resource.md`
 
 ### WebAuthn
 
