@@ -102,7 +102,7 @@ Collection endpoint に対して query を実行することもできます。
 
 RFC 7644 §3.4.2 は、`filter`、`sortBy`、`sortOrder`、`startIndex`、`count` などの query parameter を定義しています。
 
-検索結果は `ListResponse` schema で返され、`totalResults`、`startIndex`、`itemsPerPage`、`Resources` などを含みます。
+検索結果は `ListResponse` schema で返されます。`totalResults` は REQUIRED で、`Resources` は `totalResults` が 0 でない場合に REQUIRED です。`startIndex` と `itemsPerPage` は pagination により部分的な結果を返す場合に REQUIRED です。
 
 ## 6. User を更新する
 
@@ -186,12 +186,15 @@ sequenceDiagram
 
 RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extension、Bulk operation、filter grammar、sorting、index-based pagination、ETag、authentication / authorization、security considerations などが定義されています。RFC 9865 の cursor-based pagination と RFC 9967 の SCIM Security Events / 非同期リクエストも、本記事の範囲外です。
 
+また、2026年5月公開の RFC 9944 は SCIM に Device と EndpointApp の resource type および関連 schema extension を追加していますが、本記事の User resource のライフサイクルには変更を加えません。
+
 ## 11. 一次資料
 
 - RFC Editor: [RFC 7643 — System for Cross-domain Identity Management: Core Schema](https://www.rfc-editor.org/rfc/rfc7643.html)
 - RFC Editor: [RFC 7644 — System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644.html)
 - RFC Editor: [RFC 9865 — Cursor-Based Pagination of System of Cross-domain Identity Management (SCIM) Resources](https://www.rfc-editor.org/rfc/rfc9865.html)
+- RFC Editor: [RFC 9944 — Device Schema Extensions to the System for Cross-Domain Identity Management (SCIM) Model](https://www.rfc-editor.org/rfc/rfc9944.html)
 - RFC Editor: [RFC 9967 — System for Cross-Domain Identity Management (SCIM) Profile for Security Event Tokens (SETs)](https://www.rfc-editor.org/rfc/rfc9967.html)
 
-参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4 / RFC 9865 §1 / RFC 9967 §1  
-最終確認: 2026-09-19
+参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4 / RFC 9865 §1 / RFC 9944 §1–§3 / RFC 9967 §1  
+最終確認: 2026-09-21
