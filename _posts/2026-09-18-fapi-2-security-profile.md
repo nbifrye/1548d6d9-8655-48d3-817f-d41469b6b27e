@@ -135,7 +135,8 @@ Resource Server は §5.3.4 に従い、Access Token の validity、integrity、
 
 このフローでは Authorization Code 自体にも追加要件があります。
 
-- 一度使用された Authorization Code は拒否する（shall）。リプレイを識別できない場合については、仕様の NOTE で、有効期間を1分または適切な短時間に設定することが望ましいとされています。
+- Authorization Server は Authorization Code の有効期間を最大60秒としなければならない（shall）。
+- 一度使用された Authorization Code は拒否する（shall）。§5.3.2.2 の NOTE では、リプレイを識別できない場合についても、有効期間を1分または適切な短時間に設定することが望ましいとされています。
 - DPoP を使用する場合、Authorization Server は Authorization Code Binding to DPoP Key をサポートする（shall）。Client にその利用までは要求されない。
 - native application の loopback interface redirect を除き、`http` scheme の redirect URI を許可しない。
 
@@ -167,4 +168,4 @@ FAPI 2.0 Message Signing は別仕様であり、本記事では扱いません�
 - RFC Editor: [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207.html)
 
 参照した主要節: FAPI 2.0 Security Profile §5.3.1, §5.3.2.1, §5.3.2.2, §5.3.3.1, §5.3.3.2, §5.3.4  
-最終確認: 2026-09-20
+最終確認: 2026-09-21
