@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "OAuth 2.0 Implicit Grant：RFC 6749 の response_type=token と RFC 9700 の SHOULD NOT"
+title: "OAuth 2.0 Implicit Grant：RFC 9700 の SHOULD NOT と RFC 10017 の MUST NOT"
 date: 2026-09-22 04:40:00 +0900
 categories: [authorization, oauth]
 ---
@@ -9,17 +9,17 @@ categories: [authorization, oauth]
 
 **記事タイプ:** Version Difference / Security Practice  
 **対象読者:** OAuth 2.0 の既存実装や仕様書で Implicit Grant（`response_type=token`）を確認する開発者・レビュー担当者  
-**この記事で伝えること:** RFC 6749 が定義する Implicit Grant の Authorization Request / Access Token Response と、RFC 9700 が現在の Best Current Practice として示す `SHOULD NOT` の要件  
+**この記事で伝えること:** RFC 6749 が定義する Implicit Grant の Authorization Request / Access Token Response、RFC 9700 の一般的な `SHOULD NOT`、RFC 10017 が Browser-based Application に課す `MUST NOT` の要件  
 **扱わないこと:** Authorization Code Grant の詳細、PKCE の処理、OpenID Connect の response type、Implicit Grant からの移行設計
 
 ## Article brief
 
 - **Reader:** Implicit Grant を含む OAuth 2.0 実装・仕様書を確認する開発者・レビュー担当者
-- **Question:** RFC 6749 の Implicit Grant は Access Token をどのように返し、RFC 9700 ではその利用がどの規範強度で扱われているか
-- **Answer:** `response_type=token` の request と URI fragment の Access Token response を説明し、RFC 9700 §2.1.2 の `SHOULD NOT` と例外条件を原文の強度のまま区別できる
-- **Scope:** RFC 6749 §4.2–§4.2.2、RFC 9700 §2.1.2
+- **Question:** RFC 6749 の Implicit Grant は Access Token をどのように返し、現在の Best Current Practice ではその利用がどの規範強度で扱われているか
+- **Answer:** `response_type=token` の request と URI fragment の Access Token response を説明し、RFC 9700 §2.1.2 の一般的な `SHOULD NOT` と、Browser-based Application に対する RFC 10017 §7.2 の `MUST NOT` を区別できる
+- **Scope:** RFC 6749 §4.2–§4.2.2、RFC 9700 §2.1.2、RFC 10017 §7.2
 - **Out of scope:** Authorization Code Grant / PKCE の詳細、OIDC 固有 response type、移行方式の選定、個別 deployment の判断
-- **Primary sources:** RFC 6749 §4.2–§4.2.2、RFC 9700 §2.1.2
+- **Primary sources:** RFC 6749 §4.2–§4.2.2、RFC 9700 §2.1.2、RFC 10017 §7.2
 - **Diagram:** Authorization Endpoint への request と redirect URI fragment による Access Token delivery
 
 ## 1. RFC 6749 が定義する Implicit Grant
@@ -77,7 +77,7 @@ Location: https://client.example/callback#access_token=illustrative-access-token
 
 RFC 6749 §4.2.2 では、Authorization Server は HTTP `Location` header の fragment を直接 Client に送るのではなく、User-Agent を Client の redirection endpoint へ向けます。その後、User-Agent は fragment の情報を Client に渡します。
 
-## 4. RFC 9700 §2.1.2 の現在の要件
+## 4. RFC 9700 §2.1.2 の一般的な要件
 
 RFC 9700 §2.1.2 は、Implicit Grant（`response_type=token`）および Authorization Response で Access Token を発行するその他の response type について、Access Token leakage と replay のリスクを説明しています。
 
@@ -88,13 +88,25 @@ RFC 9700 §2.1.2 は続けて、Client は代わりに `response_type=code`、�
 **RFC 9700 says SHOULD NOT, not MUST NOT, and states the conditions attached to that requirement.**  
 （RFC 9700 の規範語は MUST NOT ではなく SHOULD NOT であり、その要件には仕様本文で条件が示されています。）
 
-## 5. RFC 6749 と RFC 9700 を区別して読む
+## 5. Browser-based Application では RFC 10017 が MUST NOT とする
 
-RFC 6749 §4.2–§4.2.2 は Implicit Grant の wire-level protocol を定義しています。一方、RFC 9700 §2.1.2 は、その flow を現在の Best Current Practice でどのように扱うかを規定しています。
+2026年8月に Best Current Practice として公開された RFC 10017 §7.2 は、Browser-based Application について RFC 9700 より強い要件を定めています。Browser-based Client は Access Token を取得するために Implicit Grant を使用してはなりません（**MUST NOT**）。Authorization Server は Authorization Response で Access Token を発行してはならず（**MUST NOT**）、Access Token は Token Endpoint からのみ発行しなければなりません（**MUST**）。
 
-この記事では、RFC 9700 の `SHOULD NOT` を `MUST NOT` に読み替えません。また、例外条件を満たすかどうかは個別 deployment の事実関係に依存するため、一方の設計を独自に推奨しません。
+RFC 10017 は Browser-based Application を、通常 JavaScript などで実装され、Web browser に動的に download されて実行される application と定義しています。この対象に該当する場合、RFC 9700 の一般的な `SHOULD NOT` だけを根拠に Implicit Grant の例外利用を判断するのは不十分です。
+
+**For browser-based clients, RFC 10017 tightens the guidance from SHOULD NOT to MUST NOT.**  
+（Browser-based Client については、RFC 10017 が SHOULD NOT から MUST NOT へ要件を強化しています。）
+
+## 6. RFC 6749、RFC 9700、RFC 10017 を区別して読む
+
+RFC 6749 §4.2–§4.2.2 は Implicit Grant の wire-level protocol を定義しています。RFC 9700 §2.1.2 は OAuth Client 一般に対する現在の Best Current Practice として条件付きの `SHOULD NOT` を規定し、RFC 10017 §7.2 は Browser-based Application に対象を限定して `MUST NOT` を規定しています。
+
+したがって、RFC 9700 の `SHOULD NOT` を一般に `MUST NOT` と読み替えることも、Browser-based Application に RFC 9700 の例外条件だけを適用することも適切ではありません。適用対象となる仕様を区別して規範強度を判断する必要があります。
 
 ## Primary sources
 
 - RFC 6749, §4.2–§4.2.2, *The OAuth 2.0 Authorization Framework*: https://www.rfc-editor.org/rfc/rfc6749.html
 - RFC 9700, §2.1.2, *Best Current Practice for OAuth 2.0 Security*: https://www.rfc-editor.org/rfc/rfc9700.html
+- RFC 10017, §7.2, *OAuth 2.0 for Browser-Based Applications*: https://www.rfc-editor.org/rfc/rfc10017.html
+
+最終確認: 2026-09-22
