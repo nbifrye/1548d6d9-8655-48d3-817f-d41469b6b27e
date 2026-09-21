@@ -5,7 +5,7 @@ date: 2026-09-19 04:38:00 +0900
 categories: [authorization, oauth, fapi]
 ---
 
-FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の request / response に署名を付与し、その署名を検証するためのプロファイルです。2025年9月25日に公開された OpenID Final Specification を対象とし、この記事では **Authorization Request の署名**だけを扱います。
+FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の request / response に署名を付与し、その署名を検証するためのプロファイルです。仕様文書の日付は2025年9月25日で、OpenID Foundation は翌9月26日に membership による OpenID Final Specification としての承認を発表しました。この記事では **Authorization Request の署名**だけを扱います。
 
 ## この記事について
 
@@ -91,8 +91,9 @@ FAPI 2.0 Message Signing §5.3 は、FAPI 2.0 が PAR を使用するため、pu
 ## 8. 一次資料
 
 - OpenID Foundation: [FAPI 2.0 Message Signing — Final](https://openid.net/specs/fapi-message-signing-2_0-final.html)
+- OpenID Foundation: [FAPI 2.0 Message Signing Final Specification Approved](https://openid.net/fapi-2-message-signing-final-specification-approved/)
 - RFC Editor: [RFC 9101 — The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)](https://www.rfc-editor.org/rfc/rfc9101.html)
 - RFC Editor: [RFC 9126 — OAuth 2.0 Pushed Authorization Requests](https://www.rfc-editor.org/rfc/rfc9126.html)
 
 参照した主要節: FAPI 2.0 Message Signing §5.3, §5.3.1, §5.3.2, §6.4  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
