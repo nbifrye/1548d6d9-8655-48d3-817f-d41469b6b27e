@@ -11,16 +11,6 @@ tags: [OAuth, RFC7592, Dynamic Client Registration]
 **この記事で伝えること:** RFC 7592 の Client Configuration Endpoint で、Registration Access Token を使って GET / PUT / DELETE を行う位置と主要要件  
 **扱わないこと:** RFC 7591 の初回 Client Registration Request の詳細、Client Metadata 各項目の一般的な意味、Registration Access Token の発行ポリシー、登録後の Authorization / Token flow
 
-## Article brief
-
-- **Reader:** 動的登録済み Client の registration lifecycle を実装・レビューする開発者。
-- **Question:** 初回登録後、Client はどの endpoint に何を提示し、現在の登録情報を参照・更新・削除するのか。
-- **Answer:** `registration_client_uri` が示す Client Configuration Endpoint に `registration_access_token` を Bearer Token として提示し、GET / PUT / DELETE を使い分ける処理と主要な規範要件を確認できる。
-- **Scope:** RFC 7592 §2–§3 の Client Configuration Endpoint、read / update / delete、Client Information Response。
-- **Out of scope:** RFC 7591 の初回登録処理、個別 deployment の登録可否・credential rotation frequency、OAuth authorization flow。
-- **Primary sources:** RFC 7592 §1.3, §2, §2.1–§2.3, §3, Appendix B。Bearer Token の提示について RFC 6750 §2.1。
-- **Diagram:** Client と Client Configuration Endpoint の GET / PUT / DELETE を縦方向の flowchart で示す。
-
 RFC 7592 は Experimental RFC です。すべての Dynamic Client Registration 対応 Authorization Server が、この registration management protocol をサポートするわけではありません（RFC 7592 §1）。
 
 ## 1. 初回登録と registration management は別の処理
@@ -154,4 +144,4 @@ RFC 7591 の Dynamic Client Registration は、Client Registration Endpoint に 
 - RFC Editor: [RFC 6750 — The OAuth 2.0 Authorization Framework: Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750.html)
 
 参照した主要節: RFC 7592 §1, §1.3, §2, §2.1, §2.2, §2.3, §3, Appendix A, Appendix B; RFC 6750 §2.1  
-最終確認: 2026-09-20
+最終確認: 2026-09-21
