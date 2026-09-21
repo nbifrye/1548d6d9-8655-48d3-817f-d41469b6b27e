@@ -94,6 +94,7 @@ permalink: /roadmap/
 - SCIM resource deletion の DELETE response と削除後の observable behavior → `2026-09-21-scim-delete-resource.md`
 - SCIM PUT resource replacement の attribute mutability / required と replacement semantics → `2026-09-21-scim-put-resource-replacement.md`
 - SCIM POST resource creation の attribute processing / 201 Created / resource location → `2026-09-21-scim-post-resource-creation.md`
+- SCIM Error response の HTTP status / `status` / `scimType` / `detail` 構造 → `2026-09-22-scim-error-response.md`
 
 ### WebAuthn
 
