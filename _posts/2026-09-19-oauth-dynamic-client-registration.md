@@ -75,7 +75,7 @@ RFC 7591 §1.3 の abstract flow では、Client または Developer が desired
 
 ## 4. 成功 response は登録結果を JSON で返す
 
-RFC 7591 §3.2.1 では、成功した registration response に `client_id` が含まれます。client secret を発行する場合は `client_secret` も含まれます。
+RFC 7591 §3.2 では、registration が成功した場合、Authorization Server は HTTP `201 Created` と `application/json` の body を返します。§3.2.1 では、その成功 response に `client_id` が含まれます。client secret を発行する場合は `client_secret` も含まれます。
 
 以下は構造を示すための非規範的な例です。
 
@@ -141,5 +141,5 @@ Registration Request では、`redirect_uris` などの client metadata が JSON
 - RFC Editor: [RFC 7591 — OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591.html)
 - RFC Editor: [RFC 7591 Errata — Errata ID 7782](https://www.rfc-editor.org/errata/eid7782)
 
-参照した主要節: §1.3, §2, §3, §3.1, §3.2.1, §3.2.2  
+参照した主要節: §1.3, §2, §3, §3.1, §3.2, §3.2.1, §3.2.2  
 最終確認: 2026-09-21
