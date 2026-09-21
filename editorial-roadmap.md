@@ -61,6 +61,7 @@ permalink: /roadmap/
 - Resource Owner Password Credentials Grant の request 構造と RFC 9700 の利用禁止要件 → `2026-09-22-oauth-resource-owner-password-credentials.md`
 - Client password authentication の HTTP Basic / request body credential 配置と要件 → `2026-09-22-oauth-client-password-authentication.md`
 - Implicit Grant の `response_type=token` / fragment response と RFC 9700 の `SHOULD NOT` → `2026-09-22-oauth-implicit-grant.md`
+- OAuth `redirect_uri` の登録 / validation / exact string matching → `2026-09-22-oauth-redirect-uri-validation.md`
 
 ### OpenID Connect / FAPI
 
