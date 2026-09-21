@@ -62,6 +62,7 @@ permalink: /roadmap/
 - Client password authentication の HTTP Basic / request body credential 配置と要件 → `2026-09-22-oauth-client-password-authentication.md`
 - Implicit Grant の `response_type=token` / fragment response と RFC 9700 の `SHOULD NOT` → `2026-09-22-oauth-implicit-grant.md`
 - OAuth `redirect_uri` の登録 / validation / exact string matching → `2026-09-22-oauth-redirect-uri-validation.md`
+- OAuth `state` parameter の request / response と CSRF protection の要件 → `2026-09-22-oauth-state-csrf-protection.md`
 
 ### OpenID Connect / FAPI
 
