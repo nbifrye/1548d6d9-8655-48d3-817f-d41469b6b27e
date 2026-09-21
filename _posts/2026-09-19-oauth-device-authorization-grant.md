@@ -124,6 +124,8 @@ RFC 8628 §3.5 は Device Authorization Grant 固有の Token Endpoint error を
 
 `access_denied` は利用者が authorization request を拒否したことを表します。`expired_token` は `device_code` の有効期限が切れたことを表し、Client は Device Authorization Request を新たに開始できます（MAY）が、不要な polling を避けるため、再開前に利用者の操作を待つべきです（SHOULD）。
 
+`authorization_pending` と `slow_down` 以外の error response を受け取った場合、Client は polling を停止しなければなりません（MUST）。また、connection timeout が発生した場合、Client は再試行前に自律的に polling 頻度を下げなければなりません（MUST）。その方法として、timeout ごとに polling interval を倍増するような exponential backoff が RECOMMENDED です。
+
 利用者が grant を承認すると、Token Endpoint は RFC 6749 §5.1 の成功 response を返します（RFC 8628 §3.5）。
 
 ## 一次資料
