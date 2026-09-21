@@ -120,9 +120,9 @@ RFC 8628 §3.5 は Device Authorization Grant 固有の Token Endpoint error を
 
 `authorization_pending` は利用者の interaction がまだ完了していない状態です。Client は Access Token Request を繰り返すことが SHOULD ですが、各 request の前に Device Authorization Response の `interval` 秒以上、`interval` がなければ 5 秒以上待たなければなりません（MUST）。
 
-`slow_down` を受け取った場合、Client はその request と以降の request について polling interval を少なくとも 5 秒増加させなければなりません（MUST）。
+`slow_down` を受け取った場合、Client はその request と以降の request について polling interval を 5 秒増加させなければなりません（MUST）。
 
-`access_denied` は利用者が authorization request を拒否したことを表します。`expired_token` は `device_code` の有効期限が切れたことを表し、Client は Device Authorization Request を新たに開始することが MAY です。
+`access_denied` は利用者が authorization request を拒否したことを表します。`expired_token` は `device_code` の有効期限が切れたことを表し、Client は Device Authorization Request を新たに開始できます（MAY）が、不要な polling を避けるため、再開前に利用者の操作を待つべきです（SHOULD）。
 
 利用者が grant を承認すると、Token Endpoint は RFC 6749 §5.1 の成功 response を返します（RFC 8628 §3.5）。
 
@@ -131,4 +131,4 @@ RFC 8628 §3.5 は Device Authorization Grant 固有の Token Endpoint error を
 - RFC Editor: [RFC 8628 — OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628.html)
 
 参照した主要節: §1, §3.1, §3.2, §3.3, §3.3.1, §3.4, §3.5  
-最終確認: 2026-09-19
+最終確認: 2026-09-21
