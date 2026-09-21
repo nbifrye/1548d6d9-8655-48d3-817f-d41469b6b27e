@@ -29,6 +29,8 @@ RFC 8414 §2 では metadata member を定義しています。代表的なも�
 
 ここで `response_types_supported` の REQUIRED は、公開済み RFC 8414 §2 の規範本文に従った表記です。一方、RFC Editor には、Authorization Endpoint を使う grant type を1つもサポートしない Authorization Server ではこの member を必須にしないよう変更する Technical Errata ID 7793 が登録されています。2026-09-21 時点の status は Reported であり、Verified ではないため、本記事では errata の提案を確定した規範要件として扱いません。
 
+RFC 8414 の registry には、後続仕様によって metadata member が追加されています。たとえば RFC 9728 §4 は **`protected_resources`** を OPTIONAL member として定義し、この Authorization Server とともに使用できる OAuth Protected Resource の resource identifier を JSON array で列挙できるようにしています。これは RFC 8414 の取得・`issuer` 検証手順を置き換えるものではありません。
+
 この記事では、これらすべての metadata member を列挙するのではなく、取得と検証の流れを理解するために必要な member に限定します。
 
 ## 2. issuer identifier から well-known URL を構成する
@@ -137,6 +139,7 @@ RFC 8414 §6.1 は implementation が TLS をサポートしなければなら�
 
 - RFC Editor: [RFC 8414 — OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/rfc/rfc8414.html)
 - RFC Editor: [RFC 8414 Errata — Errata ID 7793](https://www.rfc-editor.org/errata/eid7793)
+- RFC Editor: [RFC 9728 — OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728.html)
 
-参照した主要節: §1, §2, §3, §3.1, §3.2, §3.3, §6.1  
+参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §6.1、RFC 9728 §4  
 最終確認: 2026-09-21
