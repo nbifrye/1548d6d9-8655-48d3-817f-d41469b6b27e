@@ -113,6 +113,8 @@ RFC 8414 §3.3 は、metadata response の `issuer` value が、metadata URL を
 
 値が同一でない場合、Client は response に含まれる data を使用してはなりません（MUST NOT, §3.3）。
 
+この「同一」の判定には RFC 8414 §4 の string comparison rule が適用されます。JSON による escape を取り除いた Unicode code point 列を比較し、Unicode normalization を適用してはならず（MUST NOT）、Unicode code point 単位の equality comparison を行わなければなりません（MUST）。したがって、URL の意味が同じに見えることを理由に別表現へ正規化してから `issuer` を比較する処理にはしません。
+
 たとえば Client が次の issuer identifier から metadata URL を構成した場合、
 
 ```text
@@ -141,5 +143,5 @@ RFC 8414 §6.1 は implementation が TLS をサポートしなければなら�
 - RFC Editor: [RFC 8414 Errata — Errata ID 7793](https://www.rfc-editor.org/errata/eid7793)
 - RFC Editor: [RFC 9728 — OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728.html)
 
-参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §6.1、RFC 9728 §4  
-最終確認: 2026-09-21
+参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §4, §6.1、RFC 9728 §4  
+最終確認: 2026-09-22
