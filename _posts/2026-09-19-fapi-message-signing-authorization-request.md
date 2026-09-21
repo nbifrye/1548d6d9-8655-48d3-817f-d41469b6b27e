@@ -18,7 +18,7 @@ FAPI 2.0 Message Signing は、FAPI 2.0 Security Profile に基づく特定の r
 
 FAPI 2.0 Message Signing §5.3 は、pushed authorization request を署名することで NR1 を扱います。また FAPI 2.0 が PAR を使用するため、signed pushed authorization request によって front-channel の Authorization Request に関する NR2 も扱われると説明しています。
 
-ここで重要なのは、署名された request object を Browser 経由で Authorization Endpoint へ直接送る構成ではないことです。Client は signed request object を **PAR Endpoint** へ送ります。
+ここで重要なのは、署名された request object を Browser 経由で Authorization Endpoint へ直接送る構成ではないことです。Client は signed request object を **PAR Endpoint** へ送ります。さらに、FAPI 2.0 Security Profile §5.3.3.2 は Client に対し、Authorization Endpoint へ送る request parameter を `client_id` と `request_uri` だけに限定することを要求しています（shall）。その他の Authorization Request parameter は pushed authorization request で送信します。
 
 <pre class="mermaid">
 sequenceDiagram
@@ -91,9 +91,10 @@ FAPI 2.0 Message Signing §5.3 は、FAPI 2.0 が PAR を使用するため、pu
 ## 8. 一次資料
 
 - OpenID Foundation: [FAPI 2.0 Message Signing — Final](https://openid.net/specs/fapi-message-signing-2_0-final.html)
+- OpenID Foundation: [FAPI 2.0 Security Profile — Final](https://openid.net/specs/fapi-security-profile-2_0-final.html)
 - OpenID Foundation: [FAPI 2.0 Message Signing Final Specification Approved](https://openid.net/fapi-2-message-signing-final-specification-approved/)
 - RFC Editor: [RFC 9101 — The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)](https://www.rfc-editor.org/rfc/rfc9101.html)
 - RFC Editor: [RFC 9126 — OAuth 2.0 Pushed Authorization Requests](https://www.rfc-editor.org/rfc/rfc9126.html)
 
-参照した主要節: FAPI 2.0 Message Signing §5.3, §5.3.1, §5.3.2, §6.4  
+参照した主要節: FAPI 2.0 Message Signing §5.3, §5.3.1, §5.3.2, §6.4、FAPI 2.0 Security Profile §5.3.3.2  
 最終確認: 2026-09-21
