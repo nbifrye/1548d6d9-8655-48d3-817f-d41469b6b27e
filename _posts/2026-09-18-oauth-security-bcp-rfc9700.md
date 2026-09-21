@@ -83,6 +83,8 @@ RFC 9700 §2.1.1 は、PKCE を使う Client が、Authorization Request で ver
 
 Authorization Server は PKCE をサポートしなければならず（MUST）、Client が PKCE 対応を検出できる手段も提供しなければなりません（MUST）。
 
+2026年8月に BCP として公開された RFC 10017 **OAuth 2.0 for Browser-Based Applications** は、browser-based application に対して RFC 9700 の推奨をさらに具体化しています。Browser-based application が Public Client として access token を取得する場合は PKCE を実装しなければならず（MUST）、Authorization Server はそのような Client に対して PKCE をサポートし、適用しなければなりません（MUST）。RFC 10017 は browser-based application を対象とする追加の BCP であり、RFC 9700 を置き換えるものではありません。
+
 ## 6. PKCE downgrade を防止する
 
 RFC 9700 §4.8.2 は PKCE downgrade attack を扱っています。
@@ -115,6 +117,8 @@ flowchart TD
 - **PKCE challenge method:** verifier を Authorization Request で露出しない方式を使用する（SHOULD）。
 - **PKCE downgrade:** challenge の有無を transaction に結び付け、不整合な Token Request を拒否する。
 
+Browser-based application には、RFC 10017 による追加要件も適用されます。
+
 ## 8. この記事で扱っていない RFC 9700 の主題
 
 RFC 9700 には、このほかにも次の主題があります。
@@ -134,6 +138,7 @@ RFC 9700 には、このほかにも次の主題があります。
 
 - RFC Editor: [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html)
 - RFC Editor: [RFC 7636 — Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/rfc/rfc7636.html)
+- RFC Editor: [RFC 10017 — OAuth 2.0 for Browser-Based Applications](https://www.rfc-editor.org/rfc/rfc10017.html)
 
-参照した主要節: RFC 9700 §2.1, §2.1.1, §4.1, §4.8.2  
-最終確認: 2026-09-19
+参照した主要節: RFC 9700 §2.1, §2.1.1, §4.1, §4.8.2; RFC 10017 §6.3.2.1  
+最終確認: 2026-09-22
