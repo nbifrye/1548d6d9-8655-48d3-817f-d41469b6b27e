@@ -51,6 +51,9 @@ permalink: /roadmap/
 - Browser-Based Application の BFF / token-mediating backend / browser-based OAuth client の architecture pattern → `2026-09-20-oauth-browser-application-architecture-patterns.md`
 - Client Credentials Grant の confidential client authentication / Token Request / Access Token Response → `2026-09-21-oauth-client-credentials-grant.md`
 - Refresh Token による Access Token 更新の request / validation / response → `2026-09-21-oauth-refresh-token-request.md`
+- Authorization Code Grant の Authorization Endpoint request / response → `2026-09-21-oauth-authorization-code-authorization-endpoint.md`
+- Authorization Code の Token Endpoint exchange / validation / response → `2026-09-21-oauth-authorization-code-token-exchange.md`
+- Token Endpoint の error response / standard error code / `invalid_client` の HTTP status 処理 → `2026-09-21-oauth-token-endpoint-error-response.md`
 
 ### OpenID Connect / FAPI
 
