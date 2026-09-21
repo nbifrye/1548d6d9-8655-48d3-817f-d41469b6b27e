@@ -49,3 +49,8 @@ oauth-protected-resource-metadata: "Protected Resource の resource identifier �
 oidc-authorization-code-flow-id-token-role: "OpenID Connect Authorization Code Flow で ID Token が認証結果を Claims として RP に伝え、Subject Identifier を得る役割を整理します。"
 oidc-userinfo-endpoint: "UserInfo Endpoint に Bearer Access Token を送り、Claims を受け取り、UserInfo Response の sub を ID Token の sub と照合する処理を整理します。"
 oidc-provider-configuration-discovery: "既知の Issuer Identifier から OpenID Provider Configuration を取得し、metadata の issuer を照合するまでの Discovery 処理を整理します。"
+scim-post-resource-creation: "SCIM の POST による単一 resource 作成、Service Provider による id / meta の割り当て、201 Created と Location、uniqueness conflict を整理します。"
+oauth-client-credentials-grant: "Client Credentials Grant の Token Request / Response と、confidential client に適用される要件を整理します。"
+oauth-refresh-token-request: "Refresh Token を Token Endpoint に提示して Access Token を更新する request、validation、response を整理します。"
+oauth-authorization-code-token-exchange: "取得済み Authorization Code を Token Endpoint で交換するときの form parameter、Client authentication、code / redirect URI の検証、Token Response を整理します。"
+oauth-authorization-code-authorization-endpoint: "Authorization Code Grant の Authorization Endpoint で、Authorization Request の query parameter、request validation、成功時の code / state、error response を整理します。"
