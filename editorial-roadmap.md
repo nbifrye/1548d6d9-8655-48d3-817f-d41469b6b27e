@@ -76,6 +76,7 @@ permalink: /roadmap/
 - SCIM User.password の writeOnly / returned=never と設定・変更時の処理 → `2026-09-21-scim-password-writeonly.md`
 - SCIM authentication / authorization の仕様境界と access control requirement → `2026-09-21-scim-authentication-authorization.md`
 - SCIM resource versioning の ETag / `meta.version` と条件付き request → `2026-09-21-scim-resource-versioning-etag.md`
+- SCIM partial resource representation の `attributes` / `excludedAttributes` と `returned` characteristic → `2026-09-21-scim-partial-resource-representation.md`
 
 ### WebAuthn
 
