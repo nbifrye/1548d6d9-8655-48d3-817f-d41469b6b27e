@@ -49,7 +49,7 @@ RFC 9700 §2.1 は、Authorization Server が事前登録済み redirect URI と
 
 RFC 9700 §2.1 は、Client が CSRF を防止することを MUST としています。
 
-Authorization Server が PKCE をサポートしていることを Client が確認できる場合、Client は PKCE が提供する CSRF protection に依存してもよいと規定されています。
+Authorization Server が PKCE をサポートしていることを Client が確認できる場合、Client は PKCE が提供する CSRF protection に依存してもよいと規定されています。OpenID Connect flow では `nonce` parameter も CSRF protection を提供します。これらを使用しない場合は、User Agent に安全に結び付けた one-time use の CSRF token を `state` parameter で使用しなければなりません（MUST）。
 
 PKCE challenge または OpenID Connect の `nonce` を transaction binding に利用する場合、その値は transaction-specific であり、Client とフローを開始した User Agent に安全に結び付けられていなければなりません。
 
