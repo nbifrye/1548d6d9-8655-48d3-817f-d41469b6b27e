@@ -82,6 +82,14 @@ RFC 7523 §3 は JWT の validation criteria を定義しています。JWT Clie
 
 上の `iss`、`aud`、時刻、`jti` の値は illustrative value です。RFC 7523 §5 は issuer / audience identifier、key、one-time-use restriction、maximum JWT lifetime などの具体値について当事者間の agreement が必要であり、その交換方法を scope 外としています。
 
+### RFC 7523 の更新作業
+
+2026年9月21日時点では RFC 7523 が引き続き公開済みの規範仕様です。一方、RFC 7523 などを更新する `draft-ietf-oauth-rfc7523bis-11` は IESG の承認を経て RFC Editor Queue の First Edit にありますが、まだ RFC として公開されていません。
+
+この Internet-Draft は JWT Client Authentication の `aud` を厳格化し、Authorization Server の RFC 8414 `issuer` identifier だけを sole audience として使用することを MUST、Token Endpoint URL を audience value として使用しないことを MUST NOT とする予定です。また、`typ` に `client-authentication+jwt` または profile が定義するより具体的な explicit type を使用することを SHOULD としています。
+
+したがって、上記の「Token Endpoint URL は `aud` に使用できる（MAY）」は現行 RFC 7523 の要件としては正確ですが、更新 RFC が公開された場合には見直しが必要です。
+
 ## 4. Authorization Server は JWT を検証する
 
 RFC 7523 §3 により、Authorization Server は Client Authentication に JWT を利用する前に規定された criteria で JWT を検証しなければなりません（MUST）。追加の restriction や policy は Authorization Server の裁量です。
@@ -113,6 +121,7 @@ JWT Authorization Grant が invalid な場合の `invalid_grant` は §3.1 の�
 ## 一次資料
 
 - RFC Editor: [RFC 7523 — JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants](https://www.rfc-editor.org/rfc/rfc7523.html)
+- IETF Datatracker: [draft-ietf-oauth-rfc7523bis — Updates to OAuth 2.0 JSON Web Token (JWT) Client Authentication and Assertion-Based Authorization Grants](https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc7523bis/)
 
-参照した主要節: §1, §2.2, §3, §3.2, §5  
-最終確認: 2026-09-19
+参照した主要節: RFC 7523 §1, §2.2, §3, §3.2, §5、draft-ietf-oauth-rfc7523bis-11 §4  
+最終確認: 2026-09-21
