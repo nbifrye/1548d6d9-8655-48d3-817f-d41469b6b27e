@@ -156,10 +156,13 @@ Level 3 §7.2 は、RP の verification procedure を次の順序で規定して
 8. `rpIdHash` が期待する RP ID の SHA-256 ハッシュと一致することを確認する。
 9. UP flag を確認する。
 10. user verification が必要な場合は UV flag を確認する。
-11. `clientDataJSON` の SHA-256 ハッシュを計算する。
-12. 登録済み credential public key を使い、`authenticatorData || SHA-256(clientDataJSON)` に対する signature を検証する。
-13. signature counter を使用する場合は、保存済み `signCount` と今回の値を比較する。
-14. extension outputs を処理する。
+11. BE flag が設定されていない場合、BS flag も設定されていないことを確認する。
+12. credential の backup state を RP の business logic や policy で使用する場合、今回の BE / BS flags を保存済みの `backupEligible` / `backupState` と比較し、RP の policy を適用する。
+13. `clientDataJSON` の SHA-256 ハッシュを計算する。
+14. 登録済み credential public key を使い、`authenticatorData || SHA-256(clientDataJSON)` に対する signature を検証する。
+15. signature counter を使用する場合は、保存済み `signCount` と今回の値を比較する。
+16. extension outputs を処理する。
+17. `signCount` と `backupState` など、仕様が定める credential record の状態値を更新する。
 
 signature counter について、§7.2 は今回の値が保存済み値以下である場合を、Authenticator が clone された可能性を示す signal ではあるが proof ではないと説明しています。その後の処理は RP の判断に委ねられています。
 
@@ -173,4 +176,4 @@ signature counter について、§7.2 は今回の値が保存済み値以下�
 - W3C publication history: [WebAuthn Level 3 publication history](https://www.w3.org/standards/history/webauthn-3/)
 
 参照した主要節: §4, §5.5, §6.1, §6.5, §7.1, §7.2  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
