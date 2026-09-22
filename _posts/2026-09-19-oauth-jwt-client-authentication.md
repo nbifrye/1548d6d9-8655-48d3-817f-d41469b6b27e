@@ -12,6 +12,8 @@ categories: [oauth, jwt]
 **この記事で伝えること:** RFC 7523 の JWT Client Authentication で `client_assertion_type` / `client_assertion` をどこに指定し、JWT に何を含め、Authorization Server が何を検証するか  
 **扱わないこと:** JWT Bearer Authorization Grant、JWT の取得方法、鍵配布方法、個別 profile が追加する制約
 
+RFC 7523 は 2015 年 5 月に公開された Proposed Standard です。
+
 ## 1. JWT は Client Authentication の credential として使う
 
 RFC 7523 §1 は、JWT を OAuth Client が Authorization Server に対して認証するための mechanism として定義しています。JWT を authorization grant として使う方法も同じ RFC にありますが、本記事では扱いません。
@@ -94,7 +96,7 @@ RFC 7523 §3 は JWT の validation criteria を定義しています。JWT Clie
 
 RFC 7523 §3 により、Authorization Server は Client Authentication に JWT を利用する前に規定された criteria で JWT を検証しなければなりません（MUST）。追加の restriction や policy は Authorization Server の裁量です。
 
-claim の検証に加えて、JWT は issuer による digital signature または MAC が適用されていなければならず（MUST）、Authorization Server は無効な signature または MAC の JWT を拒否しなければなりません（MUST, §3）。また、JWT としてその他の点でも valid でない JWT を拒否しなければなりません（MUST, §3）。
+claim の検証に加えて、JWT は issuer による digital signature または MAC が適用されていなければならず（MUST）、Authorization Server は無効な signature または MAC の JWT を拒否しなければなりません（MUST, §3）。また、JWT としてその他の点でも valid でない JWT を拒否しなければなりません（MUST, §3）。RFC 7523 §5 は、この profile の mandatory-to-implement JWS algorithm を `RS256` と定めています。
 
 RFC 7523 自体は replay protection を必須にはしていません。`jti` を使った replay prevention は MAY です。
 
