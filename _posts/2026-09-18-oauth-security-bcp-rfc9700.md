@@ -5,7 +5,7 @@ date: 2026-09-18 09:10:00 +0900
 categories: [authorization, oauth]
 ---
 
-RFC 9700 **Best Current Practice for OAuth 2.0 Security** は、2025年1月に公開された BCP 240 です。
+RFC 9700 **Best Current Practice for OAuth 2.0 Security** は、2025年1月に公開された BCP 240 です。RFC 6749、RFC 6750、RFC 6819 を更新します。
 
 ## この記事について
 
