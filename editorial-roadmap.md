@@ -113,6 +113,10 @@ permalink: /roadmap/
 - WebAuthn `clientDataJSON.crossOrigin` / `topOrigin` の cross-origin iframe context / RP verification → `2026-09-22-webauthn-cross-origin-client-data.md`
 - WebAuthn user presence の test / UP flag / registration・authentication verification → `2026-09-22-webauthn-user-presence-flag.md`
 - WebAuthn attestation conveyance の `none` / `indirect` / `direct` / `enterprise` と attestation object との関係 → `2026-09-22-webauthn-attestation-conveyance.md`
+- WebAuthn attestation statement verification / acceptable trust anchor / trustworthiness assessment → `2026-09-22-webauthn-attestation-verification-trust.md`
+- WebAuthn authentication の `response.userHandle` / user account / credential record の対応確認 → `2026-09-22-webauthn-user-handle-authentication.md`
+- WebAuthn `pubKeyCredParams` の credential algorithm preference / registration 時の `alg` 照合 → `2026-09-22-webauthn-pubkeycredparams-algorithm-selection.md`
+- WebAuthn `PublicKeyCredentialDescriptor` の `type` / `id` / `transports` と `excludeCredentials` / `allowCredentials` での利用 → `2026-09-22-webauthn-credential-descriptor.md`
 
 ### JOSE
 
