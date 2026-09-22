@@ -41,7 +41,7 @@ RFC 9449 §4.2 では、DPoP proof JWT の JOSE Header に少なくとも次の 
 - **`alg`:** JWS の asymmetric digital signature algorithm。値を `none` または symmetric algorithm にしてはならない（MUST NOT）。
 - **`jwk`:** Client が選択した公開鍵を表す JWK。private key を含めてはならない（MUST NOT）。
 
-受信側 Server は §4.3 に従い、`DPoP` HTTP request header field が複数存在しないこと、header field value が単一の well-formed JWT であること、§4.2 の必須 claim がすべて含まれること、`typ` が `dpop+jwt` であることを確認しなければなりません（MUST）。さらに、`alg` が登録済みの asymmetric digital signature algorithm であり、アプリケーションでサポートされ、local policy 上許容されていることを確認し、`jwk` に含まれる公開鍵で JWT signature を検証しなければなりません（MUST）。
+受信側 Server は §4.3 に従い、`DPoP` HTTP request header field が複数存在しないこと、header field value が単一の well-formed JWT であること、§4.2 の必須 claim がすべて含まれること、`typ` が `dpop+jwt` であることを確認しなければなりません（MUST）。さらに、`alg` が登録済みの asymmetric digital signature algorithm であり、アプリケーションでサポートされ、local policy 上許容されていることを確認し、`jwk` に含まれる公開鍵で JWT signature を検証しなければなりません（MUST）。§11.6 はこれに加えて、DPoP proof の署名には安全とみなされる asymmetric digital signature algorithm だけを使用できるよう実装者が保証しなければならない（MUST）としています。
 
 この署名検証によって、Server は DPoP proof に含まれる公開鍵に対応する秘密鍵を送信者が所持していることを確認します。
 
@@ -49,7 +49,7 @@ RFC 9449 §4.2 では、DPoP proof JWT の JOSE Header に少なくとも次の 
 
 DPoP proof の payload は、少なくとも `jti`、`htm`、`htu`、`iat` を含まなければなりません（MUST）。
 
-- **`jti`:** DPoP proof JWT の識別子。同じ context と有効期間内で同じ値が再利用される確率が無視できるほど小さくなるよう割り当てる必要があります。
+- **`jti`:** DPoP proof JWT の識別子。同じ context と有効期間内で同じ値が再利用される確率が無視できるほど小さくなるよう割り当てなければなりません（MUST）。
 - **`htm`:** proof を付与する HTTP request の method。
 - **`htu`:** proof を付与する HTTP request の target URI。query と fragment は含めません。
 - **`iat`:** proof JWT の creation timestamp。
@@ -127,6 +127,6 @@ RFC 9449 §11.7 は、DPoP が request payload や一般的な request header �
 
 文書ステータス: Proposed Standard（Standards Track）  
 発行: 2023-09  
-参照した主要節: §2, §4, §4.2, §4.3, §6, §6.1, §6.2, §7, §7.1, §7.2, §11.1, §11.7  
+参照した主要節: §2, §4, §4.2, §4.3, §6, §6.1, §6.2, §7, §7.1, §7.2, §11.1, §11.6, §11.7  
 Verified Errata: EID 7646（Editorial。§4.2 の “authentication server” を “authorization server” に訂正）  
 最終確認: 2026-09-22
