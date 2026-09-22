@@ -96,6 +96,7 @@ permalink: /roadmap/
 - SCIM POST resource creation の attribute processing / 201 Created / resource location → `2026-09-21-scim-post-resource-creation.md`
 - SCIM Error response の HTTP status / `status` / `scimType` / `detail` 構造 → `2026-09-22-scim-error-response.md`
 - SCIM POST query の `/.search` / SearchRequest body / ListResponse → `2026-09-22-scim-post-search.md`
+- SCIM provisioning event の `full` / `notice` と `data` / `attributes` payload → `2026-09-22-scim-provisioning-events-full-notice.md`
 
 ### WebAuthn
 
