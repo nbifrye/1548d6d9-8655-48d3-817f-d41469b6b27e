@@ -43,6 +43,8 @@ RFC 7643 §6 では、特に次の属性が resource type と resource represent
 
 `schemaExtensions` の各要素は `schema` と `required` を持ちます。`schema` は extended Schema resource の `id` と等しいことが **MUST** です。`required` が `true` の場合、その resource type の resource は当該 schema extension と、その extension で required と宣言された attribute を含むことが **MUST** です。`false` の場合、その schema extension を省略することが **MAY** です（RFC 7643 §6）。
 
+RFC 7643 §8.7.2 の ResourceType schema representation には、`schemaExtensions` の `multiValued` を `false` とする記述がありますが、RFC Editor の Verified Errata ID 7522 で `true` に訂正されています。したがって `schemaExtensions` は複数の complex value を持てる属性として扱います。
+
 ## 非規範的な HTTP / JSON 例
 
 次は配置と構造を示すための**非規範的な例**です。値は illustrative value です。
@@ -102,3 +104,4 @@ flowchart TD
 - RFC 7644, §3.2 "SCIM Endpoints and HTTP Methods"
 - RFC 7644, §4 "Service Provider Configuration Endpoints"
 - RFC 7643, §6 "ResourceType Schema"
+- RFC 7643, Verified Errata ID 7522
