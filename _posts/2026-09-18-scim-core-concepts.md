@@ -5,9 +5,9 @@ date: 2026-09-18 09:30:00 +0900
 categories: [provisioning, scim]
 ---
 
-SCIM 2.0 の基本データモデルは RFC 7643、基本プロトコルは RFC 7644 で定義されています。
+SCIM 2.0 の基本データモデルは RFC 7643、基本プロトコルは RFC 7644 で定義されています。RFC 7643 / RFC 7644 はいずれも 2015年9月公開の Proposed Standard です。
 
-なお、RFC 7643 / RFC 7644 は、その後 RFC 9865（2025年10月、cursor-based pagination）と RFC 9967（2026年5月、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
+なお、RFC 7643 / RFC 7644 は、その後 RFC 9865（2025年10月、Proposed Standard、cursor-based pagination）と RFC 9967（2026年5月、Proposed Standard、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
 
 ## この記事について
 
@@ -54,7 +54,7 @@ SCIM resource には共通 attribute もあります。
 - **`meta.version`:** resource version。Service Provider が versioning をサポートする場合に使用される OPTIONAL な sub-attribute。
 - **`meta.location`:** resource URI。
 
-Service Provider が resource を受理した後、`id` と `meta` の値は Service Provider が割り当てます。`meta` の sub-attribute も Service Provider が割り当てますが、`meta.version` のサポートは OPTIONAL です。
+Service Provider が resource を受理した後、`id` と `meta` およびその sub-attribute の値は Service Provider が割り当てなければなりません（MUST、RFC 7643 §3.1）。ただし、`meta.version` のサポートは OPTIONAL です。
 
 ## 3. Attribute には扱い方を示す特性が定義される
 
@@ -88,7 +88,7 @@ sequenceDiagram
 
 Client は `/Users` endpoint に User representation を送信します。Service Provider は schema rule に従って request を処理し、作成に成功した場合は HTTP 201 (Created) を返さなければなりません（SHALL）。Response body には作成後の resource representation を含めることが推奨されています（SHOULD）。
 
-Response の `Location` header には、新しい resource の URI を含めなければなりません（SHALL）。同じ URI は response body の `meta.location` にも含まれます。
+Response の `Location` header には、新しい resource の URI を含めなければなりません（SHALL）。同じ URI は response body の `meta.location` にも含めなければなりません（SHALL）。
 
 ## 5. 作成した User を取得する
 
@@ -118,11 +118,11 @@ Client は resource representation を送信し、Service Provider は schema �
 
 RFC 7644 §3.5.2 の PATCH は OPTIONAL server function です。対応可否は `/ServiceProviderConfig` で discovery できます。
 
-PATCH request は次の schema URI を使用します。
+PATCH request body は `schemas` attribute に次の schema URI を含めなければなりません（MUST）。
 
 `urn:ietf:params:scim:api:messages:2.0:PatchOp`
 
-`Operations` array の `op` は `add`、`remove`、`replace` のいずれかです。
+また、request body は1つ以上の PATCH operation を格納する `Operations` array を含めなければなりません（MUST）。各 operation object は `op` member を正確に1つ持たなければならず（MUST）、その値には `add`、`remove`、`replace` のいずれかを使用できます（MAY）。
 
 <pre class="mermaid">
 flowchart TD
@@ -143,7 +143,7 @@ RFC 7644 §3.6 は resource removal に HTTP DELETE を使用します。
 
 `DELETE /Users/{id}`
 
-削除が成功した場合、Service Provider は HTTP 204 (No Content) を返します。
+削除が成功した場合、Service Provider は HTTP 204 (No Content) を返さなければなりません（SHALL）。
 
 Service Provider が内部的に resource を永久削除しない場合でも、削除後の resource に対する operation には 404 (Not Found) を返し、以後の query result から resource を除外しなければなりません。
 
@@ -186,7 +186,7 @@ sequenceDiagram
 
 RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extension、Bulk operation、filter grammar、sorting、index-based pagination、ETag、authentication / authorization、security considerations などが定義されています。RFC 9865 の cursor-based pagination と RFC 9967 の SCIM Security Events / 非同期リクエストも、本記事の範囲外です。
 
-また、2026年5月公開の RFC 9944 は SCIM に Device と EndpointApp の resource type および関連 schema extension を追加していますが、本記事の User resource のライフサイクルには変更を加えません。
+また、2026年5月公開の Proposed Standard である RFC 9944 は SCIM に Device と EndpointApp の resource type および関連 schema extension を追加していますが、本記事の User resource のライフサイクルには変更を加えません。
 
 ## 11. 一次資料
 
