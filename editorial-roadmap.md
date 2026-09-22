@@ -111,6 +111,8 @@ permalink: /roadmap/
 - WebAuthn `rpIdHash` の authenticator data 上の配置 / expected RP ID との validation → `2026-09-22-webauthn-rp-id-hash-validation.md`
 - WebAuthn `clientDataJSON.type` の ceremony-specific value / registration・authentication verification → `2026-09-22-webauthn-client-data-type-validation.md`
 - WebAuthn `clientDataJSON.crossOrigin` / `topOrigin` の cross-origin iframe context / RP verification → `2026-09-22-webauthn-cross-origin-client-data.md`
+- WebAuthn user presence の test / UP flag / registration・authentication verification → `2026-09-22-webauthn-user-presence-flag.md`
+- WebAuthn attestation conveyance の `none` / `indirect` / `direct` / `enterprise` と attestation object との関係 → `2026-09-22-webauthn-attestation-conveyance.md`
 
 ### JOSE
 
