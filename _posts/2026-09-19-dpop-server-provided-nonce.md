@@ -57,7 +57,7 @@ Content-Type: application/json
 
 同じ error code は、Client が送った nonce が Server の要求する値と一致しない場合にも使用されます。`DPoP-Nonce` header は response に複数含めてはなりません（MUST NOT, §8）。
 
-Browser-based Client が CORS を使用する場合、`DPoP-Nonce` は CORS-safelisted response header ではないため、その値をアプリケーションから取得して使用できるよう、Server は `Access-Control-Expose-Headers` の値に `DPoP-Nonce` を含める必要があります（§8）。
+Browser-based Client が CORS を使用する場合、`DPoP-Nonce` は CORS-safelisted response header ではありません。RFC 9449 §8 は非規範的な説明として、アプリケーションがその値を取得して使用できるよう、Server が `Access-Control-Expose-Headers` の値に `DPoP-Nonce` を含める必要があると説明しています。
 
 ## 3. Client は nonce を DPoP proof の claim に入れる
 
@@ -119,4 +119,4 @@ RFC 9449 §11.3 は、Server が Client に DPoP nonce を提供した後、`non
 - RFC Editor: [Verified Errata ID 7646](https://www.rfc-editor.org/errata/eid7646)
 
 参照した主要節: §4.2, §4.3, §8, §8.1, §8.2, §9, §11.3  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
