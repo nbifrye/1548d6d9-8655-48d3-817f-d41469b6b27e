@@ -70,7 +70,7 @@ sequenceDiagram
 
 ## 3. PAR で Authorization Request を事前登録する
 
-§5.3.2.2 は Authorization Server に、RFC 9126 に従う client-authenticated pushed authorization request のサポートを要求します。
+§5.3.2.2 は Authorization Server に、Authorization Endpoint を利用するフローでは `response_type` を `code` に限定し（shall）、RFC 9126 に従う client-authenticated pushed authorization request のサポートを要求します（shall）。
 
 Authorization Server は、PAR を使わずに送信された Authorization Request を拒否し、Client Authentication を伴わない PAR も拒否します。また、PAR request では `redirect_uri` parameter を必須としなければなりません（shall）。
 
