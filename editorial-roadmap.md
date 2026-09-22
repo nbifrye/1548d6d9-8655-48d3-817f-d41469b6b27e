@@ -104,6 +104,7 @@ permalink: /roadmap/
 - WebAuthn conditional mediation authentication → `2026-09-19-webauthn-conditional-mediation-authentication.md`
 - WebAuthn Related Origin Requests → `2026-09-19-webauthn-related-origin-requests.md`
 - WebAuthn cryptographic challenge の生成 / options への配置 / `clientDataJSON` との照合 → `2026-09-22-webauthn-cryptographic-challenge.md`
+- WebAuthn authentication の `userVerification` requirement / UV flag / RP verification → `2026-09-22-webauthn-user-verification-requirement.md`
 
 ### JOSE
 
