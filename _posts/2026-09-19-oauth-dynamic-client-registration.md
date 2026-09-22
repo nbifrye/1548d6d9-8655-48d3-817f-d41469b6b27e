@@ -12,6 +12,8 @@ categories: [oauth, client-registration]
 **この記事で伝えること:** Client Registration Endpoint に送る JSON client metadata と、成功時に返る client information の構造と処理の流れ  
 **扱わないこと:** RFC 7592 の registration management、software statement の内部構造と検証、個別 deployment の registration policy、Authorization Code Flow など登録後の OAuth フロー
 
+RFC 7591 は 2015 年 7 月公開の Proposed Standard です。
+
 ## 1. Registration Request は JSON object を POST する
 
 RFC 7591 §3.1 では、Client または Client Developer は Client Registration Endpoint に HTTP POST を送り、`Content-Type` を `application/json` とします。HTTP entity body は JSON object で、要求する client metadata を top-level member として配置します。
@@ -39,7 +41,7 @@ Accept: application/json
 
 RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。
 
-Authorization Server が initial access token を要求する構成では、その token を使って Registration Endpoint へのアクセスを制限できます（MAY, §3）。initial access token の取得方法と endpoint における検証方法は RFC 7591 の scope 外です。
+Authorization Server が initial access token を要求する構成では、その token を使って Registration Endpoint へのアクセスを制限できます（MAY, §3）。initial access token の取得方法と endpoint における検証方法は RFC 7591 の scope 外です。一方、open registration と interoperability を支援するため、Client Registration Endpoint は authorization なし、すなわち initial access token なしの registration request を許可することが推奨されています（SHOULD, §3）。
 
 ## 2. Client metadata は登録したい Client の属性を表す
 
@@ -142,4 +144,4 @@ Registration Request では、`redirect_uris` などの client metadata が JSON
 - RFC Editor: [RFC 7591 Errata — Errata ID 7782](https://www.rfc-editor.org/errata/eid7782)
 
 参照した主要節: §1.3, §2, §3, §3.1, §3.2, §3.2.1, §3.2.2  
-最終確認: 2026-09-21
+最終確認: 2026-09-22
