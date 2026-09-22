@@ -109,6 +109,7 @@ permalink: /roadmap/
 - WebAuthn `clientDataJSON.origin` の expected-origin validation と unexpected origin の拒否要件 → `2026-09-22-webauthn-origin-validation.md`
 - WebAuthn signature counter の `signCount` / RP comparison / non-increasing value の解釈 → `2026-09-22-webauthn-signature-counter.md`
 - WebAuthn `rpIdHash` の authenticator data 上の配置 / expected RP ID との validation → `2026-09-22-webauthn-rp-id-hash-validation.md`
+- WebAuthn `clientDataJSON.type` の ceremony-specific value / registration・authentication verification → `2026-09-22-webauthn-client-data-type-validation.md`
 
 ### JOSE
 
