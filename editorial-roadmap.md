@@ -110,6 +110,7 @@ permalink: /roadmap/
 - WebAuthn signature counter の `signCount` / RP comparison / non-increasing value の解釈 → `2026-09-22-webauthn-signature-counter.md`
 - WebAuthn `rpIdHash` の authenticator data 上の配置 / expected RP ID との validation → `2026-09-22-webauthn-rp-id-hash-validation.md`
 - WebAuthn `clientDataJSON.type` の ceremony-specific value / registration・authentication verification → `2026-09-22-webauthn-client-data-type-validation.md`
+- WebAuthn `clientDataJSON.crossOrigin` / `topOrigin` の cross-origin iframe context / RP verification → `2026-09-22-webauthn-cross-origin-client-data.md`
 
 ### JOSE
 
