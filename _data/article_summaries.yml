@@ -54,3 +54,4 @@ oauth-client-credentials-grant: "Client Credentials Grant の Token Request / Re
 oauth-refresh-token-request: "Refresh Token を Token Endpoint に提示して Access Token を更新する request、validation、response を整理します。"
 oauth-authorization-code-token-exchange: "取得済み Authorization Code を Token Endpoint で交換するときの form parameter、Client authentication、code / redirect URI の検証、Token Response を整理します。"
 oauth-authorization-code-authorization-endpoint: "Authorization Code Grant の Authorization Endpoint で、Authorization Request の query parameter、request validation、成功時の code / state、error response を整理します。"
+webauthn-credential-backup-state: "WebAuthn authenticator data の BE / BS flags が表す backup eligibility と現在の backup state、有効な組み合わせ、RP の registration / authentication 時の検証を整理します。"
