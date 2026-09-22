@@ -51,7 +51,7 @@ RFC 9700 §2.1 は、Client が CSRF を防止することを MUST としてい�
 
 Authorization Server が PKCE をサポートしていることを Client が確認できる場合、Client は PKCE が提供する CSRF protection に依存してもよいと規定されています。OpenID Connect flow では `nonce` parameter も CSRF protection を提供します。これらを使用しない場合は、User Agent に安全に結び付けた one-time use の CSRF token を `state` parameter で使用しなければなりません（MUST）。
 
-PKCE challenge または OpenID Connect の `nonce` を transaction binding に利用する場合、その値は transaction-specific であり、Client とフローを開始した User Agent に安全に結び付けられていなければなりません。
+PKCE challenge または OpenID Connect の `nonce` を transaction binding に利用する場合、その値は transaction-specific であり、Client とフローを開始した User Agent に安全に結び付けられていなければなりません（MUST）。
 
 ## 4. Authorization Code Injection を防止する
 
@@ -81,7 +81,7 @@ sequenceDiagram
 
 RFC 9700 §2.1.1 は、PKCE を使う Client が、Authorization Request で verifier を露出しない challenge method を使用することを SHOULD としています。RFC 9700 公開時点では `S256` がその条件を満たす唯一の方式です。
 
-Authorization Server は PKCE をサポートしなければならず（MUST）、Client が PKCE 対応を検出できる手段も提供しなければなりません（MUST）。
+Authorization Server は PKCE をサポートしなければならず（MUST）、Client が PKCE 対応を検出できる手段も提供しなければなりません（MUST）。Client が有効な `code_challenge` を Authorization Request で送った場合、Authorization Server は Token Endpoint で `code_verifier` の正しい使用を強制しなければなりません（MUST）。
 
 2026年8月に BCP として公開された RFC 10017 **OAuth 2.0 for Browser-Based Applications** は、browser-based application に対して RFC 9700 の推奨をさらに具体化しています。Browser-based application が Public Client として access token を取得する場合は PKCE を実装しなければならず（MUST）、Authorization Server はそのような Client に対して PKCE をサポートし、適用しなければなりません（MUST）。RFC 10017 は browser-based application を対象とする追加の BCP であり、RFC 9700 を置き換えるものではありません。
 
@@ -110,12 +110,13 @@ flowchart TD
 
 - **Redirect URI:** 原則として exact string matching を使用する（MUST）。
 - **CSRF:** Client は CSRF を防止する（MUST）。
+- **Transaction binding:** PKCE challenge または OpenID Connect `nonce` は transaction-specific とし、Client とフローを開始した User Agent に安全に結び付ける（MUST）。
 - **Authorization Code Injection:** Client は code injection / misuse を防止する（MUST）。
 - **Public Client:** PKCE を使用する（MUST）。
 - **Confidential Client:** PKCE の使用が RECOMMENDED。追加条件を満たす Confidential OpenID Connect Client は `nonce` を代替として使用できる（MAY）。
-- **Authorization Server:** PKCE をサポートし（MUST）、Client が対応を検出できる手段を提供する（MUST）。
+- **Authorization Server:** PKCE をサポートし（MUST）、Client が対応を検出できる手段を提供する（MUST）。有効な `code_challenge` を受け取った場合は Token Endpoint で `code_verifier` の正しい使用を強制する（MUST）。
 - **PKCE challenge method:** verifier を Authorization Request で露出しない方式を使用する（SHOULD）。
-- **PKCE downgrade:** challenge の有無を transaction に結び付け、不整合な Token Request を拒否する。
+- **PKCE downgrade:** challenge の有無を authorization code に結び付け、challenge がない transaction の Token Request に `code_verifier` が含まれていれば拒否する（MUST）。
 
 Browser-based application には、RFC 10017 による追加要件も適用されます。
 
