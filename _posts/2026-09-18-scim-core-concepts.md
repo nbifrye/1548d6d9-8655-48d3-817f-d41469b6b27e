@@ -7,7 +7,7 @@ categories: [provisioning, scim]
 
 SCIM 2.0 の基本データモデルは RFC 7643、基本プロトコルは RFC 7644 で定義されています。RFC 7643 / RFC 7644 はいずれも 2015年9月公開の Proposed Standard です。
 
-なお、RFC 7643 / RFC 7644 は、その後 RFC 9865（2025年10月、Proposed Standard、cursor-based pagination）と RFC 9967（2026年5月、Proposed Standard、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
+なお、RFC 7644 はその後 RFC 9865（2025年10月、Proposed Standard、cursor-based pagination）によって更新され、RFC 7643 / RFC 7644 は RFC 9967（2026年5月、Proposed Standard、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
 
 ## この記事について
 
@@ -197,4 +197,4 @@ RFC 7643 / RFC 7644 には、このほかにも Group resource、schema extensio
 - RFC Editor: [RFC 9967 — System for Cross-Domain Identity Management (SCIM) Profile for Security Event Tokens (SETs)](https://www.rfc-editor.org/rfc/rfc9967.html)
 
 参照した主要節: RFC 7643 §2, §3, §3.1, §4.1 / RFC 7644 §3.2–§3.6, §4 / RFC 9865 §1 / RFC 9944 §1–§3 / RFC 9967 §1  
-最終確認: 2026-09-22
+最終確認: 2026-09-23
