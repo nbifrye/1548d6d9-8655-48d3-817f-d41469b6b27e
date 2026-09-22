@@ -99,11 +99,12 @@ WebAuthn Level 3 §7.1 は、RP が登録応答に対して実行する verifica
 9. BE / BS flags の組み合わせが仕様に適合すること。
 10. credential public key の `alg` が `pubKeyCredParams` に含まれること。
 11. attestation を `fmt` に対応する verification procedure で検証すること。
-12. credential ID が仕様の長さと重複条件を満たすこと。
+12. attestation type / format に応じた acceptable trust anchors を取得し、attestation の trustworthiness を RP policy に従って評価すること。trustworthy と判断できない場合、RP は registration ceremony を失敗させることが推奨されます（SHOULD）。ただし policy が許す場合、credential を self attestation 相当として登録できます（MAY）。
+13. credential ID が仕様の長さと重複条件を満たすこと。
 
 RP は `clientDataJSON` を UTF-8 としてデコードし、JSON として解析したうえで、`type`、`challenge`、`origin` などを検証します。
 
-attestation については、RP は `attestationObject` を CBOR decode し、`fmt`、`authData`、`attStmt` を取得します。その後、`fmt` に対応する attestation statement format の verification procedure を実行します。
+attestation については、RP は `attestationObject` を CBOR decode し、`fmt`、`authData`、`attStmt` を取得します。その後、`fmt` に対応する attestation statement format の verification procedure を実行します。さらに、検証結果と RP が信頼する trust anchor / policy を使って attestation の trustworthiness を評価します。証明書を使用する場合、RP は intermediate CA certificate の certificate status information にアクセスできなければならず（MUST）、Client が attestation certificate chain を提供しなかった場合にも chain を構築できなければなりません（MUST）。
 
 ## 4. 登録後に RP が保存する credential record
 
@@ -176,4 +177,4 @@ signature counter について、§7.2 は今回の値が保存済み値以下�
 - W3C publication history: [WebAuthn Level 3 publication history](https://www.w3.org/standards/history/webauthn-3/)
 
 参照した主要節: §4, §5.5, §6.1, §6.5, §7.1, §7.2  
-最終確認: 2026-09-22
+最終確認: 2026-09-23
