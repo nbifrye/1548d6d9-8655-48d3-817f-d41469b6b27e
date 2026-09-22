@@ -56,7 +56,9 @@ client_id=device-client-123&scope=read%20profile
 
 ここで `client_id` と `scope` は JSON member ではなく form parameter です。Confidential Client が client credentials を持つ場合、RFC 6749 §3.2.1 の Client authentication requirements が適用されます（RFC 8628 §3.1）。
 
-Device からの request は TLS を使用しなければなりません（MUST, RFC 8628 §3.1）。また、request / response parameter を複数回含めてはなりません（MUST NOT）。
+Device からの request は TLS を使用し、BCP 195 の best practices を実装しなければなりません（MUST, RFC 8628 §3.1）。RFC 8628 本文が BCP 195 の参照先として挙げる RFC 7525 は RFC 9325 により obsolete されています。2026-09-22 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されているため、実装時は現行の BCP 195 を確認します。
+
+また、値のない parameter は request から省略されたものとして扱わなければならず（MUST）、Authorization Server は未知の request parameter を無視しなければなりません（MUST）。request / response parameter を複数回含めてはなりません（MUST NOT）。polling による不要な負荷を避けるため、Client は利用者に促された場合にのみ Device Authorization Request を開始し、application 起動時などに自動開始しないことが SHOULD です（RFC 8628 §3.1）。
 
 ## 3. Response object には2種類の code が入る
 
@@ -131,6 +133,8 @@ RFC 8628 §3.5 は Device Authorization Grant 固有の Token Endpoint error を
 ## 一次資料
 
 - RFC Editor: [RFC 8628 — OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628.html)
+- RFC Editor: [BCP 195 — Recommendations for Secure Use of TLS](https://www.rfc-editor.org/info/bcp195/)
+- RFC Editor: [RFC 10015 — Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015.html)
 
-参照した主要節: §1, §3.1, §3.2, §3.3, §3.3.1, §3.4, §3.5  
-最終確認: 2026-09-21
+参照した主要節: RFC 8628 §1, §3.1, §3.2, §3.3, §3.3.1, §3.4, §3.5  
+最終確認: 2026-09-22
