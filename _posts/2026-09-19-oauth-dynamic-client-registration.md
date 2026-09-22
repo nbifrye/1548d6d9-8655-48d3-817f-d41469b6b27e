@@ -39,7 +39,7 @@ Accept: application/json
 
 ここでは metadata は query parameter や form parameter ではなく、JSON request body の top-level member です。
 
-RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。
+RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。さらに §5 では、Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、TLS を使用する Client は server certificate を検証しなければなりません（MUST）。RFC 7591 がこの検証について参照する RFC 6125 は、2023 年 11 月公開の RFC 9525 によって廃止・置換されています。RFC 7591 は TLS の実装について BCP 195 も参照しており、現在の BCP 195 に従う必要があります。
 
 Authorization Server が initial access token を要求する構成では、その token を使って Registration Endpoint へのアクセスを制限できます（MAY, §3）。initial access token の取得方法と endpoint における検証方法は RFC 7591 の scope 外です。一方、open registration と interoperability を支援するため、Client Registration Endpoint は authorization なし、すなわち initial access token なしの registration request を許可することが推奨されています（SHOULD, §3）。
 
@@ -142,6 +142,8 @@ Registration Request では、`redirect_uris` などの client metadata が JSON
 
 - RFC Editor: [RFC 7591 — OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591.html)
 - RFC Editor: [RFC 7591 Errata — Errata ID 7782](https://www.rfc-editor.org/errata/eid7782)
+- RFC Editor: [RFC 9525 — Service Identity in TLS](https://www.rfc-editor.org/rfc/rfc9525.html)
+- RFC Editor: [BCP 195 — Recommendations for Secure Use of TLS and DTLS](https://www.rfc-editor.org/info/bcp195)
 
-参照した主要節: §1.3, §2, §3, §3.1, §3.2, §3.2.1, §3.2.2  
-最終確認: 2026-09-22
+参照した主要節: §1.3, §2, §3, §3.1, §3.2, §3.2.1, §3.2.2, §5  
+最終確認: 2026-09-23
