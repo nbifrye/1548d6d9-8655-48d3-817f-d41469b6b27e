@@ -108,6 +108,7 @@ permalink: /roadmap/
 - WebAuthn credential backup eligibility / backup state の BE / BS flags と RP verification → `2026-09-22-webauthn-credential-backup-state.md`
 - WebAuthn `clientDataJSON.origin` の expected-origin validation と unexpected origin の拒否要件 → `2026-09-22-webauthn-origin-validation.md`
 - WebAuthn signature counter の `signCount` / RP comparison / non-increasing value の解釈 → `2026-09-22-webauthn-signature-counter.md`
+- WebAuthn `rpIdHash` の authenticator data 上の配置 / expected RP ID との validation → `2026-09-22-webauthn-rp-id-hash-validation.md`
 
 ### JOSE
 
