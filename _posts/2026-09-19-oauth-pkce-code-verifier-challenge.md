@@ -12,6 +12,8 @@ categories: [oauth, security]
 **この記事で伝えること:** `code_verifier` の生成、`code_challenge` の導出、Authorization Request と Token Request への parameter 配置、Authorization Server による照合を RFC 7636 に沿って理解する  
 **扱わないこと:** OAuth 2.0 全体の Authorization Code Grant、Client authentication、redirect URI の選択、PAR、DPoP、RFC 9700 が PKCE の適用対象を拡張する要件
 
+RFC 7636 は 2015 年 9 月に公開された Proposed Standard です。
+
 ## 1. 2つの値は同じ request に送らない
 
 RFC 7636 の PKCE では、Client は Authorization Request ごとに `code_verifier` を生成し、そこから `code_challenge` を導出します。
@@ -114,4 +116,4 @@ Authorization Server が PKCE を public client に要求しており Authorizat
 - RFC Editor: [RFC 7636 — Proof Key for Code Exchange by OAuth Public Clients](https://www.rfc-editor.org/rfc/rfc7636.html)
 
 参照した主要節: §1.1, §3, §4.1–§4.6, §6.1, Appendix B  
-最終確認: 2026-09-19
+最終確認: 2026-09-24
