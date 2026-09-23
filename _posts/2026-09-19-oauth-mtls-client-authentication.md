@@ -12,6 +12,8 @@ categories: [oauth, mtls]
 **この記事で伝えること:** RFC 8705 が定義する PKI Mutual-TLS Method と Self-Signed Certificate Mutual-TLS Method で、Client が提示した X.509 certificate を `client_id` に対応する credential としてどのように検証するか  
 **扱わないこと:** certificate-bound Access Token、Resource Server での proof-of-possession、`cnf` / `x5t#S256`、`mtls_endpoint_aliases`、TLS 自体の handshake 詳細
 
+RFC 8705 は、2020年2月に公開された Proposed Standard（Standards Track）です。
+
 ## 1. Mutual-TLS Client Authentication の位置
 
 RFC 8705 §2 は、OAuth 2.0 の Client Authentication を X.509 client certificate を用いて行う2つの方式を定義しています。
@@ -135,4 +137,4 @@ RFC 8705 §1 と §4 は、mutual-TLS OAuth Client Authentication と mutual-TLS
 - RFC Editor: [RFC 8705 — OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens](https://www.rfc-editor.org/rfc/rfc8705.html)
 
 参照した主要節: §1, §2, §2.1, §2.1.2, §2.2, §2.2.1, §2.2.2, §4  
-最終確認: 2026-09-21
+最終確認: 2026-09-23
