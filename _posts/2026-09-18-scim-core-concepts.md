@@ -7,7 +7,7 @@ categories: [provisioning, scim]
 
 SCIM 2.0 の基本データモデルは RFC 7643、基本プロトコルは RFC 7644 で定義されています。RFC 7643 / RFC 7644 はいずれも 2015年9月公開の Proposed Standard です。
 
-なお、RFC 7644 はその後 RFC 9865（2025年10月、Proposed Standard、cursor-based pagination）によって更新され、RFC 7643 / RFC 7644 は RFC 9967（2026年5月、Proposed Standard、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
+なお、RFC 7643 / RFC 7644 は、その後 RFC 9865（2025年10月、Proposed Standard、cursor-based pagination）および RFC 9967（2026年5月、Proposed Standard、SCIM Security Events と非同期リクエスト）によって更新されています。本記事の中心である User リソースの作成・取得・更新・削除の基本処理は RFC 7643 / RFC 7644 に基づき、これらの追加機能は扱いません。
 
 ## この記事について
 
