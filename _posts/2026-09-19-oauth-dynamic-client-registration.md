@@ -39,7 +39,7 @@ Accept: application/json
 
 ここでは metadata は query parameter や form parameter ではなく、JSON request body の top-level member です。
 
-RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。さらに §5 では、Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、TLS を使用する Client は server certificate を検証しなければなりません（MUST）。RFC 7591 がこの検証について参照する RFC 6125 は、2023 年 11 月公開の RFC 9525 によって廃止・置換されています。RFC 7591 は TLS の実装について BCP 195 も参照しており、現在の BCP 195 に従う必要があります。
+RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。さらに §5 では、Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、TLS を使用する Client は server certificate を検証しなければなりません（MUST）。RFC 7591 がこの検証について参照する RFC 6125 は、2023 年 11 月公開の RFC 9525 によって廃止・置換されています。RFC 7591 は TLS の実装上の security considerations の参照先として BCP 195 を挙げており、現在の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されています。
 
 Authorization Server が initial access token を要求する構成では、その token を使って Registration Endpoint へのアクセスを制限できます（MAY, §3）。initial access token の取得方法と endpoint における検証方法は RFC 7591 の scope 外です。一方、open registration と interoperability を支援するため、Client Registration Endpoint は authorization なし、すなわち initial access token なしの registration request を許可することが推奨されています（SHOULD, §3）。
 
