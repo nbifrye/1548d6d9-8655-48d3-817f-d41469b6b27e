@@ -27,7 +27,7 @@ RFC 8414 §2 では metadata member を定義しています。代表的なも�
 - **`grant_types_supported`:** OPTIONAL。サポートする grant type value の JSON array。
 - **`introspection_endpoint`:** OPTIONAL。RFC 7662 の Introspection Endpoint URL。
 
-ここで `response_types_supported` の REQUIRED は、公開済み RFC 8414 §2 の規範本文に従った表記です。一方、RFC Editor には、Authorization Endpoint を使う grant type を1つもサポートしない Authorization Server ではこの member を必須にしないよう変更する Technical Errata ID 7793 が登録されています。2026-09-21 時点の status は Reported であり、Verified ではないため、本記事では errata の提案を確定した規範要件として扱いません。
+ここで `response_types_supported` の REQUIRED は、公開済み RFC 8414 §2 の規範本文に従った表記です。一方、RFC Editor には、Authorization Endpoint を使う grant type を1つもサポートしない Authorization Server ではこの member を必須にしないよう変更する Technical Errata ID 7793 が登録されています。2026-09-24 時点の status は Reported であり、Verified ではないため、本記事では errata の提案を確定した規範要件として扱いません。
 
 RFC 8414 の registry には、後続仕様によって metadata member が追加されています。たとえば RFC 9728 §4 は **`protected_resources`** を OPTIONAL member として定義し、この Authorization Server とともに使用できる OAuth Protected Resource の resource identifier を JSON array で列挙できるようにしています。これは RFC 8414 の取得・`issuer` 検証手順を置き換えるものではありません。
 
@@ -135,7 +135,7 @@ response の `issuer` は次と同一である必要があります。
 
 RFC 8414 §6.1 は implementation が TLS をサポートしなければならない（MUST）と規定しています。また、この RFC が規定する Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、Client は TLS を使用するとき server certificate check を実施しなければなりません（MUST）。これらは RFC 8414 自体の規範要件です。
 
-TLS の一般的な Best Current Practice は RFC 8414 公開後も更新されています。2026-09-22 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 から構成されます。RFC 8996 は TLS 1.0 / 1.1 の negotiation を MUST NOT とし、RFC 9325 は TLS 1.3 を SHOULD support、実装している場合は旧 version より優先して negotiate することを MUST としています。RFC 9852 は 2026 年 7 月に RFC 9325 を更新し、新しい protocol が TLS を使用する場合は TLS 1.3 を default として規定することを MUST としました。RFC 8414 の TLS 1.2 support 要件そのものを、これらの BCP の要件へ読み替えるものではありませんが、実装・運用時には現行の BCP 195 も確認する必要があります。
+RFC 8414 §6.1 は TLS の implementation security considerations の参照先として BCP 195 を挙げています。2026-09-24 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 から構成されます。RFC 8996 は TLS 1.0 / 1.1 の negotiation を MUST NOT とし、RFC 9325 は TLS 1.3 を SHOULD support、実装している場合は旧 version より優先して negotiate することを MUST としています。RFC 9852 は 2026 年 7 月に RFC 9325 を更新し、新しい protocol が TLS を使用する場合は TLS 1.3 を default として規定することを MUST としました。また、2026 年 7 月公開の RFC 10015 は RFC 9325 を更新し、(D)TLS 1.2 で non-ephemeral FFDH、ephemeral FFDH、static RSA の cipher suite を使用しないことを MUST NOT としています。RFC 10015 は BCP 195 の構成 RFC ではありませんが、BCP 195 を構成する RFC 9325 に対する公開済みの更新です。これらの後続文書は、RFC 8414 自体の TLS 1.2 support 要件を置き換えるものではありません。
 
 この記事では TLS version の選択や certificate validation algorithm の詳細には踏み込みません。
 
@@ -146,6 +146,7 @@ TLS の一般的な Best Current Practice は RFC 8414 公開後も更新され�
 - RFC Editor: [RFC 9728 — OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728.html)
 - RFC Editor: [BCP 195 — TLS/DTLS Recommendations](https://www.rfc-editor.org/info/bcp195/)
 - RFC Editor: [RFC 9852 — New Protocols Using TLS Must Require TLS 1.3](https://www.rfc-editor.org/rfc/rfc9852.html)
+- RFC Editor: [RFC 10015 — Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015.html)
 
-参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §4, §6.1、RFC 9728 §4、RFC 8996 §6、RFC 9325 §3.1.1、RFC 9852 §4  
-最終確認: 2026-09-23
+参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §4, §6.1、RFC 9728 §4、RFC 8996 §6、RFC 9325 §3.1.1、RFC 9852 §4、RFC 10015 §2–§4, §6  
+最終確認: 2026-09-24
