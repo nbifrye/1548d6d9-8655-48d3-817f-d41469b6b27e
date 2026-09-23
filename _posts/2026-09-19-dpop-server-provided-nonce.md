@@ -12,6 +12,7 @@ categories: [authorization, oauth, dpop]
 **この記事で伝えること:** Server が `DPoP-Nonce` を返し、Client がその値を次の DPoP proof の `nonce` claim に入れて request を再送する処理  
 **扱わないこと:** DPoP proof 全般の claim 検証、access token の key binding、authorization code binding、nonce を要求する時期を決める local policy
 
+RFC 9449 は 2023 年 9 月公開の Proposed Standard（Standards Track）です。
 
 既存の「DPoP proof は HTTP request の何を証明するのか」は DPoP proof の構造と protected resource access 時の検証を扱い、DPoP nonce を明示的に scope 外としています。本記事は server-provided nonce の往復だけを扱います。
 
@@ -19,7 +20,7 @@ categories: [authorization, oauth, dpop]
 
 RFC 9449 §8 は、Authorization Server が Client に DPoP nonce を提供できる（MAY）と規定しています。Server が nonce を必要と判断する時期を決めるロジックは RFC 9449 の scope 外です。
 
-nonce value は予測不可能でなければなりません（MUST, §8）。Client にとって nonce は opaque です。
+nonce value は予測不可能でなければなりません（MUST, §8）。Client にとって nonce は opaque です。`DPoP-Nonce` header field の nonce value は §8.1 の ABNF `1*NQCHAR` に従います。
 
 RFC 9449 §9 は Resource Server も nonce を提供できると規定しています。Authorization Server と Resource Server が発行する nonce は別のものであり、発行した Server でのみ使用されます。
 
@@ -119,4 +120,4 @@ RFC 9449 §11.3 は、Server が Client に DPoP nonce を提供した後、`non
 - RFC Editor: [Verified Errata ID 7646](https://www.rfc-editor.org/errata/eid7646)
 
 参照した主要節: §4.2, §4.3, §8, §8.1, §8.2, §9, §11.3  
-最終確認: 2026-09-22
+最終確認: 2026-09-23
