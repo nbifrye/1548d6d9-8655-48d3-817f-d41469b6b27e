@@ -12,7 +12,7 @@ categories: [authentication, webauthn]
 **この記事で伝えること:** `PublicKeyCredentialDescriptor` の `type` / `id` / `transports` の構造と、registration の `excludeCredentials`、authentication の `allowCredentials` での役割  
 **扱わないこと:** credential record 全体の保存設計、discoverable credential の選択 UI、user verification、credential の署名検証、credential management の signal methods
 
-WebAuthn Level 3 の `PublicKeyCredentialDescriptor` は、特定の public key credential を指すためのデータ構造です。本記事は W3C Web Authentication Level 3 §5.4、§5.5、§5.8.3、§5.8.4 に範囲を限定します。
+WebAuthn Level 3 の `PublicKeyCredentialDescriptor` は、特定の public key credential を指すためのデータ構造です。本記事は W3C Web Authentication Level 3 §5.2.1、§5.4、§5.5、§5.8.2–§5.8.4、§6.3.2、§14.5.1 に範囲を限定します。
 
 **A credential descriptor identifies a credential; `transports` only hints at how its authenticator may be reached.**  
 （credential descriptor は credential を識別し、`transports` はその Authenticator への到達方法についての hint だけを表します。）
@@ -63,7 +63,26 @@ WebAuthn Level 3 の `PublicKeyCredentialDescriptor` は、特定の public key 
 
 この JSON 表現では `id` は base64url 文字列として示しています。Web Authentication API の `PublicKeyCredentialDescriptor.id` 自体の型は `BufferSource` です。
 
-## 3. authentication では allowCredentials に置く
+## 3. excludeCredentials に一致すると新しい credential は作られない
+
+§6.3.2 の authenticatorMakeCredential operation では、Authenticator は `excludeCredentialDescriptorList` の各 descriptor を調べます。descriptor の `id` で credential が見つかり、その credential の RP ID と type も一致する場合、Authenticator は credential を新規作成する処理へ進みません。
+
+この場合、Authenticator は新しい credential の作成に対する user consent を確認する authorization gesture を収集します。この gesture には user presence の test を含めなければなりません（**MUST**, §6.3.2）。仕様の note が明示するように、この gesture の目的は credential の作成を続行することではなく、その credential ID が当該 Authenticator に bound されている事実を開示することについて user の authorization を得ることです。
+
+user が新しい credential の作成に consent した場合、Authenticator は `InvalidStateError` 相当の error code を返して operation を終了します。consent しなかった場合は `NotAllowedError` 相当の error code を返して終了します（§6.3.2）。どちらの場合も、その一致した Authenticator 上では新しい credential は作成されません。
+
+Client 側の registration algorithm では、`excludeCredentials` の descriptor に `transports` があり、現在の Authenticator の transport がそこに含まれない場合、Client はその descriptor の処理を続行しないことを選択できます（**MAY**, §5.1.3）。仕様は、この選択によって `transports` hint が正確でない場合に、同じ Authenticator に複数の credential を意図せず登録する可能性があると note で説明しています。
+
+## 4. excludeCredentials には privacy 上の処理要件がある
+
+§14.5.1 は registration ceremony の privacy consideration として、「Authenticator が存在しない場合」と「Authenticator が存在し、そのうち少なくとも1つが `excludeCredentials` に一致する場合」を Client implementation が区別可能にしないよう注意する必要があると説明しています。区別できると、RP が credential の存在を probe して user を識別するための情報が漏れる可能性があります。
+
+これは `excludeCredentials` の一致を通常の credential lookup 結果として RP に即時開示する設計ではないことと対応します。§6.3.2 の authorization gesture も、credential ID が Authenticator に bound されている事実の開示を user が authorize するための処理として定義されています。
+
+**An excluded credential is not a signal to create another credential after a match; the matching ceremony terminates with an error.**  
+（excluded credential に一致した後で別の credential を作成するという意味ではなく、その一致した ceremony は error で終了します。）
+
+## 5. authentication では allowCredentials に置く
 
 `PublicKeyCredentialRequestOptions.allowCredentials` も `sequence<PublicKeyCredentialDescriptor>` で、default は空の list です（§5.5）。
 
@@ -92,13 +111,13 @@ WebAuthn Level 3 の `PublicKeyCredentialDescriptor` は、特定の public key 
 
 `allowCredentials` が空の場合の account identification と `response.userHandle` の検証は別テーマであり、本記事では扱いません。
 
-## 4. unknown type と空の allowCredentials は同じ意味ではない
+## 6. unknown type と空の allowCredentials は同じ意味ではない
 
 §5.8.3 では、Client platform は unknown `type` を持つ `PublicKeyCredentialDescriptor` を無視しなければなりません（**MUST**）。ただし、`allowCredentials` の全要素が unknown `type` のため無視された場合は error としなければなりません（**MUST**）。
 
 これは、最初から空の `allowCredentials` と、descriptor を列挙したもののすべてが unknown `type` だった場合を同じ意味として扱わないためです。
 
-## 5. transports は到達方法についての hint
+## 7. transports は到達方法についての hint
 
 §5.8.4 は `usb`、`nfc`、`ble`、`smart-card`、`hybrid`、`internal` を `AuthenticatorTransport` として定義しています。これらは Client が特定の credential の Authenticator とどのように通信できるかについての hint です。
 
@@ -107,7 +126,7 @@ RP は通常、registration で返される `AuthenticatorAttestationResponse.ge
 **`transports` is reachability metadata, not a statement about the credential's cryptographic properties.**  
 （`transports` は到達方法に関する metadata であり、credential の暗号学的性質を表すものではありません。）
 
-## 6. create と get で同じ descriptor 構造を使う
+## 8. create と get で同じ descriptor 構造を使う
 
 ```mermaid
 flowchart TD
@@ -123,11 +142,14 @@ flowchart TD
 
 ## Primary sources
 
-- W3C, *Web Authentication: An API for accessing Public Key Credentials Level 3*, Recommendation, 25 August 2026, §5.2.1 Information About Public Key Credential
+- W3C, *Web Authentication: An API for accessing Public Key Credentials Level 3*, Recommendation, 25 August 2026, §5.1.3 Create a New Credential
+- 同 §5.2.1 Information About Public Key Credential
 - 同 §5.4 Options for Credential Creation (`excludeCredentials`)
 - 同 §5.5 Options for Assertion Generation (`allowCredentials`)
 - 同 §5.8.2 Credential Type Enumeration
 - 同 §5.8.3 Credential Descriptor
 - 同 §5.8.4 Authenticator Transport Enumeration
+- 同 §6.3.2 The authenticatorMakeCredential Operation
+- 同 §14.5.1 Registration Ceremony Privacy
 
 https://www.w3.org/TR/2026/REC-webauthn-3-20260825/
