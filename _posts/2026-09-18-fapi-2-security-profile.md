@@ -18,7 +18,7 @@ FAPI 2.0 Security Profile は、OpenID Foundation FAPI Working Group が策定�
 
 ## 1. FAPI 2.0 が組み合わせる仕様
 
-FAPI 2.0 Security Profile §5.3.1 は、OAuth 2.0 と関連仕様を組み合わせて利用します。
+FAPI 2.0 Security Profile §5.3.1 は、OAuth 2.0 と関連仕様を組み合わせるプロファイルを定義しています。
 
 このフローに関係する主な仕様は次のとおりです。
 
@@ -51,7 +51,7 @@ sequenceDiagram
     C->>C: iss を検証
 </pre>
 
-Token Endpoint 以降は、次の処理になります。
+Token Endpoint 以降では、次の処理を行います。
 
 <pre class="mermaid">
 sequenceDiagram
@@ -168,4 +168,4 @@ FAPI 2.0 Message Signing は別仕様であり、本記事では扱いません�
 - RFC Editor: [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207.html)
 
 参照した主要節: FAPI 2.0 Security Profile §5.3.1, §5.3.2.1, §5.3.2.2, §5.3.3.1, §5.3.3.2, §5.3.4  
-最終確認: 2026-09-22
+最終確認: 2026-09-24
