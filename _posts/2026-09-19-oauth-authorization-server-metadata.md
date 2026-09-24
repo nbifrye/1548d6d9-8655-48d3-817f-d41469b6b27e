@@ -135,6 +135,8 @@ response の `issuer` は次と同一である必要があります。
 
 RFC 8414 §6.1 は implementation が TLS をサポートしなければならない（MUST）と規定しています。また、この RFC が規定する Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、Client は TLS を使用するとき server certificate check を実施しなければなりません（MUST）。これらは RFC 8414 自体の規範要件です。
 
+RFC 8414 §6.1 は server certificate check の参照先として RFC 6125 を挙げています。RFC 6125 は 2023 年 11 月公開の RFC 9525 により obsoleted となりました。RFC 9525 は TLS で用いる application service identity の表現と検証手順を規定する現行の Standards Track RFC です。RFC 8414 本文の参照先が後から置き換わったものであり、RFC 8414 自体の Client に対する server certificate check の MUST が弱められたわけではありません。
+
 RFC 8414 §6.1 は TLS の implementation security considerations の参照先として BCP 195 を挙げています。2026-09-24 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 から構成されます。RFC 8996 は TLS 1.0 / 1.1 の negotiation を MUST NOT とし、RFC 9325 は TLS 1.3 を SHOULD support、実装している場合は旧 version より優先して negotiate することを MUST としています。RFC 9852 は 2026 年 7 月に RFC 9325 を更新し、新しい protocol が TLS を使用する場合は TLS 1.3 を default として規定することを MUST としました。また、2026 年 7 月公開の RFC 10015 は RFC 9325 を更新し、(D)TLS 1.2 で non-ephemeral FFDH、ephemeral FFDH、static RSA の cipher suite を使用しないことを MUST NOT としています。RFC 10015 は BCP 195 の構成 RFC ではありませんが、BCP 195 を構成する RFC 9325 に対する公開済みの更新です。これらの後続文書は、RFC 8414 自体の TLS 1.2 support 要件を置き換えるものではありません。
 
 この記事では TLS version の選択や certificate validation algorithm の詳細には踏み込みません。
@@ -144,9 +146,10 @@ RFC 8414 §6.1 は TLS の implementation security considerations の参照先�
 - RFC Editor: [RFC 8414 — OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/rfc/rfc8414.html)
 - RFC Editor: [RFC 8414 Errata — Errata ID 7793](https://www.rfc-editor.org/errata/eid7793)
 - RFC Editor: [RFC 9728 — OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728.html)
+- RFC Editor: [RFC 9525 — Service Identity in TLS](https://www.rfc-editor.org/rfc/rfc9525.html)
 - RFC Editor: [BCP 195 — TLS/DTLS Recommendations](https://www.rfc-editor.org/info/bcp195/)
 - RFC Editor: [RFC 9852 — New Protocols Using TLS Must Require TLS 1.3](https://www.rfc-editor.org/rfc/rfc9852.html)
 - RFC Editor: [RFC 10015 — Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015.html)
 
-参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §4, §6.1、RFC 9728 §4、RFC 8996 §6、RFC 9325 §3.1.1、RFC 9852 §4、RFC 10015 §2–§4, §6  
+参照した主要節: RFC 8414 §1, §2, §3, §3.1, §3.2, §3.3, §4, §6.1、RFC 9728 §4、RFC 9525 §1.1, §6、RFC 8996 §6、RFC 9325 §3.1.1、RFC 9852 §4、RFC 10015 §2–§4, §6  
 最終確認: 2026-09-24
