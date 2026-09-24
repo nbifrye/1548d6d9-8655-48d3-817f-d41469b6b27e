@@ -56,7 +56,7 @@ client_id=device-client-123&scope=read%20profile
 
 ここで `client_id` と `scope` は JSON member ではなく form parameter です。Confidential Client が client credentials を持つ場合、RFC 6749 §3.2.1 の Client authentication requirements が適用されます（RFC 8628 §3.1）。
 
-Device からの request は TLS を使用し、BCP 195 の best practices を実装しなければなりません（MUST, RFC 8628 §3.1）。RFC 8628 本文が BCP 195 の参照先として挙げる RFC 7525 は RFC 9325 により obsolete されています。2026-09-22 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されています。さらに、2026 年 7 月公開の RFC 10015 は RFC 9325 を更新し、(D)TLS 1.2 の obsolete な key exchange method を追加で deprecated / discouraged としているため、実装時は RFC 10015 を含む RFC 9325 の更新関係も確認します。
+Device からの request は TLS を使用し、BCP 195 の best practices を実装しなければなりません（MUST, RFC 8628 §3.1）。RFC 8628 本文が BCP 195 の参照先として挙げる RFC 7525 は RFC 9325 により obsolete されています。2026-09-24 時点の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されています。さらに、2026 年 7 月公開の RFC 10015 は RFC 9325 を更新し、(D)TLS 1.2 について、Client が non-ephemeral FFDH、ephemeral FFDH、static RSA の各 cipher suite を offer してはならず（MUST NOT）、Server もそれらを select してはなりません（MUST NOT）。non-ephemeral ECDH は従来どおり Client が offer せず、Server が select しないことが SHOULD NOT です（RFC 10015 §2–§4, §6）。
 
 また、値のない parameter は request から省略されたものとして扱わなければならず（MUST）、Authorization Server は未知の request parameter を無視しなければなりません（MUST）。request / response parameter を複数回含めてはなりません（MUST NOT）。polling による不要な負荷を避けるため、Client は利用者に促された場合にのみ Device Authorization Request を開始し、application 起動時などに自動開始しないことが SHOULD です（RFC 8628 §3.1）。
 
@@ -136,5 +136,5 @@ RFC 8628 §3.5 は Device Authorization Grant 固有の Token Endpoint error を
 - RFC Editor: [BCP 195 — Recommendations for Secure Use of TLS](https://www.rfc-editor.org/info/bcp195/)
 - RFC Editor: [RFC 10015 — Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015.html)
 
-参照した主要節: RFC 8628 §1, §3.1, §3.2, §3.3, §3.3.1, §3.4, §3.5  
-最終確認: 2026-09-22
+参照した主要節: RFC 8628 §1, §3.1, §3.2, §3.3, §3.3.1, §3.4, §3.5; RFC 10015 §2–§4, §6  
+最終確認: 2026-09-24
