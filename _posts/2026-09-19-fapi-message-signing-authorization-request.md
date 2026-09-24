@@ -39,7 +39,45 @@ FAPI 2.0 Message Signing §5.3.2 は、Authorization Request signing を実装�
 
 JAR は RFC 9101、PAR は RFC 9126 で定義されています。したがって、FAPI 2.0 Message Signing は Authorization Request の署名形式と送信経路を新規に定義するのではなく、JAR と PAR を組み合わせ、その利用方法に追加要件を設定しています。
 
-## 3. `aud` は Authorization Server の issuer identifier URL
+## 3. PAR request と signed request object の配置例
+
+次は配置を示すための**非規範的な例**です。値は説明用であり、Client Authentication に必要な情報は省略しています。
+
+```http
+POST /par HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+request=eyJ0eXAiOiJvYXV0aC1hdXRoei1yZXErand0IiwiYWxnIjoiUFMyNTYifQ...
+```
+
+`request` parameter の値は compact serialization された signed request object です。説明のために JOSE Header と payload を復号後の形で示すと、この記事で扱う claim と Authorization Request parameter は次のように同じ request object 内に入ります。
+
+```json
+{
+  "typ": "oauth-authz-req+jwt",
+  "alg": "PS256"
+}
+```
+
+```json
+{
+  "iss": "client-123",
+  "aud": "https://as.example.com",
+  "nbf": 1789999200,
+  "exp": 1790001000,
+  "response_type": "code",
+  "client_id": "client-123",
+  "redirect_uri": "https://client.example.com/cb",
+  "scope": "openid",
+  "code_challenge": "illustrative-code-challenge",
+  "code_challenge_method": "S256"
+}
+```
+
+この例は parameter の配置を示すためのものであり、claim や Authorization Request parameter の完全な一覧ではありません。
+
+## 4. `aud` は Authorization Server の issuer identifier URL
 
 §5.3.2 は Client に対し、request object の `aud` claim として Authorization Server の issuer identifier URL を送ることを要求しています（shall）。
 
@@ -53,7 +91,7 @@ flowchart TD
     C -->|No| E[要件を満たさない]
 </pre>
 
-## 4. `nbf` と `exp` の時間条件
+## 5. `nbf` と `exp` の時間条件
 
 Client は §5.3.2 により、request object に `nbf` claim を送ることを要求されています（shall）。また `exp` claim も送信し、その lifetime を60分以内にしなければなりません（shall）。
 
@@ -61,7 +99,7 @@ Authorization Server は §5.3.1 により、`nbf` が現在から60分より前
 
 このため、Authorization Server の確認対象には署名の検証だけでなく、request object の時間条件も含まれます。
 
-## 5. `typ` は Client と Authorization Server で強度が異なる
+## 6. `typ` は Client と Authorization Server で強度が異なる
 
 Client について §5.3.2 は、JOSE Header の `typ` に `oauth-authz-req+jwt` を設定することを **should** としています。
 
@@ -69,7 +107,7 @@ Client について §5.3.2 は、JOSE Header の `typ` に `oauth-authz-req+jwt
 
 Client 側の should と Authorization Server 側の shall は同じ強度ではありません。実装要件を読む際には、この違いを維持する必要があります。
 
-## 6. Authorization Server は PAR Endpoint で JAR を検証する
+## 7. Authorization Server は PAR Endpoint で JAR を検証する
 
 §5.3.1 は Authorization Server に対し、PAR Endpoint で RFC 9101 に従う signed request object をサポートし、使用を要求し、検証することを shall としています。
 
@@ -82,13 +120,13 @@ Client 側の should と Authorization Server 側の shall は同じ強度では
 5. Authorization Server が `aud`、`nbf`、`exp` など FAPI 2.0 Message Signing の追加要件を確認する。
 6. PAR が成功すると、以後の Authorization Request は PAR で得た `request_uri` を使って進む。
 
-## 7. Front-channel Authorization Request の扱い
+## 8. Front-channel Authorization Request の扱い
 
 FAPI 2.0 Message Signing §5.3 は、FAPI 2.0 が PAR を使用するため、pushed authorization request が署名されていれば NR2 も達成されると説明しています。
 
 ただし §6.4 は、front-channel Authorization Request そのものには non-repudiation が提供されないことを明記しています。つまり、PAR へ送られた signed request object と、その後 Browser を経由する front-channel message は区別して扱う必要があります。
 
-## 8. 一次資料
+## 9. 一次資料
 
 - OpenID Foundation: [FAPI 2.0 Message Signing — Final](https://openid.net/specs/fapi-message-signing-2_0-final.html)
 - OpenID Foundation: [FAPI 2.0 Security Profile — Final](https://openid.net/specs/fapi-security-profile-2_0-final.html)
@@ -97,4 +135,4 @@ FAPI 2.0 Message Signing §5.3 は、FAPI 2.0 が PAR を使用するため、pu
 - RFC Editor: [RFC 9126 — OAuth 2.0 Pushed Authorization Requests](https://www.rfc-editor.org/rfc/rfc9126.html)
 
 参照した主要節: FAPI 2.0 Message Signing §5.3, §5.3.1, §5.3.2, §6.4、FAPI 2.0 Security Profile §5.3.3.2  
-最終確認: 2026-09-21
+最終確認: 2026-09-24
