@@ -39,7 +39,7 @@ Accept: application/json
 
 ここでは metadata は query parameter や form parameter ではなく、JSON request body の top-level member です。
 
-RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。さらに §5 では、Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、TLS を使用する Client は server certificate を検証しなければなりません（MUST）。RFC 7591 がこの検証について参照する RFC 6125 は、2023 年 11 月公開の RFC 9525 によって廃止・置換されています。RFC 7591 は TLS の実装上の security considerations の参照先として BCP 195 を挙げており、現在の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されています。
+RFC 7591 §3 は Client Registration Endpoint を transport-layer security mechanism で保護しなければならない（MUST）と規定しています。さらに §5 では、Authorization Server は TLS 1.2 をサポートしなければならず（MUST）、TLS を使用する Client は server certificate を検証しなければなりません（MUST）。RFC 7591 がこの検証について参照する RFC 6125 は、2023 年 11 月公開の RFC 9525 によって廃止・置換されています。RFC 7591 は TLS の実装上の security considerations の参照先として BCP 195 を挙げており、現在の BCP 195 は RFC 8996、RFC 9325、RFC 9852 で構成されています。さらに、2026 年 7 月公開の RFC 10015 は、BCP 195 を構成する RFC 9325 を更新しています。
 
 Authorization Server が initial access token を要求する構成では、その token を使って Registration Endpoint へのアクセスを制限できます（MAY, §3）。initial access token の取得方法と endpoint における検証方法は RFC 7591 の scope 外です。一方、open registration と interoperability を支援するため、Client Registration Endpoint は authorization なし、すなわち initial access token なしの registration request を許可することが推奨されています（SHOULD, §3）。
 
@@ -107,7 +107,7 @@ Authorization Server は、この Client について登録された metadata �
 
 そのため、request で送った値と response の登録結果が常に同一とは限りません。RFC 7591 §3.2.1 は Authorization Server が要求された metadata value を reject または replace し、適切な値を代入できる（MAY）としています。
 
-RFC Editor には `client_id` の `SHOULD NOT` を `MUST NOT` に変更する Technical Errata ID 7782 が登録されていますが、2026年9月21日時点では status は Reported です。そのため、この記事では公開済み RFC 本文の規範強度を維持しています。
+RFC Editor には `client_id` の `SHOULD NOT` を `MUST NOT` に変更する Technical Errata ID 7782 が登録されていますが、2026年9月24日時点では status は Reported です。そのため、この記事では公開済み RFC 本文の規範強度を維持しています。
 
 ## 5. Registration Error は別の JSON object で返る
 
@@ -144,6 +144,7 @@ Registration Request では、`redirect_uris` などの client metadata が JSON
 - RFC Editor: [RFC 7591 Errata — Errata ID 7782](https://www.rfc-editor.org/errata/eid7782)
 - RFC Editor: [RFC 9525 — Service Identity in TLS](https://www.rfc-editor.org/rfc/rfc9525.html)
 - RFC Editor: [BCP 195 — Recommendations for Secure Use of TLS and DTLS](https://www.rfc-editor.org/info/bcp195)
+- RFC Editor: [RFC 10015 — Deprecating Obsolete Key Exchange Methods in TLS 1.2 and DTLS 1.2](https://www.rfc-editor.org/rfc/rfc10015.html)
 
 参照した主要節: §1.3, §2, §3, §3.1, §3.2, §3.2.1, §3.2.2, §5  
-最終確認: 2026-09-23
+最終確認: 2026-09-24
